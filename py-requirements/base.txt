@@ -1,0 +1,20 @@
+# Django stuff
+Django==1.10.5
+dj-database-url==0.4.2
+django-extensions==1.7.6
+djangorestframework==3.5.4
+
+# PostgreSQL
+psycopg2==2.6.2
+
+# Celery
+celery[redis]==4.0.2
+amqp==2.1.4
+billiard==3.5.0.2
+kombu==4.0.2
+vine==1.1.3
+redis==2.10.5
+
+# Misc
+six==1.10.0
+pytz==2016.10
