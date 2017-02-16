@@ -90,3 +90,8 @@ ENV/
 
 # Vim
 *.swp
+
+# Docker volume data
+*.rdb
+*.pid
+celerybeat-schedule.*
