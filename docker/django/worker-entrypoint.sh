@@ -5,4 +5,4 @@ do
     echo "Waiting for volume..."
 done
 
-C_FORCE_ROOT=true celery worker -A firebot -l debug
+C_FORCE_ROOT=true exec celery worker -A firebot -l debug

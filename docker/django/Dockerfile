@@ -2,6 +2,7 @@ FROM python:3.6.0
 
 ENV PYTHONUNBUFFERED 1
 
+ADD ./src /django/src
 COPY ./docker/django/django-entrypoint.sh /
 COPY ./docker/django/worker-entrypoint.sh /
 COPY ./docker/django/scheduler-entrypoint.sh /

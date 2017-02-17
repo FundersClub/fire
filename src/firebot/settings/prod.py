@@ -10,13 +10,3 @@ DATABASES = {
         conn_max_age=int(os.environ.get('DJANGO_DB_CONN_MAX_AGE', 0)),
     ),
 }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'firebot',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-    },
-}
