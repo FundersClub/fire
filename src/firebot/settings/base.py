@@ -6,18 +6,23 @@ import os
 ###############################################################################
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ALLOWED_HOSTS = []
+SITE_ID = 1
 
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
     'django_extensions',
+    'rest_framework',
 
     'firebot',
 )
@@ -80,6 +85,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'staticfiles'))
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+###############################################################################
+# Allauth
+###############################################################################
+
+LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'user:email',
+        ],
+    }
+}
 
 
 ###############################################################################

@@ -1,0 +1,11 @@
+{% load socialaccount %}
+
+{% if request.user.is_authenticated %}
+    Logged in as: {{ request.user }}<br/>
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <button type="submit">Sign Out</button>
+    </form>
+{% else %}
+    <a href="{% provider_login_url 'github' process='login' %}">Login</a>
+{% endif %}
