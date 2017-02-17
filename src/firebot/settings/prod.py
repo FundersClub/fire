@@ -15,6 +15,8 @@ MEDIAFILES_AWS_ACCESS_KEY_ID = os.environ['MEDIAFILES_AWS_ACCESS_KEY_ID']
 MEDIAFILES_AWS_SECRET_ACCESS_KEY = os.environ['MEDIAFILES_AWS_SECRET_ACCESS_KEY']
 DEFAULT_FILE_STORAGE = 'firebot.storages.S3MediaFilesStorage'
 
+EMAIL_BACKEND = 'sgbackend.SendGridBackend'
+SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 
 DATABASES = {
     'default': dj_database_url.parse(

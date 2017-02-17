@@ -6,6 +6,7 @@ from firebot.settings.base import *  # noqa
 # Django
 ###############################################################################
 DEBUG = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SECRET_KEY = 'o*3#%*xmxb2dgfpn$1835f1p49!i=9kuq(e#zvczkcvg1d)xsk'
 
 MEDIA_URL = '/media/'
