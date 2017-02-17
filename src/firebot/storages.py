@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.utils.encoding import filepath_to_uri
 from storages.backends.s3boto import S3BotoStorage
 
 
