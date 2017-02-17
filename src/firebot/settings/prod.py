@@ -66,5 +66,9 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
+        'firebot': {
+            'level': 'ERROR',
+            'handlers': ['console', 'sentry'],
+        },
     },
 }
