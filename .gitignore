@@ -95,3 +95,6 @@ ENV/
 *.rdb
 *.pid
 celerybeat-schedule.*
+
+# Static files
+staticfiles/
