@@ -96,5 +96,6 @@ ENV/
 *.pid
 celerybeat-schedule.*
 
-# Static files
+# Static/media files
 staticfiles/
+mediafiles/

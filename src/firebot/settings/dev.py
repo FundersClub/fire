@@ -1,3 +1,4 @@
+import os
 from firebot.settings.base import *  # noqa
 
 
@@ -6,6 +7,9 @@ from firebot.settings.base import *  # noqa
 ###############################################################################
 DEBUG = True
 SECRET_KEY = 'o*3#%*xmxb2dgfpn$1835f1p49!i=9kuq(e#zvczkcvg1d)xsk'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'mediafiles'))
 
 DATABASES = {
     'default': {
