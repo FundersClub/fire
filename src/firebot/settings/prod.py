@@ -3,7 +3,7 @@ import dj_database_url
 from firebot.settings.base import *  # noqa
 
 
-ALLOWED_HOSTS = ','.split(os.environ['DJANGO_ALLOWED_HOSTS'])
+ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(',')
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'YES'
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
