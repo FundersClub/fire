@@ -15,3 +15,15 @@ DATABASES = {
         conn_max_age=int(os.environ.get('DJANGO_DB_CONN_MAX_AGE', 0)),
     ),
 }
+
+INSTALLED_APPS += (
+    'raven.contrib.django.raven_compat',
+)
+
+import os
+import raven
+
+RAVEN_CONFIG = {
+    'dsn': 'https://ec78c1fd42f144e2aca4facf5a012e87:205e3c07dfb44cbab804e6c40026d268@sentry.io/139935',
+    'release': os.environ.get('HEROKU_SLUG_COMMIT'),
+}
