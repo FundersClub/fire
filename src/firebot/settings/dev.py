@@ -55,6 +55,6 @@ LOGGING = {
 # Celery
 ###############################################################################
 
-#CELERY_TASK_ALWAYS_EAGER = True
-#CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+# CELERY_BROKER_URL = 'redis://localhost:6379/1'
