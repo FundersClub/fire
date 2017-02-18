@@ -3,6 +3,11 @@ import os
 import sys
 
 if __name__ == "__main__":
+    # If we're running from the main project dir and not the src dir,
+    # switch to the src dir. This pleases the Django test discovery.
+    if os.path.exists('src/manage.py'):
+        os.chdir('src')
+
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "firebot.settings.dev")
     try:
         from django.core.management import execute_from_command_line

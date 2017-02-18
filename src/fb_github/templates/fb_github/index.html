@@ -1,0 +1,26 @@
+{% extends 'firebot/base.html' %}
+{% load github socialaccount %}
+
+{% block title %}Manage {{ view.repo.full_name }}{% endblock %}
+
+{% block body %}
+    <h1>Manage {{ view.repo.full_name }}</h1>
+    Fire e-mail: <a href="mailto:{{ view.repo.email }}">{{ view.repo.email }}</a>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>GitHub Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in view.repo.emailmap_set.all %}
+                <tr>
+                    <td>{{ entry.email }}</td>
+                    <td>{{ entry.login }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

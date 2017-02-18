@@ -1,0 +1,24 @@
+{% extends 'firebot/base.html' %}
+{% load github socialaccount %}
+
+{% block title %}Associate e-mail{% endblock %}
+
+{% block body %}
+    <h1>{{ view.repo.full_name }}</h1>
+    {% if view.associated %}
+        Done! Emails coming from {{ view.associated.email }} will get tagged with {{ view.associated.login|github_profile }}!
+    {% elif request.user.is_authenticated %}
+        Please confirm you'd like to associate {{ view.msg.from_email }} with the username {{ request.user.username|github_profile }}. If you're not {{ request.user.username|github_profile }}, please sign-out and try again.<br/>
+        <form method="post" action="">
+            {% csrf_token %}
+            <button type="submit">Continue</button>
+        </form>
+        <form method="post" action="{% url 'account_logout' %}?next={{ request.get_full_path }}">
+            {% csrf_token %}
+            <button type="submit">Sign out and try again</button>
+        </form>
+    {% else %}
+        Before you can associate your e-mail address {{ view.msg.from_email }} with your GitHub account for repository <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a> you need to login.
+        Click <a href="{% provider_login_url 'fb_github' process='login' next=request.get_full_path %}">here</a> to continue.<br/>
+    {% endif %}
+{% endblock %}

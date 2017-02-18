@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^test-500/$', firebot.views.test_500),
+    url(r'^emails/', include('fb_emails.urls')),
+    url(r'^github/', include('fb_github.urls')),
 ]
 
 if settings.DEBUG:

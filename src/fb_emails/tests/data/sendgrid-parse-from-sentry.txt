@@ -1,0 +1,418 @@
+--xYzZY
+Content-Disposition: form-data; name="headers"
+
+From: Eran Rundstein <eran@fundersclub.com>
+Date: Mon, 20 Feb 2017 13:33:04 -0800
+Subject: Fwd: [FundersClub Production] error: ReferenceError: clearOverlappingSelection is not defined
+To: test@firebot.fundersclub.com
+Content-Type: multipart/alternative; boundary=94eb2c05ae023eea400548fd025a
+
+--xYzZY
+Content-Disposition: form-data; name="dkim"
+
+{@fundersclub.com : pass}
+--xYzZY
+Content-Disposition: form-data; name="to"
+
+test@firebot.fundersclub.com
+--xYzZY
+Content-Disposition: form-data; name="html"
+
+<div dir="ltr"><br><div class="gmail_quote">---------- Forwarded message ----------<br>From: <b class="gmail_sendername">Sentry</b> <span dir="ltr">&lt;<a href="mailto:noreply@md.getsentry.com">noreply@md.getsentry.com</a>&gt;</span><br>Date: Sat, Feb 18, 2017 at 8:54 PM<br>Subject: [FundersClub Production] error: ReferenceError: clearOverlappingSelection is not defined<br>To: <a href="mailto:eran@fundersclub.com">eran@fundersclub.com</a><br><br><br><u></u>
+
+
+  
+  
+
+  
+
+
+
+
+  
+
+
+<div style="font-size:16px;color:#2f2936;padding:0;font-family:&quot;Lato&quot;,&quot;Helvetica Neue&quot;,helvetica,sans-serif;background-image:url(https://a0wx592cvgzripj.global.ssl.fastly.net/_static/e445fa38a26eeda40957d45e83ffe5b9/sentry/images/email/sentry-pattern.png);width:100%;font-weight:300;margin:0;background-color:#fff">
+<div class="m_7651095618708991879preheader" style="padding:0;font-size:0;display:none;max-height:0;font-weight:300;line-height:0">
+  New alert from FundersClub Production.
+</div>
+<table class="m_7651095618708991879main" style="border-radius:4px;font-size:16px;color:#2f2936;border-collapse:separate;border-spacing:0;max-width:700px;font-family:&quot;Lato&quot;,&quot;Helvetica Neue&quot;,helvetica,sans-serif;border:1px solid #c7d0d4;padding:0;width:100%;font-weight:300;margin:15px auto;background-color:#fff">
+  <tbody><tr style="font-weight:300">
+    <td style="padding:0;font-weight:300;margin:0;text-align:center">
+      <div class="m_7651095618708991879header" style="padding:23px 0;font-size:14px;font-weight:300;border-bottom:1px solid #dee7eb">
+        <div class="m_7651095618708991879container" style="padding:0 20px;max-width:600px;font-weight:300;margin:0 auto;text-align:left">
+          
+    <a href="https://sentry.io/" class="m_7651095618708991879btn" style="border-radius:3px;color:#fff;float:right;line-height:18px;padding:8px 15px;text-decoration:none;border:1px solid #413496;font-weight:600;display:inline-block;background-color:#6c5fc7" target="_blank">View on Sentry</a>
+    
+          <h1 style="font-size:38px;color:#000;letter-spacing:-1px;padding:0;font-weight:normal;margin:0;line-height:42px">
+            <a href="https://sentry.io" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank"><img src="https://a0wx592cvgzripj.global.ssl.fastly.net/_static/e445fa38a26eeda40957d45e83ffe5b9/sentry/images/email/sentry_logo_full.png" width="125px" height="29px" alt="Sentry" style="font-weight:300"></a>
+          </h1>
+          
+
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr style="font-weight:300">
+    <td style="padding:0;font-weight:300;margin:0;text-align:center">
+      
+      <div class="m_7651095618708991879container" style="padding:0 20px;max-width:600px;font-weight:300;margin:0 auto;text-align:left">
+        <div class="m_7651095618708991879inner" style="padding:30px 0 20px;font-weight:300;background-color:#fff">
+          
+    <h2 style="font-size:24px;font-weight:700;margin:0 0 15px">
+        New alert from <a href="https://sentry.io/" style="color:#4674ca;font-weight:inherit;text-decoration:none" target="_blank">FundersClub Production</a>
+    </h2>
+
+    
+      <div class="m_7651095618708991879event" style="font-weight:300;margin-bottom:30px">
+        <div class="m_7651095618708991879event-id" style="color:#889092;float:right;font-weight:300">ID: b162081f6c7a4d29aa36050a275751<wbr>f1</div>
+        <div class="m_7651095618708991879event-date" style="color:#889092;font-weight:300">Feb. 19, 2017, 4:54:31 a.m. UTC</div>
+      </div>
+
+      
+      <div class="m_7651095618708991879interface" style="font-weight:300;margin-bottom:30px">
+          <h3 class="m_7651095618708991879title" style="font-size:22px;font-weight:700;margin:0 0 15px">Exception</h3>
+          <pre style="border-radius:4px;font-size:14px;color:#3d4649;word-wrap:break-word;padding:15px;white-space:pre-wrap;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace;font-weight:normal;margin:0 0 15px;background-color:#f4f5f6">ReferenceError: clearOverlappingSelection is not defined
+  at None (/learn/startup-equity/<wbr>preferred-equity-rights-and-<wbr>terms/pro-rata-investment-<wbr>rights/)</pre>
+      </div>
+      
+      <div class="m_7651095618708991879interface" style="font-weight:300;margin-bottom:30px">
+          <h3 class="m_7651095618708991879title" style="font-size:22px;font-weight:700;margin:0 0 15px">Request</h3>
+          
+<table style="border-collapse:separate;border-spacing:5px;width:100%;font-weight:300">
+    <colgroup style="font-weight:300">
+      <col style="width:130px;font-weight:300">
+    </colgroup>
+    <tbody style="font-weight:300">
+        <tr style="font-weight:300">
+            <th style="color:#889092;text-align:left;min-width:60px;padding:5px 0;font-weight:500">URL</th>
+            <td style="border-radius:3px;padding:5px 10px;font-weight:400;margin:0 0 5px;background-color:#f4f5f6;text-align:left"><a href="https://fundersclub.com/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">https://fundersclub.com/learn/<wbr>startup-equity/preferred-<wbr>equity-rights-and...</a></td>
+        </tr>
+        
+        
+        
+    </tbody>
+</table>
+
+      </div>
+      
+      <div class="m_7651095618708991879interface" style="font-weight:300;margin-bottom:30px">
+          <h3 class="m_7651095618708991879title" style="font-size:22px;font-weight:700;margin:0 0 15px">User</h3>
+          
+
+
+<table class="m_7651095618708991879reset" style="border-collapse:collapse;border-spacing:0;width:100%;font-weight:300">
+  <tbody><tr style="font-weight:300">
+    <td style="border-radius:3px;padding:0;font-weight:400;margin:0 0 5px;background-color:#fff;text-align:left">
+      <table style="border-collapse:separate;border-spacing:5px;width:100%;font-weight:300;margin:0">
+        <colgroup style="font-weight:300">
+          <col style="width:130px;font-weight:300">
+        </colgroup>
+        <tbody style="font-weight:300">
+          
+          
+            <tr style="font-weight:300">
+              <th style="color:#889092;text-align:left;min-width:60px;padding:5px 0;font-weight:500">IP Address:</th>
+              <td class="m_7651095618708991879code" style="border-radius:3px;padding:5px 10px;font-weight:400;margin:0 0 5px;background-color:#f4f5f6;text-align:left">1.2.3.4</td>
+            </tr>
+          
+          
+          
+          
+        </tbody>
+      </table>
+    </td>
+    
+  </tr>
+</tbody></table>
+
+      </div>
+      
+
+      
+        <h3 style="font-size:22px;font-weight:700;margin:0 0 20px">Tags</h3>
+
+        <ul class="m_7651095618708991879tag-list" style="list-style:none;padding:0;font-weight:300;margin:0 0 20px">
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">browser</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=browser%3A%22Chrome%20Mobile%2044.0.2403%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">Chrome Mobile 44.0.2403</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200"><a href="http://browser.name" target="_blank">browser.name</a></strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=browser.name%3A%22Chrome%20Mobile%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">Chrome Mobile</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">device</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=device%3A%22SM-N9200%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">SM-N9200</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">device.family</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=device.family%3A%22Samsung%20SM-N9200%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">Samsung SM-N9200</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">level</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=level%3A%22error%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">error</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">logger</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=logger%3A%22javascript%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">javascript</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">os</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=os%3A%22Android%206.0.1%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">Android 6.0.1</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200"><a href="http://os.name" target="_blank">os.name</a></strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=os.name%3A%22Android%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">Android</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">sentry:user</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=sentry%3Auser%3A%22ip%3A1.2.3.4%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">ip:1.2.3.4</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">transaction</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=transaction%3A%22/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/%20in%20%3F%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">/learn/startup-equity/<wbr>preferred-equity-rights-a...</a> 
+              
+              </span>
+          </li>
+        
+          <li style="border-radius:3px;margin-right:5px;margin-bottom:10px;padding:5px 10px 6px;font-weight:300;display:inline-block;background-color:#f4f5f6">
+              <strong style="font-weight:200">url</strong>
+              <em style="font-weight:300">=</em>
+              <span style="font-weight:300">
+              
+                <a href="https://sentry.io?query=url%3A%22https%3A//fundersclub.com/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/%22" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">https://fundersclub.com/learn/<wbr>startup-equity/pr...</a> <a href="https://fundersclub.com/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/" class="m_7651095618708991879icon-share" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank"></a>
+              
+              </span>
+          </li>
+        
+        </ul>
+      
+    
+
+    
+        <p class="m_7651095618708991879via" style="border-radius:3px;font-size:14px;padding:15px;font-weight:300;margin:15px 0;line-height:24px;background-color:#f7f8f9;text-align:center">
+            You are receiving this email due to matching rules:
+            
+                <a href="https://sentry.io/" style="color:#4674ca;font-weight:500;text-decoration:none" target="_blank">Send a notification for new events</a>
+            
+        </p>
+    
+
+    
+    <div style="font-weight:300">
+      
+      <div style="font-weight:300">
+        
+        
+      </div>
+      <div style="font-weight:300">
+        
+        
+      </div>
+    </div>
+
+        </div>
+      </div>
+      
+      <div class="m_7651095618708991879container" style="padding:0 20px;max-width:600px;font-weight:300;margin:0 auto;text-align:left">
+        <div class="m_7651095618708991879footer" style="padding:35px 0;border-top:1px solid #e7ebee;font-weight:300">
+          
+          <a href="https://sentry.io" style="color:#687276;float:right;font-weight:500;text-decoration:none" target="_blank">Home</a>
+          
+          <a href="https://sentry.io/account/settings/notifications/" style="color:#687276;font-weight:500;text-decoration:none" target="_blank">Notification Settings</a>
+          
+            · <a href="https://sentry.io/account/notifications/unsubscribe/" style="color:#687276;font-weight:500;text-decoration:none" target="_blank">Unsubscribe</a>
+          
+          
+        </div>
+      </div>
+    </td>
+  </tr>
+</tbody></table>
+</div>
+</div><br><br clear="all"><div><br></div>-- <br><div class="gmail_signature" data-smartmail="gmail_signature"><div dir="ltr"><div><div dir="ltr"><div><div><span style="font-family:verdana,sans-serif;font-size:small">Eran Rundstein</span><br></div></div><font face="verdana,sans-serif"><a href="http://www.fundersclub.com/" style="color:rgb(17,85,204)" target="_blank">FundersClub</a> | <a href="https://fundersclub.com/blog/" style="color:rgb(17,85,204)" target="_blank">FundersClub Blog</a></font><br><div><a href="http://careers.fundersclub.com/" style="color:rgb(17,85,204)" target="_blank">We&#39;re hiring</a>!<br></div></div></div></div></div>
+</div>
+
+--xYzZY
+Content-Disposition: form-data; name="from"
+
+Eran Rundstein <eran@fundersclub.com>
+--xYzZY
+Content-Disposition: form-data; name="text"
+
+---------- Forwarded message ----------
+From: Sentry <noreply@md.getsentry.com>
+Date: Sat, Feb 18, 2017 at 8:54 PM
+Subject: [FundersClub Production] error: ReferenceError:
+clearOverlappingSelection is not defined
+To: eran@fundersclub.com
+
+
+New alert from FundersClub Production.
+View on Sentry <https://sentry.io/>
+[image:
+Sentry] <https://sentry.io>
+New alert from FundersClub Production
+<https://sentry.io/fundersclub/production/>
+ID: b162081f6c7a4d29aa36050a275751f1
+Feb. 19, 2017, 4:54:31 a.m. UTC
+Exception
+
+ReferenceError: clearOverlappingSelection is not defined
+  at None (/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/)
+
+Request
+URL https://fundersclub.com/learn/startup-equity/preferred-
+equity-rights-and...
+<https://fundersclub.com/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/>
+User
+IP Address: 1.2.3.4
+Tags
+
+   - *browser* *=* Chrome Mobile 44.0.2403
+   <https://sentry.io?query=browser%3A%22Chrome%20Mobile%2044.0.2403%22>
+   - *browser.name <http://browser.name>* *=* Chrome Mobile
+   <https://sentry.io?query=browser.name%3A%22Chrome%20Mobile%22>
+   - *device* *=* SM-N9200 <https://sentry.io?query=device%3A%22SM-N9200%22>
+   - *device.family* *=* Samsung SM-N9200
+   <https://sentry.io?query=device.family%3A%22Samsung%20SM-N9200%22>
+   - *level* *=* error <https://sentry.io?query=level%3A%22error%22>
+   - *logger* *=* javascript
+   <https://sentry.io?query=logger%3A%22javascript%22>
+   - *os* *=* Android 6.0.1
+   <https://sentry.io?query=os%3A%22Android%206.0.1%22>
+   - *os.name <http://os.name>* *=* Android
+   <https://sentry.io?query=os.name%3A%22Android%22>
+   - *sentry:user* *=* ip:1.2.3.4
+   <https://sentry.io?query=sentry%3Auser%3A%22ip%3A1.2.3.4%22>
+   - *transaction* *=* /learn/startup-equity/preferred-equity-rights-a...
+   <https://sentry.io?query=transaction%3A%22/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/%20in%20%3F%22>
+   - *url* *=* https://fundersclub.com/learn/startup-equity/pr...
+   <https://sentry.io?query=url%3A%22https%3A//fundersclub.com/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/%22>
+   <https://fundersclub.com/learn/startup-equity/preferred-equity-rights-and-terms/pro-rata-investment-rights/>
+
+You are receiving this email due to matching rules: Send a notification for
+new events
+<https://sentry.io/>
+Home <https://sentry.io> Notification Settings
+<https://sentry.io/account/settings/notifications/> · Unsubscribe
+<https://sentry.io/account/notifications/unsubscribe/>
+
+
+
+-- 
+Eran Rundstein
+FundersClub <http://www.fundersclub.com/> | FundersClub Blog
+<https://fundersclub.com/blog/>
+We're hiring <http://careers.fundersclub.com/>!
+
+--xYzZY
+Content-Disposition: form-data; name="sender_ip"
+
+1.2.3.4
+--xYzZY
+Content-Disposition: form-data; name="spam_report"
+
+Spam detection software, running on the system "mx0033p1mdw1.sendgrid.net", has
+identified this incoming email as possible spam.  The original message
+has been attached to this so you can view it (if it isn't spam) or label
+similar future email.  If you have any questions, see
+@@CONTACT_ADDRESS@@ for details.
+
+Content preview:  Forwarded message From: Sentry <noreply@md.getsentry.com>
+   Date: Sat, Feb 18, 2017 at 8:54 PM Subject: [FundersClub Production] error:
+   ReferenceError: clearOverlappingSelection is not defined To: eran@fundersclub.com
+   [...] 
+
+Content analysis details:   (0.0 points, 5.0 required)
+
+ pts rule name              description
+---- ---------------------- --------------------------------------------------
+ 0.0 HTML_MESSAGE           BODY: HTML included in message
+ 0.0 T_MIME_NO_TEXT         No text body parts
+
+
+--xYzZY
+Content-Disposition: form-data; name="envelope"
+
+{"to":["test@firebot.fundersclub.com"],"from":"eran@fundersclub.com"}
+--xYzZY
+Content-Disposition: form-data; name="attachments"
+
+0
+--xYzZY
+Content-Disposition: form-data; name="subject"
+
+Fwd: [FundersClub Production] error: ReferenceError: clearOverlappingSelection is not defined
+--xYzZY
+Content-Disposition: form-data; name="spam_score"
+
+0.011
+--xYzZY
+Content-Disposition: form-data; name="charsets"
+
+{"to":"UTF-8","html":"UTF-8","subject":"UTF-8","from":"UTF-8","text":"UTF-8"}
+--xYzZY
+Content-Disposition: form-data; name="SPF"
+
+pass
+--xYzZY--

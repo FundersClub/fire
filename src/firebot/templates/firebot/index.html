@@ -1,0 +1,24 @@
+{% extends 'firebot/base.html' %}
+{% load socialaccount %}
+
+{% block title %}Index{% endblock %}
+
+{% block body %}
+    {% if request.user.is_authenticated %}
+        Logged in as: {{ request.user }}<br/>
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit">Sign Out</button>
+        </form>
+        <hr>
+        <ul>
+            {% for repo in request.user.repository_set.all %}
+                <li>
+                    <a href="{% url 'fb_github:index' repo.login repo.name %}">{{ repo.full_name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <a href="{% provider_login_url 'github' process='login' %}">Login</a>
+    {% endif %}
+{% endblock %}

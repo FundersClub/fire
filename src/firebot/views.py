@@ -6,4 +6,4 @@ def test_500(request):
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'firebot/index.html')

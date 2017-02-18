@@ -1,0 +1,5 @@
+Greetings!
+
+@{{ repo.inviter_login }} has invited me to this fine repository.
+**If you'd like me to stay, please have them click [here]({{ settings.BASE_URL }}{% url 'fb_github:inviter-approval' repo.login repo.name %})**.
+Otherwise, simply ignore this issue and I won't bother you again.

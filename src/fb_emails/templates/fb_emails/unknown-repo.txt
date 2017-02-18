@@ -1,0 +1,6 @@
+Hello {{ msg.from_name }},
+
+Unfortunately I do not recognize the e-mail address {{ msg.to_email }}. **{{ email_slug }}** is not currently associated with any repository.
+
+Thank you,
+The FireBot.

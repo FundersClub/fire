@@ -25,6 +25,8 @@ INSTALLED_APPS = (
     'rest_framework',
 
     'firebot',
+    'fb_emails',
+    'fb_github',
 )
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'firebot.context_processors.firebot_context_processor',
             ],
         },
     },
@@ -126,3 +129,4 @@ SOCIALACCOUNT_PROVIDERS = {
 ###############################################################################
 
 CELERY_IGNORE_RESULT = True
+from firebot.settings.tasks import *  # noqa
