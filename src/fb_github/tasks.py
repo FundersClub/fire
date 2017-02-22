@@ -28,7 +28,7 @@ def poll_invitations():
                 'original_invitation_data': repo_invitation.as_dict(),
             },
         )
-        if created or True:
+        if created:
             accept_new_repo.delay(repo.id)
 
 
