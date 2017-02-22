@@ -9,6 +9,7 @@ from django.views.generic import TemplateView
 
 from fb_emails.models import IncomingMessage
 from fb_github.models import Repository
+from fb_github.tasks import update_issue_after_email_association
 
 
 class RepoAdminMixin(object):
@@ -94,4 +95,5 @@ class AssociateEmailView(TemplateView):
                 login=request.user.username,
                 user=request.user,
             )
+            update_issue_after_email_association.delay(self.msg.issue.id)
         return super(AssociateEmailView, self).get(request, *args, **kwargs)
