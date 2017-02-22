@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Usage: ./bin/restore-db
+# Note: This also creates a superuser with login/pass: admin/admin
+
+# Die on errors
+set -e
+
+# Drop existing db and fetch a fresh copy
+dropdb firebot
+
+# The || true is because even when this succeeds it sometimes return a non-zero value :(
+heroku pg:pull DATABASE_URL firebot --app fc-firebot || true
+
+# Sanitize
+psql firebot << EOF
+
+-- delete sensitive data no one needs
+DELETE FROM django_admin_log;
+DELETE FROM django_session;
+
+-- update the github app to our testing one (firebot-dev by @eranrund)
+UPDATE socialaccount_socialapp SET client_id='f74af549d738c27ebd81', secret='3311aac5a7a7f3a94f10d3c6714f71d4f4f6a44f' WHERE name='github';
+
+-- update all email addresses
+UPDATE auth_user SET email=username || '@test.com';
+UPDATE fb_github_emailmap SET email=login || id || '@test.com';
+
+EOF
