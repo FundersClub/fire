@@ -2,7 +2,7 @@ from celery.schedules import crontab
 from datetime import timedelta
 
 
-CELERYBEAT_SCHEDULE = {
+CELERY_BEAT_SCHEDULE = {
     ###########################################################################
     # celery
     ###########################################################################
