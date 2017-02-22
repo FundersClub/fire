@@ -99,6 +99,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             'user:email',
         ],
+        'VERIFIED_EMAIL': True,
     }
 }
 
