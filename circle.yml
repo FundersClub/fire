@@ -2,6 +2,10 @@ machine:
     python:
         version: 3.6.0
 
+dependencies:
+    post:
+        - pip install -r py-requirements/dev.txt
+
 deployment:
     production:
         branch: master
