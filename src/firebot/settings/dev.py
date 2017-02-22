@@ -68,8 +68,8 @@ CELERY_TASK_EAGER_PROPAGATES = True
 # GitHub
 ###############################################################################
 
-# Test app owned by @eranrund
-GITHUB_TOKEN = '7141bd44a35fc1ab49303997ef4c699ee09a5506'
+# @firebot-test-local
+GITHUB_TOKEN = '173c367ffc34aafe96118576eae3fde982a337ab'
 
 
 ###############################################################################

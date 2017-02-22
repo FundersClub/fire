@@ -35,3 +35,7 @@ Browse to http://localhost:12000/
 ```
 ./manage.py test
 ```
+
+### GitHub intergration notes
+ - Locally, `GITHUB_TOKEN` is a personal access token for @firebot-test-local
+ - On Heroku, `GITHUB_TOKEN` is a personal access token for @firebot-test
