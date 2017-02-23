@@ -13,16 +13,40 @@
         FundersClub/<strong>FundersClub</strong>
     </div>
     <div>
-        <md-tab-group>
-            <md-tab label="Send">
-                To do
-            </md-tab>
-            <md-tab label="Team">
-                To do
-            </md-tab>
-            <md-tab label="Settings">
-                To do
-            </md-tab>
-        </md-tab-group>
+        <nav md-tab-nav-bar>
+            <a
+                md-tab-link
+                routerLink="/"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
+                #rlaSend="routerLinkActive"
+                [active]="rlaSend.isActive"
+            >
+                Send
+            </a>
+            <a
+                md-tab-link
+                routerLink="/team"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
+                #rlaTeam="routerLinkActive"
+                [active]="rlaTeam.isActive"
+            >
+                Team
+            </a>
+            <a
+                md-tab-link
+                routerLink="/settings"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
+                #rlaSettings="routerLinkActive"
+                [active]="rlaSettings.isActive"
+            >
+                Settings
+            </a>
+        </nav>
+        <md-card>
+            <router-outlet></router-outlet>
+        </md-card>
     </div>
 </div>
