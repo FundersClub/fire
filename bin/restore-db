@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Usage: ./bin/restore-db
-# Note: This also creates a superuser with login/pass: admin/admin
 
 # Die on errors
 set -e

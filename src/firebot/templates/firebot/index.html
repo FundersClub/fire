@@ -16,6 +16,8 @@
                 <li>
                     <a href="{% url 'fb_github:index' repo.login repo.name %}">{{ repo.full_name }}</a>
                 </li>
+            {% empty %}
+                <li>Looks like you haven't set up any repositories yet.</li>
             {% endfor %}
         </ul>
     {% else %}
