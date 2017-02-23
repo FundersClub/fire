@@ -60,7 +60,13 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
+      filename: 'index.html',
       template: 'src-frontend/index.html'
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: 'static-page.html',
+      template: 'src-frontend/static-page.html'
     })
   ]
 };
