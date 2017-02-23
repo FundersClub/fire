@@ -55,11 +55,12 @@ class InviterApprovalView(TemplateView):
 
         repo.admins.add(request.user)
 
-        repo.emailmap_set.create(
-            email=request.user.email,
-            login=request.user.username,
-            user=request.user,
-        )
+        for emailaddress in request.user.emailaddress_set.filter(verified=True):
+            repo.emailmap_set.create(
+                email=emailaddress.email,
+                login=request.user.username,
+                user=request.user,
+            )
 
         return http.HttpResponseRedirect(reverse('fb_github:index', kwargs=kwargs))
 

@@ -3,8 +3,8 @@ import github3
 from django.conf import settings
 
 
-def get_github_client():
-    ghc = github3.login(token=settings.GITHUB_TOKEN)
+def get_github_client(token=None):
+    ghc = github3.login(token=token or settings.GITHUB_TOKEN)
     assert ghc.__class__ == github3.github.GitHub
     ghc.__class__ = GitHub
     return ghc
@@ -12,7 +12,7 @@ def get_github_client():
 
 class GitHub(github3.github.GitHub):
     def repository_invitations(self, number=-1, etag=None):
-        url = self._build_url('user/repository_invitations')
+        url = self._build_url('user', 'repository_invitations')
         return self._iter(
             int(number),
             url,
