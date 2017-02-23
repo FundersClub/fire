@@ -1,0 +1,35 @@
+/* Home for global CSS (e.g. resets, normalizations). Not scoped. */
+/* @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css'; */
+
+body {
+    background: #fff;
+}
+
+.GlobalMain {
+    background: url(../images/background-gradient.png) no-repeat top center;
+    background-size: 100% 300px;
+    /* Leave room for footer. */
+    min-height: calc(100vh - 60px);
+}
+
+.GlobalFooter {
+    align-items: center;
+    background-color: #2e2e2e;
+    display: flex;
+    height: 60px;
+}
+
+.GlobalFooter-link {
+    color: #aaaaaa;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.GlobalFooter-link + .GlobalFooter-link {
+    margin-left: 20px;
+}
+
+.GlobalFooter-logo {
+    height: 40px;
+    width: 40px;
+}

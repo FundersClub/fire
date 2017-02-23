@@ -1,9 +1,12 @@
-.wrapper-element {
-    font-family: monospace;
-    text-align: center;
-    margin-top: 100px;
+.AppHeader {
 }
 
-.hello-world {
-    margin-bottom: 50px;
+.AppContent {
+    margin: 0 auto;
+    padding: 20px 40px 40px 40px;
+    width: 800px;
+}
+
+.AppContent-repoName {
+    font-size: 20px;
 }
