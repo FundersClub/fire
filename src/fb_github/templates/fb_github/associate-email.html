@@ -19,6 +19,6 @@
         </form>
     {% else %}
         Before you can associate your e-mail address {{ view.msg.from_email }} with your GitHub account for repository <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a> you need to login.
-        Click <a href="{% provider_login_url 'fb_github' process='login' next=request.get_full_path %}">here</a> to continue.<br/>
+        Click <a href="{% provider_login_url 'github' process='login' next=request.get_full_path %}">here</a> to continue.<br/>
     {% endif %}
 {% endblock %}
