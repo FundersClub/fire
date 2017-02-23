@@ -27,7 +27,7 @@ class Repository(models.Model):
     admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
     approved_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    email_slug = models.SlugField(default=email_slug_default)
+    email_slug = models.SlugField(default=email_slug_default, unique=True)
     inviter_login = models.CharField(max_length=200)
     login = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
