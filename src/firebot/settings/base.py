@@ -37,6 +37,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'firebot.middleware.XForwardedForMiddleware',
 ]
 
 ROOT_URLCONF = 'firebot.urls'
