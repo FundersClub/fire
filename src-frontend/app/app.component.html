@@ -9,44 +9,5 @@
 </header>
 
 <div class="AppContent">
-    <div class="AppContent-repoName">
-        FundersClub/<strong>FundersClub</strong>
-    </div>
-    <div>
-        <nav md-tab-nav-bar>
-            <a
-                md-tab-link
-                routerLink="/"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}"
-                #rlaSend="routerLinkActive"
-                [active]="rlaSend.isActive"
-            >
-                Send
-            </a>
-            <a
-                md-tab-link
-                routerLink="/team"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}"
-                #rlaTeam="routerLinkActive"
-                [active]="rlaTeam.isActive"
-            >
-                Team
-            </a>
-            <a
-                md-tab-link
-                routerLink="/settings"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}"
-                #rlaSettings="routerLinkActive"
-                [active]="rlaSettings.isActive"
-            >
-                Settings
-            </a>
-        </nav>
-        <md-card>
-            <router-outlet></router-outlet>
-        </md-card>
-    </div>
+    <router-outlet></router-outlet>
 </div>
