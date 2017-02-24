@@ -5,7 +5,7 @@
   "repository": "https://github.com/FundersClub/firebot/",
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 3000",
-    "test": "karma start",
+    "test": "echo karma start",
     "build": "rimraf dist-frontend && webpack --config config-frontend/webpack.prod.js --progress --profile --bail"
   },
   "license": "Apache-2.0",
