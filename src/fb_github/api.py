@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import (
     include,
     url,
@@ -58,6 +59,11 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
                 'required': True,
             },
         }
+
+    def validate_email_slug(self, value):
+        if value in settings.FIREBOT_BANNED_EMAIL_SLUGS:
+            raise serializers.ValidationError('"{}" is not permitted.'.format(value))
+        return value
 
 
 ################################################################################

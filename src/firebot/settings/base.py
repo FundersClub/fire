@@ -132,3 +132,54 @@ SOCIALACCOUNT_PROVIDERS = {
 
 CELERY_IGNORE_RESULT = True
 from firebot.settings.tasks import *  # noqa
+
+
+###############################################################################
+# Firebot
+###############################################################################
+
+FIREBOT_BANNED_EMAIL_SLUGS = (
+    'abuse',
+    'admin',
+    'administrator',
+    'billing',
+    'catalyst',
+    'compliance',
+    'dev',
+    'devnull',
+    'dns',
+    'fc',
+    'fire',
+    'ftp',
+    'fundersclub',
+    'help',
+    'hostmaster',
+    'info',
+    'inoc',
+    'ispfeedback',
+    'ispsupport',
+    'list',
+    'list-request',
+    'maildaemon',
+    'no-reply',
+    'noc',
+    'noreply',
+    'null',
+    'phish',
+    'phishing',
+    'postmaster',
+    'privacy',
+    'registrar',
+    'root',
+    'security',
+    'spam',
+    'support',
+    'sysadmin',
+    'tech',
+    'undisclosed-recipients',
+    'unsubscribe',
+    'usenet',
+    'uucp',
+    'webmaster',
+    'www',
+)

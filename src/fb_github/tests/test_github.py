@@ -76,7 +76,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp.data['email_slug'] = orig_data['email_slug']
         self.assertEqual(resp.data, orig_data)
 
-        # Changing to a slug that's already in use, or to an empty one should fail
+        # Changing to a slug that's already in use, empty or banned should fail
         orig_data['email_slug'] = self.repo2.email_slug
         resp = self.client.put(url, orig_data)
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
@@ -86,6 +86,11 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.put(url, orig_data)
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(resp.data, {'email_slug': ['This field may not be blank.']})
+
+        orig_data['email_slug'] = 'support'
+        resp = self.client.put(url, orig_data)
+        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(resp.data, {'email_slug': ['"support" is not permitted.']})
 
         # For now, delete doesn't work and neither does creating a new repo this way
         resp = self.client.delete(url)
