@@ -13,6 +13,9 @@ urlpatterns = [
     url(r'^$', firebot.views.index, name='index'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^api/', include([
+        url(r'^github/', include('fb_github.api')),
+    ])),
     url(r'^test-500/$', firebot.views.test_500),
     url(r'^emails/', include('fb_emails.urls')),
     url(r'^github/', include('fb_github.urls')),

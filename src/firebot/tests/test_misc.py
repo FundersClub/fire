@@ -18,4 +18,4 @@ class TestFlake8(TestCase):
         try:
             subprocess.check_output([flake8, settings.BASE_DIR])
         except subprocess.CalledProcessError as e:
-            raise Exception(e.output)
+            raise Exception(e.output.decode('utf-8'))
