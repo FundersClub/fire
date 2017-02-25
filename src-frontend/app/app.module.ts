@@ -1,50 +1,30 @@
 import { ApplicationRef, NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
 import { BrowserModule }  from '@angular/platform-browser';
-import { RouterModule, Routes }   from '@angular/router';
-import { HttpModule }    from '@angular/http';
+import { HttpModule } from '@angular/http';
+import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { ManageAddressComponent } from './manage-address.component';
-import { ManageSettingsComponent } from './manage-settings.component';
-import { ManageTeamComponent } from './manage-team.component';
-import { RepositoryComponent } from './repository.component';
-import { RepositoryListComponent } from './repository-list.component';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './not-found.component';
+import { RepositoryModule } from './repository/repository.module';
+import { UserIsAuthedGuard } from './user-auth.service';
 import { UserService } from './user.service';
-
-const appRoutes: Routes = [{
-    path: 'repo',
-    component: RepositoryListComponent,
-}, {
-    path: 'team',
-    component: ManageTeamComponent,
-}, {
-    path: 'settings',
-    component: ManageSettingsComponent,
-}, {
-    path: 'repo/:id',
-    component: RepositoryComponent,
-}, {
-    path: '**',
-    component: RepositoryListComponent,
-}];
 
 @NgModule({
     imports: [
         BrowserModule,
-        MaterialModule,
-        RouterModule.forRoot(appRoutes),
         HttpModule,
+        MaterialModule,
+        // Order of the following modules is important.
+        RepositoryModule,
+        AppRoutingModule,
     ],
     declarations: [
         AppComponent,
-        ManageAddressComponent,
-        ManageSettingsComponent,
-        ManageTeamComponent,
-        RepositoryComponent,
-        RepositoryListComponent,
+        PageNotFoundComponent,
     ],
     providers: [
+        UserIsAuthedGuard,
         UserService,
     ],
     entryComponents: [

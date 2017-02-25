@@ -53,7 +53,10 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
         model = models.Repository
         fields = (
             'emailmap_set',
+            'email',
             'email_slug',
+            'full_name',
+            'gh_url',
             'login',
             'name',
             'status',

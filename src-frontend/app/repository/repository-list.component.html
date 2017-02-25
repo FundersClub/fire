@@ -1,0 +1,9 @@
+<ul>
+    <li *ngFor="let repo of repositoryService.all()">
+        <a [routerLink]="[repo.full_name]">
+            {{ repo.full_name }}
+        </a>
+    </li>
+</ul>
+<router-outlet></router-outlet>
+

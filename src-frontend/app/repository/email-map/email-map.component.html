@@ -1,0 +1,52 @@
+<form
+    (ngSubmit)="save()"
+    #emailMapForm="ngForm"
+>
+    <md-input-container>
+        <input
+            mdInput
+            [(ngModel)]="emailMap.login"
+            required
+            name="login"
+        >
+        <div mdPrefix>@</div>
+        <md-hint
+            *ngIf="error?.login"
+            color="primary"
+        >
+            {{ error.login }}
+        </md-hint>
+    </md-input-container>
+    <md-input-container>
+        <input
+            mdInput
+            [(ngModel)]="emailMap.email"
+            required
+            name="email"
+        >
+        <md-hint
+            *ngIf="error?.email"
+            color="primary"
+        >
+            {{ error.email }}
+        </md-hint>
+    </md-input-container>
+
+    <button
+        *ngIf="emailMapForm.form.dirty"
+        md-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!emailMapForm.form.valid"
+    >
+        Save
+    </button>
+    <button
+        md-button
+        color="primary"
+        (click)="delete()"
+        type="button"
+    >
+        Delete
+    </button>
+</form>

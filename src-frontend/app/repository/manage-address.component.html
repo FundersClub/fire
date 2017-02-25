@@ -1,0 +1,34 @@
+<div>
+    <div>Blah blah lah blah afgsdfg.</div>
+
+    <div
+        *ngIf="!inEditMode"
+        class="EditorWell"
+    >
+        {{ repository.email_slug }}
+
+        <div class="EditorIcon">
+            <div>
+                <button
+                    md-button
+                    color="primary"
+                    (click)="inEditMode = true;"
+                >
+                    Edit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div
+        *ngIf="inEditMode"
+    >
+        <edit-address
+            [repository]="repository"
+            (editCanceled)="inEditMode = false;"
+            (editSaved)="inEditMode = false;"
+        ></edit-address>
+    </div>
+
+
+</div>

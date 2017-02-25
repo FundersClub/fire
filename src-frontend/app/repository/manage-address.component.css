@@ -1,0 +1,18 @@
+.EditorWell {
+    background-color: #f5f5f5;
+    border: 1px solid #eee;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.EditorIcon {
+    align-items: center;
+    display: flex;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+}
