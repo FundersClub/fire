@@ -1,6 +1,6 @@
 import { ApplicationRef, NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpModule, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -26,6 +26,10 @@ import { UserService } from './user.service';
     providers: [
         UserIsAuthedGuard,
         UserService,
+        {
+            provide: XSRFStrategy,
+            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken'),
+        }
     ],
     entryComponents: [
         AppComponent,

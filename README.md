@@ -24,12 +24,12 @@ Otherwise, you'll need to set up the DB manually. This means:
 1. `./manage.py syncdb`
 2. `./manage.py createsuperuser`
 3. Run the dev server (see below)
-4. Go to http://localhost:12000/admin/socialaccount/socialapp/add/ and set up a `github` social app
+4. Go to http://localhost:12001/admin/socialaccount/socialapp/add/ and set up a `github` social app
 
 ### Running the dev servers
 ```
 ./bin/run-dev-server (to run backend at http://localhost:12000/)
-npm start (to run frontend at http://localhost:3000/)
+npm start (to run frontend at http://localhost:12001/)
 ```
 
 ### Running tests

@@ -4,7 +4,7 @@
   "description": "Easily create GitHub issues via email",
   "repository": "https://github.com/FundersClub/firebot/",
   "scripts": {
-    "start": "webpack-dev-server --inline --progress --port 3000",
+    "start": "webpack-dev-server --inline --progress --port 12001",
     "test": "echo karma start",
     "build": "rimraf dist-frontend && webpack --config config-frontend/webpack.prod.js --progress --profile --bail"
   },

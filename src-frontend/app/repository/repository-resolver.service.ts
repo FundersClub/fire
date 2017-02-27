@@ -13,7 +13,7 @@ export class RepositoryResolver implements Resolve<Repository> {
 
     resolve(route: ActivatedRouteSnapshot): Repository {
         // Ensure a repo with the specified info actually exists.
-        const repository = this.respositoryService.get(
+        const repository = this.respositoryService.getByDisplayName(
             route.params['login'],
             route.params['name']
         )

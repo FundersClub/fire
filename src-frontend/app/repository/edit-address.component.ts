@@ -30,7 +30,7 @@ export class EditAddressComponent implements OnInit {
     save() {
         this.errorMessage = '';
         this.repositoryService.updateAddress(this.repository, this.newAddress)
-            .then(() => this.editSaved.emit())
+            .then((updatedRepository) => this.editSaved.emit(updatedRepository))
             .catch((errorMessage: string) => this.errorMessage = errorMessage);
     }
 }

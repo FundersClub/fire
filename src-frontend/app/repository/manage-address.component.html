@@ -5,14 +5,14 @@
         class="EditorWell"
         *ngIf="!inEditMode"
     >
-        {{ repository.email_slug }}
+        {{ repository.email }}
 
         <div class="EditorIcon">
             <div>
                 <button
                     md-button
                     color="primary"
-                    (click)="inEditMode = true;"
+                    (click)="startEditing()"
                 >
                     Edit
                 </button>
@@ -23,8 +23,8 @@
     <div *ngIf="inEditMode">
         <edit-address
             [repository]="repository"
-            (editCanceled)="inEditMode = false;"
-            (editSaved)="inEditMode = false;"
+            (editCanceled)="editCanceled()"
+            (editSaved)="editSaved($event)"
         ></edit-address>
     </div>
 </div>
