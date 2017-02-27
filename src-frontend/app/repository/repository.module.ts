@@ -10,8 +10,8 @@ import { ManageSettingsComponent } from './manage-settings.component';
 import { ManageTeamComponent } from './manage-team.component';
 import { RepositoryComponent } from './repository.component';
 import { RepositoryListComponent } from './repository-list.component';
-import { RepositoryRoutingModule } from './repository-routing.module';
 import { RepositoryResolver } from './repository-resolver.service';
+import { RepositoryRoutingModule } from './repository-routing.module';
 import { RepositoryService } from './repository.service';
 
 @NgModule({

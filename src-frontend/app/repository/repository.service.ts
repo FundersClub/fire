@@ -15,7 +15,9 @@ const ERROR_MESSAGE = {
 export class RepositoryService {
     private repositories: Repository[] = [];
 
-    constructor(private http: Http) {}
+    constructor(
+        private http: Http
+    ) {}
 
     add(repository: Repository) {
         this.repositories.push(repository);

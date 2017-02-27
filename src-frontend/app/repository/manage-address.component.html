@@ -2,8 +2,8 @@
     <div>Blah blah lah blah afgsdfg.</div>
 
     <div
-        *ngIf="!inEditMode"
         class="EditorWell"
+        *ngIf="!inEditMode"
     >
         {{ repository.email_slug }}
 
@@ -20,15 +20,11 @@
         </div>
     </div>
 
-    <div
-        *ngIf="inEditMode"
-    >
+    <div *ngIf="inEditMode">
         <edit-address
             [repository]="repository"
             (editCanceled)="inEditMode = false;"
             (editSaved)="inEditMode = false;"
         ></edit-address>
     </div>
-
-
 </div>

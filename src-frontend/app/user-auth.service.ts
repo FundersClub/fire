@@ -5,7 +5,9 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class UserIsAuthedGuard implements CanActivate {
-    constructor(private userService: UserService) {}
+    constructor(
+        private userService: UserService
+    ) {}
 
     canActivate() {
         return this.userService.isAuthenticated();
