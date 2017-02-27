@@ -9,9 +9,12 @@ from firebot.settings.base import *  # noqa
 ###############################################################################
 
 ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(',')
+CSRF_COOKIE_SECURE = True
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'YES'
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
 
 MEDIAFILES_AWS_STORAGE_BUCKET_NAME = os.environ['MEDIAFILES_AWS_STORAGE_BUCKET_NAME']
 MEDIAFILES_AWS_ACCESS_KEY_ID = os.environ['MEDIAFILES_AWS_ACCESS_KEY_ID']
@@ -106,5 +109,6 @@ BASE_URL = os.environ['FIREBOT_BASE_URL']
 EMAIL_BACKEND = 'sgbackend.SendGridBackend'
 EMAIL_DOMAIN = os.environ['FIREBOT_EMAIL_DOMAIN']
 DEFAULT_FROM_EMAIL = 'bot@' + EMAIL_DOMAIN
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 SENDGRID_WEBHOOK_SECRET = os.environ['SENDGRID_WEBHOOK_SECRET']
