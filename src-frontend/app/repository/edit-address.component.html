@@ -1,9 +1,8 @@
 <form
     (ngSubmit)="save()"
     #addressForm="ngForm"
+    autocomplete="off"
 >
-    <p>blah: {{ newAddress }}</p>
-
     <md-input-container>
         <input
             mdInput
@@ -13,7 +12,7 @@
         >
         <md-hint
             *ngIf="errorMessage"
-            color="primary"
+            [ngStyle]="{'color': 'red'}"
         >
             {{ errorMessage }}
         </md-hint>

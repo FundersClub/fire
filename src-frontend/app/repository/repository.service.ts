@@ -50,11 +50,11 @@ export class RepositoryService {
                     }
                     resolve(repo);
                 })
-                .catch((error: any) => {
-                    if (typeof error == 'object' && error['email_slug'] == 'object') {
-                        reject(error['email_slug'][0])
+                .catch((error) => {
+                    let err = error.json();
+                    if (typeof err == 'object' && typeof err['email_slug'] == 'object') {
+                        reject(err['email_slug'][0])
                     } else {
-
                         reject('Could not update email');
                     }
                 });

@@ -72,7 +72,7 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
 
     def validate_email_slug(self, value):
         if value in settings.FIREBOT_BANNED_EMAIL_SLUGS:
-            raise serializers.ValidationError('"{}" is not permitted.'.format(value))
+            raise serializers.ValidationError('"{}" is not permitted'.format(value))
         return value
 
     def get_urls(self, obj):
