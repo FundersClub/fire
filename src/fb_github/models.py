@@ -93,6 +93,7 @@ class Repository(models.Model):
 
 
 class EmailMap(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
     email = models.EmailField()
     login = models.CharField(max_length=200)
     repo = models.ForeignKey(Repository)
@@ -113,6 +114,7 @@ class EmailMap(models.Model):
 
 class Issue(models.Model):
     body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
     gh_data = JSONField()
     issue_number = models.PositiveIntegerField()
     msg = models.OneToOneField('fb_emails.IncomingMessage')

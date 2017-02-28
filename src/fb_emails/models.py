@@ -54,5 +54,6 @@ def attachment_file_name(instance, filename):
 class Attachment(models.Model):
     content_id = models.CharField(max_length=100)
     content_type = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(max_length=500, upload_to=attachment_file_name)
     msg = models.ForeignKey(IncomingMessage)
