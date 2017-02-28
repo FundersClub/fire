@@ -78,17 +78,17 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
 
         # Changing to a slug that's already in use, empty or banned should fail
         orig_data['email_slug'] = self.repo2.email_slug
-        resp = self.client.put(url, orig_data)
+        resp = self.client.put(url, orig_data, format='json')
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(resp.data, {'email_slug': ['repository with this email slug already exists.']})
 
         orig_data['email_slug'] = ''
-        resp = self.client.put(url, orig_data)
+        resp = self.client.put(url, orig_data, format='json')
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(resp.data, {'email_slug': ['This field may not be blank.']})
 
         orig_data['email_slug'] = 'support'
-        resp = self.client.put(url, orig_data)
+        resp = self.client.put(url, orig_data, format='json')
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(resp.data, {'email_slug': ['"support" is not permitted.']})
 
@@ -205,6 +205,9 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                     'name': self.repo1.name,
                     'status': 'active',
                     'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.id),
+                    'urls': {
+                        'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.id),
+                    },
                 },
             ],
             'username': self.user1.username,
@@ -227,6 +230,10 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                     'name': self.repo2.name,
                     'status': 'active',
                     'url': 'http://testserver/api/github/repository/{}/'.format(self.repo2.id),
+                    'urls': {
+                        'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo2.id),
+                    },
+
                 },
             ],
             'username': self.user2.username,
