@@ -58,17 +58,51 @@ export class RepositoryService {
     }
 
     updateEmailMap({url, repo, login, email}: EmailMap): Promise<any> {
+        const repository = this.getByUrl(repo);
         return new Promise((resolve, reject) => {
             this.http.patch(url, {login, email}).toPromise()
                 .then((response) => {
                     const updatedEM = response.json() as EmailMap;
                     // Update repo entry in list with new map data.
-                    const repository = this.getByUrl(repo);
                     const index = repository.emailmap_set.findIndex((e) => e.url == url);
                     if (index > -1) {
-                        repository[index] = updatedEM;
+                        repository.emailmap_set[index] = updatedEM;
                     }
                     resolve(updatedEM);
+                })
+                .catch((error) => {
+                    reject(error.json());
+                });
+            }
+        );
+    }
+
+    addEmailMap({repo, login, email}: EmailMap): Promise<any> {
+        const repository = this.getByUrl(repo);
+        return new Promise((resolve, reject) => {
+            this.http.post(repository.emailmap_add_url, {login, email, repo}).toPromise()
+                .then((response) => {
+                    const emailMap = response.json() as EmailMap;
+                    repository.emailmap_set.push(emailMap);
+                    resolve(emailMap);
+                })
+                .catch((error) => {
+                    reject(error.json());
+                });
+            }
+        );
+    }
+
+    deleteEmailMap({url, repo}: EmailMap): Promise<any> {
+        const repository = this.getByUrl(repo);
+        return new Promise((resolve, reject) => {
+            this.http.delete(url).toPromise()
+                .then(() => {
+                    const index = repository.emailmap_set.findIndex((e) => e.url == url);
+                    if (index > -1) {
+                        repository.emailmap_set.splice(index, 1);
+                    }
+                    resolve();
                 })
                 .catch((error) => {
                     reject(error.json());

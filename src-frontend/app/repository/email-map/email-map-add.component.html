@@ -1,6 +1,6 @@
 <form
     (ngSubmit)="save()"
-    #emailMapForm="ngForm"
+    #emailMapAddForm="ngForm"
 >
     <md-input-container>
         <input
@@ -8,6 +8,7 @@
             [(ngModel)]="emailMap.login"
             required
             name="login"
+            placeholder="GitHub"
         >
         <div mdPrefix>@</div>
         <md-hint
@@ -16,6 +17,12 @@
         >
             {{ error.login }}
         </md-hint>
+        <md-hint
+            *ngIf="error?.non_field_errors"
+            class="ErrorMessage"
+        >
+            {{ error.non_field_errors }}
+        </md-hint>
     </md-input-container>
     <md-input-container>
         <input
@@ -23,6 +30,7 @@
             [(ngModel)]="emailMap.email"
             required
             name="email"
+            placeholder="Email"
         >
         <md-hint
             *ngIf="error?.email"
@@ -31,29 +39,11 @@
             {{ error.email }}
         </md-hint>
     </md-input-container>
-
-    <span *ngIf="showSave()">
-        <button
-            md-icon-button
-            type="submit"
-            [disabled]="!emailMapForm.form.valid"
-        >
-            <md-icon>check</md-icon>
-        </button>
-        <button
-            md-icon-button
-            (click)="reset()"
-            type="button"
-        >
-            <md-icon>undo</md-icon>
-        </button>
-    </span>
     <button
-        *ngIf="!showSave()"
         md-icon-button
-        (click)="delete()"
-        type="button"
+        type="submit"
+        [disabled]="!emailMapAddForm.form.valid"
     >
-        <md-icon>clear</md-icon>
+        <md-icon>add</md-icon>
     </button>
 </form>

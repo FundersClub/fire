@@ -4,6 +4,7 @@ export class Repository {
     constructor(
         public email: string,
         public email_slug: string,
+        public emailmap_add_url: string,
         public emailmap_set: Array<EmailMap>,
         public full_name: string, // `{login}/{name}`
         public gh_url: string,

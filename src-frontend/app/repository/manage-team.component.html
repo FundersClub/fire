@@ -9,11 +9,13 @@
 
 <ul>
     <li *ngFor="let emailMap of repository.emailmap_set; trackBy: trackByFn">
-        <email-map
+        <email-map-edit
             [emailMap]="emailMap"
-        ></email-map>
+        ></email-map-edit>
     </li>
     <li>
-        Add component for adding things here.
+        <email-map-add
+            [repository]="repository"
+        ></email-map-add>
     </li>
 </ul>

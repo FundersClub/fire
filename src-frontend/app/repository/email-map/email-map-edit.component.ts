@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { EmailMap } from './email-map.model';
 import { RepositoryService } from '../repository.service';
 
 @Component({
-    selector: 'email-map',
-    templateUrl: './email-map.component.html',
+    selector: 'email-map-edit',
+    templateUrl: './email-map-edit.component.html',
 })
-export class EmailMapComponent implements OnInit {
+export class EmailMapEditComponent implements OnInit {
     @Input() emailMap: EmailMap;
     @ViewChild(NgForm) private form: NgForm;
     originalData: EmailMap;
@@ -34,7 +34,7 @@ export class EmailMapComponent implements OnInit {
     }
 
     delete() {
-        console.log('del');
+        this.repositoryService.deleteEmailMap(this.emailMap);
     }
 
     showSave() {

@@ -43,19 +43,23 @@ class EmailMapSerializer(BaseSerializer):
             'repo',
             'url',
         )
-        read_only_fields = (
-            'repo',
-        )
+
+    def update(self, instance, validated_data):
+        # Not allowed to update repo.
+        validated_data.pop('repo', None)
+        return super().update(instance, validated_data)
 
 
 class RepositorySerializer(serializers.HyperlinkedModelSerializer):
     emailmap_set = EmailMapSerializer(many=True, read_only=True)
     urls = serializers.SerializerMethodField()
+    emailmap_add_url = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Repository
         fields = (
             'emailmap_set',
+            'emailmap_add_url',
             'email',
             'email_slug',
             'full_name',
@@ -75,13 +79,16 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
 
     def validate_email_slug(self, value):
         if value in settings.FIREBOT_BANNED_EMAIL_SLUGS:
-            raise serializers.ValidationError('"{}" is not permitted'.format(value))
+            raise serializers.ValidationError('"{}" is not permitted.'.format(value))
         return value
 
     def get_urls(self, obj):
         return {
             'purge_attachments': reverse('repository-purge-attachments', args=[obj.pk], request=self.context['request']),
         }
+
+    def get_emailmap_add_url(self, obj):
+        return reverse('emailmap-list')
 
 
 ################################################################################
