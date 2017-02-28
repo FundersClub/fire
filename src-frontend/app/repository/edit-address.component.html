@@ -1,22 +1,27 @@
 <form
+    class="Form"
     (ngSubmit)="save()"
     #addressForm="ngForm"
     autocomplete="off"
 >
-    <md-input-container>
-        <input
-            mdInput
-            [(ngModel)]="newAddress"
-            required
-            name="newAddress"
-        >
-        <md-hint
-            *ngIf="errorMessage"
-            [ngStyle]="{'color': 'red'}"
-        >
-            {{ errorMessage }}
-        </md-hint>
-    </md-input-container>
+    <div class="Inputs">
+        <md-input-container>
+            <input
+                mdInput
+                [(ngModel)]="newAddress"
+                required
+                name="newAddress"
+            >
+            <md-hint
+                *ngIf="errorMessage"
+                class="ErrorMessage"
+            >
+                {{ errorMessage }}
+            </md-hint>
+        </md-input-container>
+
+        @firebot.fundersclub.com
+    </div>
 
     <button
         md-raised-button

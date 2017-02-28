@@ -4,12 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Repository } from './repository.model';
-
-const ERROR_MESSAGE = {
-    "email_slug": [
-        "This field may not be blank."
-    ]
-}
+import { EmailMap } from './email-map/email-map.model';
 
 @Injectable()
 export class RepositoryService {
@@ -57,6 +52,26 @@ export class RepositoryService {
                     } else {
                         reject('Could not update email');
                     }
+                });
+            }
+        );
+    }
+
+    updateEmailMap({url, repo, login, email}: EmailMap): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.http.patch(url, {login, email}).toPromise()
+                .then((response) => {
+                    const updatedEM = response.json() as EmailMap;
+                    // Update repo entry in list with new map data.
+                    const repository = this.getByUrl(repo);
+                    const index = repository.emailmap_set.findIndex((e) => e.url == url);
+                    if (index > -1) {
+                        repository[index] = updatedEM;
+                    }
+                    resolve(updatedEM);
+                })
+                .catch((error) => {
+                    reject(error.json());
                 });
             }
         );

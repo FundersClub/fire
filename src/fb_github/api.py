@@ -43,6 +43,9 @@ class EmailMapSerializer(BaseSerializer):
             'repo',
             'url',
         )
+        read_only_fields = (
+            'repo',
+        )
 
 
 class RepositorySerializer(serializers.HyperlinkedModelSerializer):
@@ -90,6 +93,7 @@ class EmailMapViewSet(
     RetrieveModelMixin,
     DestroyModelMixin,
     ListModelMixin,
+    UpdateModelMixin,
     GenericViewSet,
 ):
     queryset = models.EmailMap.objects.all()

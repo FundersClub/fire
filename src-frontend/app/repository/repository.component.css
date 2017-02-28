@@ -1,0 +1,19 @@
+// Our Repository-wide defaults.
+:host >>> .Intro {
+    text-align: center;
+}
+
+:host >>> .Intro-title {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+:host >>> .Intro-subtext {
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+:host >>> .ErrorMessage {
+    color: red;
+    white-space: nowrap;
+}

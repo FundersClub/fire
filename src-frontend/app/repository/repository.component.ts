@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Repository } from './repository.model';
 
 @Component({
+    styleUrls: ['./repository.component.css'],
     templateUrl: './repository.component.html',
 })
 export class RepositoryComponent implements OnInit {

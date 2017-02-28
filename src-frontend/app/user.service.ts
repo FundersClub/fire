@@ -38,9 +38,4 @@ export class UserService {
     isAuthenticated(): Promise<boolean> {
         return this.userData.then((user: User) => user.is_authenticated);
     }
-
-    private handleError(error: any): Promise<any> {
-        console.error('Error', error);
-        return Promise.reject(error && (error.message || error) || {});
-    }
 }

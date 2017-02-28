@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { EmailMap } from './email-map/email-map.model';
 import { Repository } from './repository.model';
+import { RepositoryService } from './repository.service';
 
 @Component({
     selector: 'manage-team',
@@ -10,16 +11,22 @@ import { Repository } from './repository.model';
 })
 export class ManageTeamComponent implements OnInit {
     emailMaps: EmailMap[];
-    repositoryUrl: string;
+    repository: Repository;
 
     constructor(
         private route: ActivatedRoute,
+        private respositoryService: RepositoryService,
     ) {}
 
     ngOnInit() {
-        this.route.data.subscribe((data: { repository: Repository }) => {
-            this.emailMaps = data.repository.emailmap_set;
-            this.repositoryUrl = data.repository.url;
-        });
+        // Always pull a fresh copy of the repo when creating the view. The
+        // cached copy in the route's data may be outdatted.
+        let data = this.route.snapshot.data as { repository: Repository };
+        this.repository = this.respositoryService.getByUrl(data.repository.url);
     }
+
+    trackByFn(index: number, emailMap: EmailMap) {
+        return emailMap.url;
+    }
+
 }

@@ -12,7 +12,7 @@
         <div mdPrefix>@</div>
         <md-hint
             *ngIf="error?.login"
-            color="primary"
+            class="ErrorMessage"
         >
             {{ error.login }}
         </md-hint>
@@ -26,27 +26,34 @@
         >
         <md-hint
             *ngIf="error?.email"
-            color="primary"
+            class="ErrorMessage"
         >
             {{ error.email }}
         </md-hint>
     </md-input-container>
 
+    <span *ngIf="showSave()">
+        <button
+            md-icon-button
+            type="submit"
+            [disabled]="!emailMapForm.form.valid"
+        >
+            <md-icon>check</md-icon>
+        </button>
+        <button
+            md-icon-button
+            (click)="reset()"
+            type="button"
+        >
+            <md-icon>undo</md-icon>
+        </button>
+    </span>
     <button
-        *ngIf="emailMapForm.form.dirty"
-        md-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="!emailMapForm.form.valid"
-    >
-        Save
-    </button>
-    <button
-        md-button
-        color="primary"
+        *ngIf="!showSave()"
+        md-icon-button
         (click)="delete()"
         type="button"
     >
-        Delete
+        <md-icon>clear</md-icon>
     </button>
 </form>
