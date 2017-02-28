@@ -30,6 +30,8 @@ from firebot.api import BaseSerializer
 ################################################################################
 
 class EmailMapSerializer(BaseSerializer):
+    login = serializers.SlugField()
+
     class Meta:
         model = models.EmailMap
         fields = (
