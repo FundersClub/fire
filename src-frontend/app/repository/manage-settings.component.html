@@ -1,1 +1,17 @@
-<div>settings</div>
+<div class="Intro">
+    <div class="Intro-title">
+        Purge attachment data?
+    </div>
+    <div class="Intro-subtext">
+        GitHub Issues only support <a href="https://help.github.com/articles/file-attachments-on-issues-and-pull-requests/" target="_blank">certain file types as attachments</a>. In order to support all file types, firebot hosts attachments you send it. You may delete these stored attachment at any time, but doing so will break all download links in existing Issues.
+    </div>
+
+    <button
+        md-raised-button
+        color="primary"
+        type="button"
+        (click)="purge()"
+    >
+        Delete all attachment data
+    </button>
+</div>

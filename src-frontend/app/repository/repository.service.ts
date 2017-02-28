@@ -110,4 +110,8 @@ export class RepositoryService {
             }
         );
     }
+
+    purgeAttachmentData(repository: Repository) {
+        console.log('purged?', repository);
+    }
 }

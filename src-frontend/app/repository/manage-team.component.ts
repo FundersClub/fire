@@ -28,5 +28,4 @@ export class ManageTeamComponent implements OnInit {
     trackByFn(index: number, emailMap: EmailMap) {
         return emailMap.url;
     }
-
 }
