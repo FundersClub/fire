@@ -1,12 +1,41 @@
 .AppHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    align-items: center;
+}
+
+.Logo {
+    display: flex;
+    align-items: center;
+}
+
+.Logo-text {
+    margin-left: 10px;
+    font-size: 24px;
+    color: #fff;
+}
+
+.UserLinks > div {
+    display: flex;
+}
+
+.UserLinks a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.UserLinks a:hover {
+    text-decoration: underline;
+}
+
+.Username {
+    font-weight: 300;
+    margin-right: 15px;
 }
 
 .AppContent {
     margin: 0 auto;
     padding: 20px 40px 40px 40px;
     width: 720px;
-}
-
-.AppContent-repoName {
-    font-size: 20px;
 }

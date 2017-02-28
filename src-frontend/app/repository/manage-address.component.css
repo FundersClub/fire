@@ -10,6 +10,8 @@
 .EditorIcon {
     align-items: center;
     display: flex;
+    /* Need this overflow protection cause of a bug in md-icon. */
+    overflow: hidden;
     position: absolute;
     right: 10px;
     top: 0;

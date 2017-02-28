@@ -1,3 +1,19 @@
+.RepositoryInfo {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.RepositoryInfo-name {
+    font-weight: 500;
+}
+
+.RepositoryData {
+    padding: 50px 60px;
+}
+
 /* Our Repository-wide defaults. */
 :host >>> .Intro {
     text-align: center;

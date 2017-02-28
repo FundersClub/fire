@@ -1,11 +1,35 @@
 <header class="AppHeader">
-    <img
-        alt="Firebot logo"
-        height="100"
-        width="100"
-        src="../static/images/firebot-logo.png"
-    >
-    firebot
+    <div class="Logo">
+        <img
+            class="Logo-image"
+            alt="Firebot logo"
+            height="50"
+            width="50"
+            src="../static/images/firebot-logo.png"
+        >
+        <span class="Logo-text">firebot</span>
+    </div>
+
+    <div class="UserLinks">
+        <div *ngIf="user?.is_authenticated && user.username">
+            <a
+                class="Username"
+                routerLink="/repos"
+            >
+                @{{ user.username }}
+            </a>
+            <a
+                href="{{ user.urls.logout }}"
+            >
+                Logout
+            </a>
+        </div>
+        <div *ngIf="!user?.is_authenticated">
+            <a>
+                Login with GitHub
+            </a>
+        </div>
+    </div>
 </header>
 
 <div class="AppContent">

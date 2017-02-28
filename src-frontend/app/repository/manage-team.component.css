@@ -1,0 +1,26 @@
+.TeamMembers {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.TeamMembers >>> form {
+    display: flex;
+    align-items: baseline;
+}
+
+.TeamMembers >>> .LoginField {
+    flex: 0 0 40%;
+}
+
+.TeamMembers >>> .EmailField {
+    /* Leave room for Actions and margins. */
+    flex: 0 0 calc(60% - 20px - 10px - 40px);
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.TeamMembers >>> .Actions {
+    flex: 0 0 40px;
+    white-space: nowrap;
+}

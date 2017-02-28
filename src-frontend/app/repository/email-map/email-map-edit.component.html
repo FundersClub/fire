@@ -2,7 +2,7 @@
     (ngSubmit)="save()"
     #emailMapEditForm="ngForm"
 >
-    <md-input-container>
+    <md-input-container class="LoginField">
         <input
             mdInput
             [(ngModel)]="emailMap.login"
@@ -23,7 +23,7 @@
             {{ error.non_field_errors }}
         </md-hint>
     </md-input-container>
-    <md-input-container>
+    <md-input-container class="EmailField">
         <input
             mdInput
             [(ngModel)]="emailMap.email"
@@ -38,28 +38,36 @@
         </md-hint>
     </md-input-container>
 
-    <span *ngIf="showSave()">
-        <button
-            md-icon-button
-            type="submit"
-            [disabled]="!emailMapEditForm.form.valid"
-        >
-            <md-icon>check</md-icon>
-        </button>
-        <button
-            md-icon-button
-            (click)="reset()"
-            type="button"
-        >
-            <md-icon>undo</md-icon>
-        </button>
-    </span>
-    <button
-        *ngIf="!showSave()"
-        md-icon-button
-        (click)="delete()"
-        type="button"
-    >
-        <md-icon>clear</md-icon>
-    </button>
+    <div class="Actions">
+        <span *ngIf="showSave()">
+            <span mdTooltip="Save changes" mdTooltipPosition="above">
+                <button
+                    md-icon-button
+                    type="submit"
+                    [disabled]="!emailMapEditForm.form.valid"
+                >
+                    <md-icon>check</md-icon>
+                </button>
+            </span>
+            <span mdTooltip="Undo changes" mdTooltipPosition="above">
+                <button
+                    md-icon-button
+                    (click)="reset()"
+                    type="button"
+                >
+                    <md-icon>undo</md-icon>
+                </button>
+            </span>
+        </span>
+        <span mdTooltip="Delete this entry" mdTooltipPosition="above">
+            <button
+                *ngIf="!showSave()"
+                md-icon-button
+                (click)="delete()"
+                type="button"
+            >
+                <md-icon>clear</md-icon>
+            </button>
+        </span>
+    </div>
 </form>

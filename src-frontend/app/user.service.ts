@@ -9,7 +9,7 @@ import { RepositoryService } from './repository/repository.service';
 @Injectable()
 export class UserService {
     private getUserDataUrl = '/api/github/me/';
-    private userData: Promise<User>;
+    userData: Promise<User>;
 
     constructor(
         private http: Http,

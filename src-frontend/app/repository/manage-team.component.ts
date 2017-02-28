@@ -7,6 +7,7 @@ import { RepositoryService } from './repository.service';
 
 @Component({
     selector: 'manage-team',
+    styleUrls: ['./manage-team.component.css'],
     templateUrl: './manage-team.component.html',
 })
 export class ManageTeamComponent implements OnInit {
