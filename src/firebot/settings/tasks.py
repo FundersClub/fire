@@ -16,7 +16,7 @@ CELERY_BEAT_SCHEDULE = {
     ###########################################################################
     'Look for pending repository invitations': {
         'task': 'fb_github.tasks.poll_invitations',
-        'schedule': timedelta(seconds=5),
+        'schedule': timedelta(seconds=30),
     },
 
 }
