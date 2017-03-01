@@ -34,10 +34,10 @@
             {% endif %}
         {% else %}
             <p class="card-text">
-                Hello there! {{ view.repo.inviter_login|github_profile }} recently added Firebot to <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a>. To complete Firebot setup, @{{ view.repo.inviter_login }} needs visit this page and login via Github.
+                {{ view.repo.inviter_login|github_profile }} recently added Firebot to <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a>.
             </p>
             <p class="card-text">
-                Are you @{{ view.repo.inviter_login }}? If so, please login below. Otherwise, please ask @{{ view.repo.inviter_login }} to view this page.
+                Are you @{{ view.repo.inviter_login }}? If so, please login below to complete setup. Otherwise, please ask @{{ view.repo.inviter_login }} to view this page.
             </p>
             <a
                 class="btn btn-primary"

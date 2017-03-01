@@ -4,4 +4,4 @@ Greetings, <a href="https://firebot.fundersclub.com/">Firebot</a> here!
 
 **[Complete Firebot setup now]({{ settings.BASE_URL }}{% url 'fb_github:inviter-approval' repo.login repo.name %})**
 
-Only @{{ repo.inviter_login }} will be able to enable Firebot using the above link. If Firebot was added in error or you would no longer like to use Firebot, feel free to remove the `fire-bot` collaborator from your repository and I won't bother you again!
+Only @{{ repo.inviter_login }} will be able to enable Firebot using the above link. If Firebot was added in error or you would no longer like to use Firebot, feel free to remove the `fire-bot` collaborator from your repository and you won't be bothered again!
