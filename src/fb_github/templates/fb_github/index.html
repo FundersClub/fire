@@ -4,23 +4,35 @@
 {% block title %}Manage {{ view.repo.full_name }}{% endblock %}
 
 {% block body %}
-    <h1>Manage {{ view.repo.full_name }}</h1>
-    Fire e-mail: <a href="mailto:{{ view.repo.email }}">{{ view.repo.email }}</a>
-    <br/>
-    <table>
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>GitHub Username</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in view.repo.emailmap_set.all %}
-                <tr>
-                    <td>{{ entry.email }}</td>
-                    <td>{{ entry.login }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="card-block">
+        <h4 class="card-title">
+            Manage {{ view.repo.full_name }}
+        </h4>
+        <p class="card-text">
+            Fire e-mail: <a href="mailto:{{ view.repo.email }}">{{ view.repo.email }}</a>
+        </p>
+        <div class="card-text">
+            <table class="table table-sm">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Email</th>
+                        <th>GitHub Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in view.repo.emailmap_set.all %}
+                        <tr>
+                            <td>{{ entry.email }}</td>
+                            <td>{{ entry.login }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">
+                                <em>No users have been added.</em>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 {% endblock %}

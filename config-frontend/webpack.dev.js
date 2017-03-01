@@ -21,7 +21,7 @@ module.exports = webpackMerge(commonConfig, {
     historyApiFallback: true,
     stats: 'minimal',
     proxy: {
-      '/{github,api,admin,static,media}/**': {
+      '/{accounts,github,api,admin,static,media}/**': {
         target: 'http://localhost:12000',
         secure: false
       }

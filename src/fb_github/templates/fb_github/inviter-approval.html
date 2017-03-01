@@ -4,23 +4,47 @@
 {% block title %}Approve FireBot{% endblock %}
 
 {% block body %}
-    <h1>{{ view.repo.full_name }}</h1>
-    {% if request.user.is_authenticated %}
-        {% if request.user.username == view.repo.inviter_login %}
-            Hello, {{ request.user.username }}!<br/>
-            <form method="post" action="">
-                {% csrf_token %}
-                <button type="submit">Approve FireBot to join {{ view.repo.full_name }}</button>
-            </form>
+    <div class="card-block">
+        <h4 class="card-title">
+            Approve Firebot
+        </h4>
+        {% if request.user.is_authenticated %}
+            {% if request.user.username == view.repo.inviter_login %}
+                <p class="card-text">
+                    Hello, {{ request.user.username|github_profile }}! You're one step away from enabling Firebot on <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a>.
+                </p>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Approve FireBot
+                    </button>
+                </form>
+            {% else %}
+                <p class="card-text">
+                    Hello, {{ request.user.username|github_profile }}! Someone else ({{ view.repo.inviter_login|github_profile }}) added Firebot to <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a>. Please have them visit this page to complete Firebot setup.
+                </p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        You may <a href="{% url 'account_logout' %}?next={{ request.get_full_path }}">log out of Firebot</a> if needed.
+                    </small>
+                </p>
+            {% endif %}
         {% else %}
-            Hey, you are logged in as {{ request.user.username|github_profile }} but only {{ view.repo.inviter_login|github_profile }} can approve this invite :(<br/>
-            <form method="post" action="{% url 'account_logout' %}?next={{ request.get_full_path }}">
-                {% csrf_token %}
-                <button type="submit">Sign out and try again</button>
-            </form>
+            <p class="card-text">
+                Hello there! {{ view.repo.inviter_login|github_profile }} recently added Firebot to <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a>. To complete Firebot setup, @{{ view.repo.inviter_login }} needs visit this page and login via Github.
+            </p>
+            <p class="card-text">
+                Are you @{{ view.repo.inviter_login }}? If so, please login below. Otherwise, please ask @{{ view.repo.inviter_login }} to view this page.
+            </p>
+            <a
+                class="btn btn-primary"
+                href="{% provider_login_url 'github' process='login' next=request.get_full_path %}"
+            >
+                Login with GitHub
+            </a>
         {% endif %}
-    {% else %}
-        {{ view.repo.inviter_login|github_profile }} has invited me to play in <a href="{{ view.repo.gh_url }}">{{ view.repo.full_name }}</a>.<br/>
-        If you are {{ view.repo.inviter_login|github_profile }}, please click <a href="{% provider_login_url 'github' process='login' next=request.get_full_path %}">here</a> to continue. If not, please have them view this page :)<br/>
-    {% endif %}
+    </div>
 {% endblock %}
