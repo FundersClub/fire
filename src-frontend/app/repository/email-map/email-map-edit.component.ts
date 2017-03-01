@@ -25,7 +25,10 @@ export class EmailMapEditComponent implements OnInit {
     save() {
         this.error = {};
         this.repositoryService.updateEmailMap(this.emailMap)
-            .then((updatedEM) => this.form.resetForm(updatedEM))
+            .then((updatedEM) => {
+                this.originalData = Object.assign({}, updatedEM);
+                this.form.resetForm(updatedEM);
+            })
             .catch((error: any) => this.error = error);
     }
 

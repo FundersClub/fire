@@ -22,5 +22,4 @@ export class AppComponent implements OnInit {
             this.user = user;
         });
     }
-
 }
