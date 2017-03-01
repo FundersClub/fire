@@ -73,6 +73,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
 
         self.assertEqual(resp.data['email_slug'], 'lol')
 
+        resp.data['email'] = orig_data['email']
         resp.data['email_slug'] = orig_data['email_slug']
         self.assertEqual(resp.data, orig_data)
 
@@ -200,12 +201,16 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                             'url': 'http://testserver/api/github/email-map/{}/'.format(self.repo1.emailmap_set.get().id),
                         },
                     ],
+                    'email': self.repo1.email,
                     'email_slug': self.repo1.email_slug,
+                    'full_name': self.repo1.full_name,
                     'login': self.repo1.login,
                     'name': self.repo1.name,
                     'status': 'active',
                     'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.id),
                     'urls': {
+                        'github': self.repo1.gh_url,
+                        'emailmap_add': 'http://testserver/api/github/email-map/',
                         'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.id),
                     },
                 },
@@ -225,12 +230,16 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
             'repositories': [
                 {
                     'emailmap_set': [],
+                    'email': self.repo2.email,
                     'email_slug': self.repo2.email_slug,
+                    'full_name': self.repo2.full_name,
                     'login': self.repo2.login,
                     'name': self.repo2.name,
                     'status': 'active',
                     'url': 'http://testserver/api/github/repository/{}/'.format(self.repo2.id),
                     'urls': {
+                        'github': self.repo2.gh_url,
+                        'emailmap_add': 'http://testserver/api/github/email-map/',
                         'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo2.id),
                     },
 

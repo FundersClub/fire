@@ -82,7 +82,7 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
     def get_urls(self, obj):
         return {
             'github': obj.gh_url,
-            'emailmap_add': reverse('emailmap-list'),
+            'emailmap_add': reverse('emailmap-list', request=self.context['request']),
             'purge_attachments': reverse('repository-purge-attachments', args=[obj.pk], request=self.context['request']),
         }
 
