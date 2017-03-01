@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { EmailMap } from './email-map/email-map.model';
-import { Repository } from './repository.model';
-import { RepositoryService } from './repository.service';
+import { Repository } from '../repository.model';
+import { RepositoryService } from '../repository.service';
 
 @Component({
-    selector: 'manage-team',
-    styleUrls: ['./manage-team.component.scss'],
-    templateUrl: './manage-team.component.html',
+    templateUrl: './manage-address.component.html',
+    styleUrls: ['./manage-address.component.scss']
 })
-export class ManageTeamComponent implements OnInit {
-    emailMaps: EmailMap[];
+export class ManageAddressComponent implements OnInit {
     repository: Repository;
+    inEditMode: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -26,7 +24,16 @@ export class ManageTeamComponent implements OnInit {
         this.repository = this.respositoryService.getByUrl(data.repository.url);
     }
 
-    trackByFn(index: number, emailMap: EmailMap) {
-        return emailMap.url;
+    startEditing() {
+        this.inEditMode = true;
+    }
+
+    editCanceled() {
+        this.inEditMode = false;
+    }
+
+    editSaved(updatedRepository: Repository) {
+        this.repository = updatedRepository;
+        this.inEditMode = false;
     }
 }

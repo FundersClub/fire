@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Repository } from './repository.model';
-import { RepositoryService } from './repository.service';
+import { Repository } from '../repository.model';
+import { RepositoryService } from '../repository.service';
 
 @Component({
-    templateUrl: './manage-address.component.html',
-    styleUrls: ['./manage-address.component.scss']
+    selector: 'manage-settings',
+    templateUrl: './manage-settings.component.html',
 })
-export class ManageAddressComponent implements OnInit {
+export class ManageSettingsComponent {
     repository: Repository;
-    inEditMode: boolean = false;
+    dataDeleted = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,16 +24,8 @@ export class ManageAddressComponent implements OnInit {
         this.repository = this.respositoryService.getByUrl(data.repository.url);
     }
 
-    startEditing() {
-        this.inEditMode = true;
-    }
-
-    editCanceled() {
-        this.inEditMode = false;
-    }
-
-    editSaved(updatedRepository: Repository) {
-        this.repository = updatedRepository;
-        this.inEditMode = false;
+    purge() {
+        this.respositoryService.purgeAttachmentData(this.repository)
+            .then(() => this.dataDeleted = true);
     }
 }

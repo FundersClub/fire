@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Repository } from './repository.model';
-import { RepositoryService } from './repository.service';
+import { EmailMap } from '../email-map/email-map.model';
+import { Repository } from '../repository.model';
+import { RepositoryService } from '../repository.service';
 
 @Component({
-    selector: 'manage-settings',
-    templateUrl: './manage-settings.component.html',
+    selector: 'manage-team',
+    styleUrls: ['./manage-team.component.scss'],
+    templateUrl: './manage-team.component.html',
 })
-export class ManageSettingsComponent {
+export class ManageTeamComponent implements OnInit {
+    emailMaps: EmailMap[];
     repository: Repository;
-    dataDeleted = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,8 +26,7 @@ export class ManageSettingsComponent {
         this.repository = this.respositoryService.getByUrl(data.repository.url);
     }
 
-    purge() {
-        this.respositoryService.purgeAttachmentData(this.repository)
-            .then(() => this.dataDeleted = true);
+    trackByFn(index: number, emailMap: EmailMap) {
+        return emailMap.url;
     }
 }

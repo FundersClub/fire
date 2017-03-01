@@ -1,9 +1,9 @@
 import { NgModule }              from '@angular/core';
 import { RouterModule, Routes }  from '@angular/router';
 
-import { ManageAddressComponent } from './manage-address.component';
-import { ManageSettingsComponent } from './manage-settings.component';
-import { ManageTeamComponent } from './manage-team.component';
+import { ManageAddressComponent } from './management/manage-address.component';
+import { ManageSettingsComponent } from './management/manage-settings.component';
+import { ManageTeamComponent } from './management/manage-team.component';
 import { RepositoryComponent } from './repository.component';
 import { RepositoryListComponent } from './repository-list.component';
 import { RepositoryResolver } from './repository-resolver.service';
