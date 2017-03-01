@@ -1,0 +1,21 @@
+<div class="Intro">
+    <div class="Intro-title">
+        Add your team to receive issue updates
+    </div>
+    <div class="Intro-subtext">
+        Link your team's GitHub handles to their emails in order to tag them as Issues are created.
+    </div>
+</div>
+
+<ul class="TeamMembers">
+    <li *ngFor="let emailMap of repository.emailmap_set; trackBy: trackByFn">
+        <email-map-edit
+            [emailMap]="emailMap"
+        ></email-map-edit>
+    </li>
+    <li>
+        <email-map-add
+            [repository]="repository"
+        ></email-map-add>
+    </li>
+</ul>

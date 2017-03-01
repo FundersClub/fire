@@ -1,33 +1,35 @@
 import { ApplicationRef, NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
 import { BrowserModule }  from '@angular/platform-browser';
-import { RouterModule }   from '@angular/router';
+import { HttpModule, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
+import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { ManageAddressComponent } from './manage-address.component';
-import { ManageSettingsComponent } from './manage-settings.component';
-import { ManageTeamComponent } from './manage-team.component';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './not-found.component';
+import { RepositoryModule } from './repository/repository.module';
+import { UserIsAuthedGuard } from './user-auth.service';
+import { UserService } from './user.service';
 
 @NgModule({
     imports: [
         BrowserModule,
+        HttpModule,
         MaterialModule,
-        RouterModule.forRoot([{
-            path: '',
-            component: ManageAddressComponent,
-        }, {
-            path: 'team',
-            component: ManageTeamComponent,
-        }, {
-            path: 'settings',
-            component: ManageSettingsComponent,
-        }]),
+        // Order of the following modules is important.
+        RepositoryModule,
+        AppRoutingModule,
     ],
     declarations: [
         AppComponent,
-        ManageAddressComponent,
-        ManageSettingsComponent,
-        ManageTeamComponent,
+        PageNotFoundComponent,
+    ],
+    providers: [
+        UserIsAuthedGuard,
+        UserService,
+        {
+            provide: XSRFStrategy,
+            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken'),
+        }
     ],
     entryComponents: [
         AppComponent,

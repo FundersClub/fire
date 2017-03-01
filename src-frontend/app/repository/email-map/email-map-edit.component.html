@@ -1,0 +1,91 @@
+<form
+    (ngSubmit)="save()"
+    #emailMapEditForm="ngForm"
+>
+    <md-input-container class="LoginField">
+        <input
+            mdInput
+            [(ngModel)]="emailMap.login"
+            required
+            name="login"
+        >
+        <div mdPrefix>@</div>
+        <md-hint
+            *ngIf="error?.login"
+            class="ErrorMessage"
+        >
+            {{ error.login }}
+        </md-hint>
+        <md-hint
+            *ngIf="error?.non_field_errors"
+            class="ErrorMessage"
+        >
+            {{ error.non_field_errors }}
+        </md-hint>
+    </md-input-container>
+    <md-input-container
+        class="EmailField"
+        [ngClass]="{'EmailField--shrunk': showSave()}"
+    >
+        <input
+            mdInput
+            [(ngModel)]="emailMap.email"
+            required
+            name="email"
+        >
+        <md-hint
+            *ngIf="error?.email"
+            class="ErrorMessage"
+        >
+            {{ error.email }}
+        </md-hint>
+    </md-input-container>
+
+    <div
+        class="Actions"
+        [ngClass]="{'Actions--expanded': showSave()}"
+    >
+        <span *ngIf="showSave()">
+            <span
+                class="Actions-save"
+                mdTooltip="Save changes"
+                mdTooltipPosition="above"
+            >
+                <button
+                    md-icon-button
+                    type="submit"
+                    [disabled]="!emailMapEditForm.form.valid"
+                >
+                    <md-icon>check</md-icon>
+                </button>
+            </span>
+            <span
+                class="Actions-undo"
+                mdTooltip="Undo changes"
+                mdTooltipPosition="above"
+            >
+                <button
+                    md-icon-button
+                    (click)="reset()"
+                    type="button"
+                >
+                    <md-icon>undo</md-icon>
+                </button>
+            </span>
+        </span>
+        <span
+            class="Actions-delete"
+            mdTooltip="Delete this entry"
+            mdTooltipPosition="above"
+        >
+            <button
+                *ngIf="!showSave()"
+                md-icon-button
+                (click)="delete()"
+                type="button"
+            >
+                <md-icon>clear</md-icon>
+            </button>
+        </span>
+    </div>
+</form>

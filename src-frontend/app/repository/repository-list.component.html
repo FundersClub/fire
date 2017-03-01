@@ -1,0 +1,21 @@
+<div class="Title">Choose a Repository</div>
+<md-card
+    *ngFor="let repo of repositoryService.all()"
+    class="Repository"
+>
+    <a
+        [routerLink]="[repo.full_name]"
+        class="Repository-link"
+    >
+        <span class="Repository-login">{{ repo.login }}/</span><span class="Repository-name">{{ repo.name }}</span>
+    </a>
+
+    <a
+        [routerLink]="[repo.full_name]"
+        md-raised-button
+        color="primary"
+    >
+        Continue
+    </a>
+</md-card>
+<router-outlet></router-outlet>

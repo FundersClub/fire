@@ -1,0 +1,33 @@
+<div class="Intro">
+    <div class="Intro-title">
+        Send an email, create an issue
+    </div>
+    <div class="Intro-subtext">
+        Tell your team to email the address below to create an issue on GitHub.
+    </div>
+</div>
+<div
+    class="EditorWell"
+    *ngIf="!inEditMode"
+>
+    {{ repository.email }}
+
+    <div class="EditorIcon">
+        <div>
+            <button
+                md-icon-button
+                (click)="startEditing()"
+                type="button"
+            >
+                <md-icon>edit mode</md-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="inEditMode">
+    <edit-address
+        [repository]="repository"
+        (editCanceled)="editCanceled()"
+        (editSaved)="editSaved($event)"
+    ></edit-address>
+</div>

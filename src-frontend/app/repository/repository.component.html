@@ -1,0 +1,37 @@
+<div class="RepositoryInfo">
+    {{ repo.login }}/<span class="RepositoryInfo-name">{{ repo.name }}</span>
+</div>
+
+<nav md-tab-nav-bar>
+    <a
+        md-tab-link
+        routerLink="./"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        #rlaSend="routerLinkActive"
+        [active]="rlaSend.isActive"
+    >
+        Send
+    </a>
+    <a
+        md-tab-link
+        routerLink="./team"
+        routerLinkActive="active"
+        #rlaTeam="routerLinkActive"
+        [active]="rlaTeam.isActive"
+    >
+        Team
+    </a>
+    <a
+        md-tab-link
+        routerLink="./settings"
+        routerLinkActive="active"
+        #rlaSettings="routerLinkActive"
+        [active]="rlaSettings.isActive"
+    >
+        Settings
+    </a>
+</nav>
+<md-card class="RepositoryData">
+    <router-outlet></router-outlet>
+</md-card>

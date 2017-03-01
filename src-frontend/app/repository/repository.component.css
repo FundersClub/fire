@@ -1,0 +1,86 @@
+.RepositoryInfo {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.RepositoryInfo-name {
+    font-weight: 500;
+}
+
+.RepositoryData {
+    padding: 50px 60px;
+}
+
+/* Our Repository-wide defaults. */
+:host >>> .Intro {
+    text-align: center;
+}
+
+:host >>> .Intro-title {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+:host >>> .Intro-subtext {
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+:host >>> .ErrorMessage {
+    color: red;
+    white-space: nowrap;
+}
+
+/* Make tab bar centered, white. */
+.mat-tab-nav-bar {
+    border-bottom: 0px;
+}
+
+:host >>> .mat-tab-links {
+    color: red;
+    justify-content: center;
+}
+
+.mat-tab-link {
+    color: #fff;
+    font-weight: 400;
+    height: 55px;
+    min-width: 100px;
+}
+
+.mat-tab-link.active {
+    opacity: 1;
+}
+
+/* Add white triange over ink bar that slides in on load. */
+@keyframes slideIn {
+    from {
+        transform: translateY(13px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+:host >>> .mat-ink-bar {
+    animation: slideIn .2s .3s linear both;
+    background-color: transparent;
+}
+
+:host >>> md-ink-bar.mat-ink-bar:after {
+    content: '';
+    bottom: -1px;
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #fff;
+    transform: translateX(-12px);
+    z-index: 1;
+}

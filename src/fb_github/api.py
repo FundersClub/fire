@@ -44,6 +44,11 @@ class EmailMapSerializer(BaseSerializer):
             'url',
         )
 
+    def update(self, instance, validated_data):
+        # Not allowed to update repo.
+        validated_data.pop('repo', None)
+        return super().update(instance, validated_data)
+
 
 class RepositorySerializer(serializers.HyperlinkedModelSerializer):
     emailmap_set = EmailMapSerializer(many=True, read_only=True)
@@ -53,7 +58,9 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
         model = models.Repository
         fields = (
             'emailmap_set',
+            'email',
             'email_slug',
+            'full_name',
             'login',
             'name',
             'status',
@@ -74,6 +81,8 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
 
     def get_urls(self, obj):
         return {
+            'github': obj.gh_url,
+            'emailmap_add': reverse('emailmap-list', request=self.context['request']),
             'purge_attachments': reverse('repository-purge-attachments', args=[obj.pk], request=self.context['request']),
         }
 
@@ -87,6 +96,7 @@ class EmailMapViewSet(
     RetrieveModelMixin,
     DestroyModelMixin,
     ListModelMixin,
+    UpdateModelMixin,
     GenericViewSet,
 ):
     queryset = models.EmailMap.objects.all()

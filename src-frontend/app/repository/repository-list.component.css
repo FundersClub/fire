@@ -1,0 +1,31 @@
+.Title {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.Repository {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.Repository + .Repository {
+    margin-top: 30px;
+}
+
+.Repository-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.Repository-login {
+    font-weight: 300;
+}
+
+.Repository-name {
+    font-weight: 500;
+}

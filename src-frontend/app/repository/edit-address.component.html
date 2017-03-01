@@ -1,0 +1,42 @@
+<form
+    class="Form"
+    (ngSubmit)="save()"
+    #addressForm="ngForm"
+    autocomplete="off"
+>
+    <div class="Inputs">
+        <md-input-container>
+            <input
+                mdInput
+                [(ngModel)]="newAddress"
+                required
+                name="newAddress"
+            >
+            <md-hint
+                *ngIf="errorMessage"
+                class="ErrorMessage"
+            >
+                {{ errorMessage }}
+            </md-hint>
+        </md-input-container>
+
+        @firebot.fundersclub.com
+    </div>
+
+    <button
+        md-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!addressForm.form.valid"
+    >
+        Save
+    </button>
+    <button
+        md-button
+        color="primary"
+        (click)="cancel()"
+        type="button"
+    >
+        Cancel
+    </button>
+</form>
