@@ -1,8 +1,52 @@
 /* Home for global CSS (e.g. resets, normalizations). Not scoped. */
-/* @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css'; */
+/* Having this outside of Angular means it loads before JS is initialized. That's important. */
 
 body {
     background: #fff;
+    font-family: "futura-pt";
+    font-weight: 400;
+}
+
+/* Hack a bunch of material design overrides */
+.mat-card,
+.mat-tab-link,
+.mat-input-container,
+.mat-input-element,
+.mat-button,
+.mat-fab,
+.mat-mini-fab,
+.mat-raised-button {
+    font-family: "futura-pt" !important;
+}
+
+.mat-input-container,
+.mat-input-element {
+    font-size: 18px !important;
+}
+
+.mat-button,
+.mat-fab,
+.mat-mini-fab,
+.mat-raised-button {
+    font-size: 16px !important;
+}
+
+.GlobalHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    align-items: center;
+}
+
+.GlobalLogo {
+    display: flex;
+    align-items: center;
+}
+
+.GlobalLogo-text {
+    margin-left: 10px;
+    font-size: 34px;
+    color: #fff;
 }
 
 .GlobalMain {
@@ -20,8 +64,8 @@ body {
 }
 
 .GlobalFooter-link {
-    color: #aaaaaa;
-    font-size: 12px;
+    color: #aaa;
+    font-size: 16px;
     text-decoration: none;
 }
 
@@ -32,4 +76,15 @@ body {
 .GlobalFooter-logo {
     height: 40px;
     width: 40px;
+}
+
+/* Convenient to dump this here. */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

@@ -7,7 +7,7 @@
 }
 
 .RepositoryInfo-name {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .RepositoryData {
@@ -21,13 +21,13 @@
     }
 
     .Intro-title {
-        font-size: 24px;
+        font-size: 28px;
         margin-bottom: 16px;
     }
 
     .Intro-subtext {
-        font-size: 12px;
-        margin-bottom: 30px;
+        font-size: 16px;
+        margin-bottom: 40px;
     }
 
     .ErrorMessage {
@@ -78,7 +78,8 @@
 
 .mat-tab-link {
     color: #fff;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 300;
     height: 55px;
     min-width: 100px;
 }

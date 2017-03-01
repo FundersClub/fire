@@ -1,39 +1,26 @@
 .AppHeader {
-    display: flex;
-    justify-content: space-between;
-    padding: 30px;
-    align-items: center;
-}
+    .UserLinks {
+        animation: fadeIn .1s 1s linear both;
+        font-size: 18px;
 
-.Logo {
-    display: flex;
-    align-items: center;
-}
+        > div {
+            display: flex;
+        }
 
-.Logo-text {
-    margin-left: 10px;
-    font-size: 24px;
-    color: #fff;
-}
+        a {
+            text-decoration: none;
+            color: #fff;
 
-.UserLinks {
-    > div {
-        display: flex;
-    }
-
-    a {
-        text-decoration: none;
-        color: #fff;
-
-        &:hover {
-            text-decoration: underline;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
-}
 
-.Username {
-    font-weight: 300;
-    margin-right: 15px;
+    .Username {
+        font-weight: 300;
+        margin-right: 15px;
+    }
 }
 
 .AppContent {
