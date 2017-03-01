@@ -55,8 +55,19 @@
     opacity: 1;
 }
 
-/* Add white triange over ink bar. */
+/* Add white triange over ink bar that slides in on load. */
+@keyframes slideIn {
+    from {
+        transform: translateY(13px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
 :host >>> .mat-ink-bar {
+    animation: slideIn .2s .3s linear both;
     background-color: transparent;
 }
 

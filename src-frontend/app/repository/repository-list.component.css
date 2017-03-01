@@ -1,3 +1,11 @@
+.Title {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
 .Repository {
     align-items: center;
     display: flex;
