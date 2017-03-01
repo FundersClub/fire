@@ -39,8 +39,13 @@ class InviterApprovalView(TemplateView):
             Repository,
             login=kwargs['repo_login'],
             name=kwargs['repo_name'],
-            status=Repository.Status.PendingInviterApproval,
         )
+
+        if self.repo.status == Repository.Status.PendingAccept:
+            raise http.Http404
+        elif self.repo.status != Repository.Status.PendingInviterApproval:
+            return http.HttpResponseRedirect(reverse('fb_github:index', kwargs=kwargs))
+
         return super(InviterApprovalView, self).dispatch(request, *args, **kwargs)
 
     @transaction.atomic
