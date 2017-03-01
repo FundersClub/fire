@@ -23,7 +23,10 @@
             {{ error.non_field_errors }}
         </md-hint>
     </md-input-container>
-    <md-input-container class="EmailField">
+    <md-input-container
+        class="EmailField"
+        [ngClass]="{'EmailField--shrunk': showSave()}"
+    >
         <input
             mdInput
             [(ngModel)]="emailMap.email"
@@ -38,9 +41,16 @@
         </md-hint>
     </md-input-container>
 
-    <div class="Actions">
+    <div
+        class="Actions"
+        [ngClass]="{'Actions--expanded': showSave()}"
+    >
         <span *ngIf="showSave()">
-            <span mdTooltip="Save changes" mdTooltipPosition="above">
+            <span
+                class="Actions-save"
+                mdTooltip="Save changes"
+                mdTooltipPosition="above"
+            >
                 <button
                     md-icon-button
                     type="submit"
@@ -49,7 +59,11 @@
                     <md-icon>check</md-icon>
                 </button>
             </span>
-            <span mdTooltip="Undo changes" mdTooltipPosition="above">
+            <span
+                class="Actions-undo"
+                mdTooltip="Undo changes"
+                mdTooltipPosition="above"
+            >
                 <button
                     md-icon-button
                     (click)="reset()"
@@ -59,7 +73,11 @@
                 </button>
             </span>
         </span>
-        <span mdTooltip="Delete this entry" mdTooltipPosition="above">
+        <span
+            class="Actions-delete"
+            mdTooltip="Delete this entry"
+            mdTooltipPosition="above"
+        >
             <button
                 *ngIf="!showSave()"
                 md-icon-button
