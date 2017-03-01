@@ -12,7 +12,7 @@
         </form>
         <hr>
         <ul>
-            {% for repo in request.user.repository_set.all %}
+            {% for repo in request.user.repository_set.active.all %}
                 <li>
                     <a href="{% url 'fb_github:index' repo.login repo.name %}">{{ repo.full_name }}</a>
                 </li>

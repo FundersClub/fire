@@ -18,6 +18,11 @@ def email_slug_default():
     return uuid4().hex[:8]
 
 
+class RepositoryQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(status=Repository.Status.Active)
+
+
 class Repository(models.Model):
     class Status(DjangoChoices):
         PendingAccept = C('pending-accept', 'Pending accept')
@@ -33,6 +38,8 @@ class Repository(models.Model):
     name = models.CharField(max_length=200)
     original_invitation_data = JSONField()
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.PendingAccept)
+
+    objects = RepositoryQuerySet.as_manager()
 
     class Meta:
         unique_together = (

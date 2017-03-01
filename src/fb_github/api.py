@@ -121,6 +121,7 @@ class RepositoryViewSet(
 
     def get_queryset(self):
         return (super(RepositoryViewSet, self).get_queryset()
+            .active()
             .filter(admins=self.request.user)
         )
 
