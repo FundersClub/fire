@@ -1,11 +1,11 @@
-Hello {{ msg.from_name }},
+Hey {{ msg.from_name }},
 
-This looks like the first time you have e-mailed {{ msg.to_email }}. I don't recognize your e-mail address, but I will still create the issue for you.
-However, because I don't recognize you I can't tag you in the issue. This prevents you from receiving notifications when something changes on the GitHub issue.
-If you have a GitHub account, you can go to the URL so that I can properly tag you in issues you open:
+Great job creating an issue using Firebot! If you'd like to get updates on your issue (e.g. new comments or it being closed), Firebot needs to know your GitHub username.
+
+Add your GitHub info now:
 {{ settings.BASE_URL }}{% url 'fb_github:associate-email' repo.login repo.name msg.uuid %}
 
-If you are not interested in this, simply ignore this email. I will not contact you again about this repository.
+If you are not interested in receiving updates or don't have a GitHub account, simply ignore this email. I will not contact you again about this repository.
 
-Thank you,
-The FireBot.
+Thanks,
+Firebot

@@ -49,7 +49,7 @@ def accept_new_repo(repo_id):
     })
 
     repo.gh_repo.create_issue(
-        title='FireBot says hi!',
+        title='Firebot here!',
         body=body,
     )
 
