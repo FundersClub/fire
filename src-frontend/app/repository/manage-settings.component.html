@@ -11,7 +11,14 @@
         color="primary"
         type="button"
         (click)="purge()"
+        [disabled]="dataDeleted"
     >
         Delete all attachment data
     </button>
+    <div
+        *ngIf="dataDeleted"
+    >
+        <br>
+        All attachment data has been deleted.
+    </div>
 </div>

@@ -53,17 +53,14 @@ class EmailMapSerializer(BaseSerializer):
 class RepositorySerializer(serializers.HyperlinkedModelSerializer):
     emailmap_set = EmailMapSerializer(many=True, read_only=True)
     urls = serializers.SerializerMethodField()
-    emailmap_add_url = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Repository
         fields = (
             'emailmap_set',
-            'emailmap_add_url',
             'email',
             'email_slug',
             'full_name',
-            'gh_url',
             'login',
             'name',
             'status',
@@ -84,11 +81,10 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
 
     def get_urls(self, obj):
         return {
+            'github': obj.gh_url,
+            'emailmap_add': reverse('emailmap-list'),
             'purge_attachments': reverse('repository-purge-attachments', args=[obj.pk], request=self.context['request']),
         }
-
-    def get_emailmap_add_url(self, obj):
-        return reverse('emailmap-list')
 
 
 ################################################################################

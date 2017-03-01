@@ -80,7 +80,7 @@ export class RepositoryService {
     addEmailMap({repo, login, email}: EmailMap): Promise<any> {
         const repository = this.getByUrl(repo);
         return new Promise((resolve, reject) => {
-            this.http.post(repository.emailmap_add_url, {login, email, repo}).toPromise()
+            this.http.post(repository.urls.emailmap_add, {login, email, repo}).toPromise()
                 .then((response) => {
                     const emailMap = response.json() as EmailMap;
                     repository.emailmap_set.push(emailMap);
@@ -111,7 +111,12 @@ export class RepositoryService {
         );
     }
 
-    purgeAttachmentData(repository: Repository) {
-        console.log('purged?', repository);
+    purgeAttachmentData(repository: Repository): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.http.post(repository.urls.purge_attachments, {}).toPromise()
+                .then(() => resolve())
+                .catch((error) => reject(error.json()));
+            }
+        );
     }
 }

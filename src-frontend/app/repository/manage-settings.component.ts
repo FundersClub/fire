@@ -10,6 +10,7 @@ import { RepositoryService } from './repository.service';
 })
 export class ManageSettingsComponent {
     repository: Repository;
+    dataDeleted = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,6 +25,7 @@ export class ManageSettingsComponent {
     }
 
     purge() {
-        this.respositoryService.purgeAttachmentData(this.repository);
+        this.respositoryService.purgeAttachmentData(this.repository)
+            .then(() => this.dataDeleted = true);
     }
 }
