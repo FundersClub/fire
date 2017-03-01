@@ -1,6 +1,7 @@
-Hello {{ msg.from_name }},
+Hey {{ msg.from_name }},
 
-Unfortunately I do not recognize the e-mail address {{ msg.to_email }}. **{{ email_slug }}** is not currently associated with any repository.
+I do not recognize the e-mail address {{ msg.to_email }}. Have you added Firebot to your repository?
+**{{ email_slug }}** is not currently associated with any repository.
 
-Thank you,
+Thanks,
 Firebot
