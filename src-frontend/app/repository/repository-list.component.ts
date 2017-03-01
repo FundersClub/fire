@@ -4,7 +4,7 @@ import { RepositoryService } from './repository.service';
 
 @Component({
     selector: 'repository-list',
-    styleUrls: ['./repository-list.component.css'],
+    styleUrls: ['./repository-list.component.scss'],
     templateUrl: './repository-list.component.html',
 })
 export class RepositoryListComponent {

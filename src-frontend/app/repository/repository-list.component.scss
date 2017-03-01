@@ -11,10 +11,10 @@
     display: flex;
     justify-content: space-between;
     font-size: 20px;
-}
 
-.Repository + .Repository {
-    margin-top: 30px;
+    & + .Repository {
+        margin-top: 30px;
+    }
 }
 
 .Repository-link {

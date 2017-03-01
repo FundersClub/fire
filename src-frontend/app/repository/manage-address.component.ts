@@ -6,7 +6,7 @@ import { RepositoryService } from './repository.service';
 
 @Component({
     templateUrl: './manage-address.component.html',
-    styleUrls: ['./manage-address.component.css']
+    styleUrls: ['./manage-address.component.scss']
 })
 export class ManageAddressComponent implements OnInit {
     repository: Repository;

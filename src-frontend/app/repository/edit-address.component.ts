@@ -5,7 +5,7 @@ import { RepositoryService } from './repository.service';
 
 @Component({
     selector: 'edit-address',
-    styleUrls: ['./edit-address.component.css'],
+    styleUrls: ['./edit-address.component.scss'],
     templateUrl: './edit-address.component.html',
 })
 export class EditAddressComponent implements OnInit {

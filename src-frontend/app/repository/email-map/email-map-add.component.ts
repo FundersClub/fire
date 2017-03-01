@@ -7,7 +7,7 @@ import { RepositoryService } from '../repository.service';
 
 @Component({
     selector: 'email-map-add',
-    styleUrls: ['./email-map-add.component.css'],
+    styleUrls: ['./email-map-add.component.scss'],
     templateUrl: './email-map-add.component.html',
 })
 export class EmailMapAddComponent implements OnInit {

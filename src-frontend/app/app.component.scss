@@ -16,17 +16,19 @@
     color: #fff;
 }
 
-.UserLinks > div {
-    display: flex;
-}
+.UserLinks {
+    > div {
+        display: flex;
+    }
 
-.UserLinks a {
-    text-decoration: none;
-    color: #fff;
-}
+    a {
+        text-decoration: none;
+        color: #fff;
 
-.UserLinks a:hover {
-    text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 .Username {

@@ -1,4 +1,4 @@
 /* Hide the astericks added to required fields. */
-:host >>> .mat-placeholder-required {
+:host /deep/ .mat-placeholder-required {
     display: none;
 }
