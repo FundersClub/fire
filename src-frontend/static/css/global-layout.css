@@ -2,8 +2,8 @@
 /* Having this outside of Angular means it loads before JS is initialized. That's important. */
 
 body {
-    background: #fff;
-    font-family: "futura-pt";
+    background: #fafafa;
+    font-family: "futura-pt", sans-serif;
     font-weight: 400;
 }
 
@@ -50,10 +50,35 @@ body {
 }
 
 .GlobalMain {
-    background: url(../images/background-gradient.png) no-repeat top center;
-    background-size: 100% 300px;
+    position: relative;
     /* Leave room for footer. */
     min-height: calc(100vh - 60px);
+}
+
+.GlobalMain:after {
+    position: absolute;
+    width: 100%;
+    height: 500px;
+    top: 0;
+    background:
+        url(../images/background-curves.svg) no-repeat scroll top center/cover,
+        linear-gradient(60deg, #CC3A99 0%, #CC3A40 100%) no-repeat scroll top center/cover;
+    background-size: 100%;
+    content: '';
+    z-index: -2;
+}
+
+.GlobalMain:before {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background-size: 100%;
+    content: '';
+    top: 450px;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 x=%220%22 y=%220%22 viewBox=%220 0 1800 26%22 preserveAspectRatio=%22none%22%3E%3Cpath fill=%22%23fafafa%22 d=%22M900,19.8C594.4,19.8,293.9,13.1,0,0v26h1800V0C1506.1,13.1,1205.6,19.8,900,19.8z%22/%3E%3C/svg%3E")
+        no-repeat scroll bottom center/cover;
+    z-index: -1;
 }
 
 .GlobalFooter {
