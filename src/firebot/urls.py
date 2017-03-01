@@ -5,12 +5,17 @@ from django.conf.urls import (
 )
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.static import serve
 
 import firebot.views
 
 
 urlpatterns = [
-    url(r'^$', firebot.views.index, name='index'),
+    # Static files
+    url(r'^$', serve, {'path': 'index.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
+    url(r'^repos/$', serve, {'path': 'index.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
+
+    # Django Views
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include([

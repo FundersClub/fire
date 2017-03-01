@@ -88,6 +88,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'staticfiles'))
+STATIC_FRONTEND_ROOT = os.path.join(STATIC_ROOT, 'frontend')
+STATICFILES_DIRS = [
+    os.path.abspath(os.path.join(BASE_DIR, '..', 'dist-frontend'))
+]
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 ###############################################################################
