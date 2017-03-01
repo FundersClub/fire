@@ -35,6 +35,11 @@ module.exports = {
                 loader: 'file-loader?name=assets/[name].[hash].[ext]'
             },
             {
+                test: /\.scss$/,
+                include: helpers.root('src-frontend', 'app'),
+                loaders: ['raw-loader', 'sass-loader']
+            },
+            {
                 test: /\.css$/,
                 exclude: helpers.root('src-frontend', 'app'),
                 loader: ExtractTextPlugin.extract({

@@ -5,7 +5,7 @@ import { MdTabNavBar } from '@angular/material';
 import { Repository } from './repository.model';
 
 @Component({
-    styleUrls: ['./repository.component.css'],
+    styleUrls: ['./repository.component.scss'],
     templateUrl: './repository.component.html',
 })
 export class RepositoryComponent implements OnInit, AfterViewInit {
