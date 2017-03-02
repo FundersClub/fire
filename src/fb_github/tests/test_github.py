@@ -7,8 +7,9 @@ from rest_framework.test import APITestCase
 
 from firebot.tests import RequestsMockMixin
 from fb_emails.tests.factories import IncomingMessageFactory
-from fb_github.tests.mocks import mock_github_api
+from fb_github.models import Repository
 from fb_github.tests.factories import RepositoryFactory
+from fb_github.tests.mocks import mock_github_api
 
 
 class GitHubTestCase(RequestsMockMixin, TestCase):
@@ -47,7 +48,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         self.user3 = get_user_model().objects.create_user(username='user3')
 
     def test_repo(self):
-        url = reverse('repository-detail', args=[self.repo1.id])
+        url = reverse('repository-detail', args=[self.repo1.uuid])
 
         # Should 403 on unauthenticated user
         resp = self.client.get(url)
@@ -123,7 +124,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
             {
                 'email': 'a@b.com',
                 'login': 'lenny',
-                'repo': 'http://testserver/api/github/repository/{}/'.format(self.repo1.id),
+                'repo': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
                 'url': 'http://testserver/api/github/email-map/{}/'.format(self.repo1.emailmap_set.get().id),
             },
         ])
@@ -140,7 +141,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url, data={
             'email': 'test@me.com',
             'login': 'woo',
-            'repo': reverse('repository-detail', args=[self.repo2.id]),
+            'repo': reverse('repository-detail', args=[self.repo2.uuid]),
         })
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
@@ -152,7 +153,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url, data={
             'email': self.repo1.emailmap_set.get().email,
             'login': 'woo',
-            'repo': reverse('repository-detail', args=[self.repo1.id]),
+            'repo': reverse('repository-detail', args=[self.repo1.uuid]),
         })
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
@@ -166,7 +167,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url, data={
             'email': 'test@me.com',
             'login': 'woo',
-            'repo': reverse('repository-detail', args=[self.repo1.id]),
+            'repo': reverse('repository-detail', args=[self.repo1.uuid]),
         })
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
 
@@ -174,7 +175,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url, data={
             'email': 'test@me.com',
             'login': 'woo',
-            'repo': reverse('repository-detail', args=[self.repo1.id]),
+            'repo': reverse('repository-detail', args=[self.repo1.uuid]),
         })
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -197,7 +198,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                         {
                             'email': 'a@b.com',
                             'login': 'lenny',
-                            'repo': 'http://testserver/api/github/repository/{}/'.format(self.repo1.id),
+                            'repo': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
                             'url': 'http://testserver/api/github/email-map/{}/'.format(self.repo1.emailmap_set.get().id),
                         },
                     ],
@@ -207,11 +208,11 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                     'login': self.repo1.login,
                     'name': self.repo1.name,
                     'status': 'active',
-                    'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.id),
+                    'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
                     'urls': {
                         'github': self.repo1.gh_url,
                         'emailmap_add': 'http://testserver/api/github/email-map/',
-                        'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.id),
+                        'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
                     },
                 },
             ],
@@ -236,11 +237,11 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                     'login': self.repo2.login,
                     'name': self.repo2.name,
                     'status': 'active',
-                    'url': 'http://testserver/api/github/repository/{}/'.format(self.repo2.id),
+                    'url': 'http://testserver/api/github/repository/{}/'.format(self.repo2.uuid),
                     'urls': {
                         'github': self.repo2.gh_url,
                         'emailmap_add': 'http://testserver/api/github/email-map/',
-                        'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo2.id),
+                        'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo2.uuid),
                     },
 
                 },
@@ -262,5 +263,119 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
             'is_authenticated': True,
             'urls': {
                 'logout': 'http://testserver/accounts/logout/',
+            },
+        })
+
+    def test_approve(self):
+        self.repo1.inviter_login = self.user1.username
+        self.repo1.status = Repository.Status.PendingAccept
+        self.repo1.save()
+
+        url = reverse('repository-approve', args=[self.repo1.uuid])
+
+        # Try to GET/POST without a user, should fail
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
+
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
+
+        # Try as the wrong user
+        self.client.force_authenticate(user=self.user2)
+
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data, {
+            'full_name': 'login0/name0',
+            'inviter_login': 'user1',
+            'login': 'login0',
+            'name': 'name0',
+            'status': 'pending-accept',
+            'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+        })
+
+        # Try as the right user, but before the bot accepted the invite
+        self.assertEqual(self.repo1.status, Repository.Status.PendingAccept)
+
+        self.client.force_authenticate(user=self.user1)
+
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data, {
+            'emailmap_set': [
+                {
+                    'email': 'a@b.com',
+                    'login': 'lenny',
+                    'repo': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+                    'url': 'http://testserver/api/github/email-map/{}/'.format(self.repo1.emailmap_set.get().id),
+                },
+            ],
+            'email': self.repo1.email,
+            'email_slug': self.repo1.email_slug,
+            'full_name': self.repo1.full_name,
+            'login': self.repo1.login,
+            'name': self.repo1.name,
+            'status': 'pending-accept',
+            'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+            'urls': {
+                'github': self.repo1.gh_url,
+                'emailmap_add': 'http://testserver/api/github/email-map/',
+                'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
+            },
+        })
+
+        # Switch to the correct state and try both users again
+        self.repo1.status = Repository.Status.PendingInviterApproval
+        self.repo1.save()
+
+        self.client.force_authenticate(user=self.user2)
+
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data, {
+            'full_name': 'login0/name0',
+            'inviter_login': 'user1',
+            'login': 'login0',
+            'name': 'name0',
+            'status': 'pending-inviter-approval',
+            'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+        })
+
+        self.client.force_authenticate(user=self.user1)
+
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data, {
+            'emailmap_set': [
+                {
+                    'email': 'a@b.com',
+                    'login': 'lenny',
+                    'repo': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+                    'url': 'http://testserver/api/github/email-map/{}/'.format(self.repo1.emailmap_set.get().id),
+                },
+            ],
+            'email': self.repo1.email,
+            'email_slug': self.repo1.email_slug,
+            'full_name': self.repo1.full_name,
+            'login': self.repo1.login,
+            'name': self.repo1.name,
+            'status': 'active',
+            'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+            'urls': {
+                'github': self.repo1.gh_url,
+                'emailmap_add': 'http://testserver/api/github/email-map/',
+                'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
             },
         })
