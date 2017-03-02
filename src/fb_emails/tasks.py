@@ -43,16 +43,16 @@ def process_incoming_message(msg_id):
 
         return
 
-    # If we don't recognize this email address and haven't seen it before,
-    # offer user to associate their GitHub account with this repo
-    email_recognized = repo.emailmap_set.filter(email=msg.from_email).exists()
-    email_seen_before = IncomingMessage.objects.filter(
-        issue__repo=repo, from_email=msg.from_email
-    ).exclude(id=msg.id).exists()
-    if not email_recognized and not email_seen_before:
-        msg.reply_from_template('fb_emails/offer-associate.txt', {
-            'repo': repo,
-        })
+    # # If we don't recognize this email address and haven't seen it before,
+    # # offer user to associate their GitHub account with this repo
+    # email_recognized = repo.emailmap_set.filter(email=msg.from_email).exists()
+    # email_seen_before = IncomingMessage.objects.filter(
+    #     issue__repo=repo, from_email=msg.from_email
+    # ).exclude(id=msg.id).exists()
+    # if not email_recognized and not email_seen_before:
+    #     msg.reply_from_template('fb_emails/offer-associate.txt', {
+    #         'repo': repo,
+    #     })
 
     # Got our repo, create an issue
     if not repo.create_issue_from_incoming_msg(msg):
