@@ -15,6 +15,7 @@ export class EmailMapAddComponent implements OnInit {
     @ViewChild(NgForm) private form: NgForm;
     emailMap: EmailMap;
     error = {};
+    saving = false;
 
     constructor(
         private repositoryService: RepositoryService
@@ -25,9 +26,11 @@ export class EmailMapAddComponent implements OnInit {
     }
 
     save() {
+        this.saving = true;
         this.error = {};
         this.repositoryService.addEmailMap(this.emailMap)
             .then((emailMap) => this.form.resetForm())
-            .catch((error: any) => this.error = error);
+            .catch((error: any) => this.error = error)
+            .finally(() => this.saving = false);
     }
 }

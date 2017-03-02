@@ -13,6 +13,7 @@ export class EmailMapEditComponent implements OnInit {
     @ViewChild(NgForm) private form: NgForm;
     originalData: EmailMap;
     error = {};
+    saving = false;
 
     constructor(
         private repositoryService: RepositoryService
@@ -23,13 +24,15 @@ export class EmailMapEditComponent implements OnInit {
     }
 
     save() {
+        this.saving = true;
         this.error = {};
         this.repositoryService.updateEmailMap(this.emailMap)
             .then((updatedEM) => {
                 this.originalData = Object.assign({}, updatedEM);
                 this.form.resetForm(updatedEM);
             })
-            .catch((error: any) => this.error = error);
+            .catch((error: any) => this.error = error)
+            .finally(() => this.saving = false);
     }
 
     reset() {

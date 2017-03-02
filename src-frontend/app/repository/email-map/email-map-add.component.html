@@ -1,6 +1,8 @@
 <form
+    class="MemberForm"
     (ngSubmit)="save()"
     #emailMapAddForm="ngForm"
+    [ngClass]="{'MemberForm--saving': saving}"
 >
     <md-input-container class="LoginField">
         <input

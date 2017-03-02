@@ -3,6 +3,7 @@ import 'core-js/es7/reflect';
 import 'hammerjs/hammer';
 import 'normalize.css/normalize.css';
 require('zone.js/dist/zone');
+require('promise.prototype.finally').shim();
 
 if (process.env.ENV === 'production') {
     // Production
