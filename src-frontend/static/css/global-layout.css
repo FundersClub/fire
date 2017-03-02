@@ -103,7 +103,11 @@ body {
     width: 40px;
 }
 
-/* Convenient to dump this here. */
+/* Convenient to dump this stuff here. */
+strong {
+    font-weight: 600;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
