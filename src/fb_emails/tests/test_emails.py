@@ -40,7 +40,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: Attachment test')
         self.assertTrue(
-            'Unfortunately I do not recognize the e-mail address test@firebot.fundersclub.com. **test** is not currently associated with any repository.'
+            'I do not recognize the e-mail address test@firebot.fundersclub.com. Have you added Firebot to your repository?'
             in mail.outbox[0].body
         )
 
@@ -116,10 +116,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue(
-            'This looks like the first time you have e-mailed fake@{}'.format(settings.EMAIL_DOMAIN)
-            in mail.outbox[0].body
-        )
+        self.assertTrue('Great job creating an issue using Firebot' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + reverse('fb_github:associate-email', args=[repo.login, repo.name, msg.uuid])
         self.assertTrue(expected_url in mail.outbox[0].body)
@@ -136,10 +133,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue(
-            'This looks like the first time you have e-mailed fake@{}'.format(settings.EMAIL_DOMAIN)
-            in mail.outbox[0].body
-        )
+        self.assertTrue('Great job creating an issue using Firebot' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + reverse('fb_github:associate-email', args=[repo.login, repo.name, msg.uuid])
         self.assertTrue(expected_url in mail.outbox[0].body)
@@ -171,10 +165,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue(
-            'This looks like the first time you have e-mailed {}'.format(repo2_email)
-            in mail.outbox[0].body
-        )
+        self.assertTrue('Great job creating an issue using Firebot' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + reverse('fb_github:associate-email', args=[repo2.login, repo2.name, msg.uuid])
         self.assertTrue(expected_url in mail.outbox[0].body)
@@ -188,10 +179,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue(
-            'This looks like the first time you have e-mailed fake@{}'.format(settings.EMAIL_DOMAIN)
-            in mail.outbox[0].body
-        )
+        self.assertTrue('Great job creating an issue using Firebot' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + reverse('fb_github:associate-email', args=[repo.login, repo.name, msg.uuid])
         self.assertTrue(expected_url in mail.outbox[0].body)
