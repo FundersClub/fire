@@ -11,10 +11,6 @@ import firebot.views
 
 
 urlpatterns = [
-    # Static files
-    url(r'^$', serve, {'path': 'index.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
-    url(r'^repos/$', serve, {'path': 'index.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
-
     # Django Views
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
@@ -24,6 +20,10 @@ urlpatterns = [
     url(r'^test-500/$', firebot.views.test_500),
     url(r'^emails/', include('fb_emails.urls')),
     url(r'^github/', include('fb_github.urls')),
+
+    # Static files
+    url(r'^$', serve, {'path': 'static.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
+    url(r'^.+', serve, {'path': 'app.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='repos'),
 ]
 
 if settings.DEBUG:

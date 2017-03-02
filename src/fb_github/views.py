@@ -67,7 +67,7 @@ class InviterApprovalView(TemplateView):
                 user=request.user,
             )
 
-        return http.HttpResponseRedirect(reverse('fb_github:index', kwargs=kwargs))
+        return http.HttpResponseRedirect(reverse('repos'))
 
 
 class AssociateEmailView(TemplateView):

@@ -18,7 +18,19 @@ module.exports = webpackMerge(commonConfig, {
     ],
 
     devServer: {
-        historyApiFallback: true,
+        historyApiFallback: {
+            verbose: true,
+            rewrites: [
+                // Send empty URL to homepage, all else to app.
+                {
+                    from: /^\/$/,
+                    to: '/static.html'
+                }, {
+                    from: /^\/.+/,
+                    to: '/app.html'
+                }
+            ]
+        },
         stats: 'minimal',
         proxy: {
             '/{accounts,github,api,admin,static,media}/**': {
