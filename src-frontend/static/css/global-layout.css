@@ -47,13 +47,13 @@ body {
     color: #fff;
     font-size: 34px;
     font-weight: 400;
-    margin: 0 0 0 10px;
+    margin: 0;
 }
 
 .GlobalMain {
     position: relative;
     /* Leave room for footer. */
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 50px);
 }
 
 .GlobalMain:after {
@@ -61,9 +61,10 @@ body {
     width: 100%;
     height: 500px;
     top: 0;
+    /* Gradient is $mat-orange(600) to $mat-deep-orange(600). */
     background:
         url(../images/background-curves.svg) no-repeat scroll top center/cover,
-        linear-gradient(60deg, #CC3A99 0%, #CC3A40 100%) no-repeat scroll top center/cover;
+        linear-gradient(60deg, #fb8c00 0%, #f4511e 100%) no-repeat scroll top center/cover;
     background-size: 100%;
     content: '';
     z-index: -2;
@@ -89,7 +90,8 @@ body {
 .GlobalFooterContent {
     align-items: center;
     display: flex;
-    height: 60px;
+    height: 50px;
+    justify-content: center;
     margin: 0 auto;
     padding: 0 40px;
     width: 720px;
@@ -97,7 +99,7 @@ body {
 
 .GlobalFooter-link {
     color: #aaa;
-    font-size: 16px;
+    font-size: 14px;
     text-decoration: none;
 }
 
@@ -113,6 +115,8 @@ body {
     height: 30px;
     opacity: .8;
     width: 30px;
+    /* Improve alignment with rest of footer links. */
+    margin-right: -10px;
 }
 
 .GlobalFooter-logo:hover {
@@ -121,7 +125,7 @@ body {
 
 /* Convenient to dump this stuff here. */
 strong {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .text-center {

@@ -66,13 +66,13 @@
 .FeatureTitle {
     font-size: 40px;
     font-weight: 300;
-    color: #e91e63;
+    /* $mat-deep-orange(500) */
+    color: #ff5722;
     margin: 0 0 10px 0;
 }
 
 .FeatureText {
     font-size: 20px;
-    font-weight: 300;
     line-height: 36px;
     color: #3D3D3D;
 }
@@ -84,9 +84,10 @@
 
 .HowTo:after {
     background-size: 100%;
+    /* Gradient is $mat-orange(600) to $mat-deep-orange(600). */
     background:
         url(../images/background-curves.svg) no-repeat scroll top center/cover,
-        linear-gradient(60deg, #CC3A99 0%, #CC3A40 100%) no-repeat scroll top center/cover;
+        linear-gradient(60deg, #fb8c00 0%, #f4511e 100%) no-repeat scroll top center/cover;
     content: '';
     height: 100%;
     position: absolute;
@@ -127,7 +128,6 @@
 .HowToText {
     color: #fff;
     font-size: 20px;
-    font-weight: 300;
     line-height: 36px;
     text-align: center;
 }
@@ -149,7 +149,6 @@
 
 .HowToCtaSubtext {
     color: #fff;
-    font-weight: 300;
     margin-top: 10px;
 }
 
@@ -192,7 +191,6 @@
 .PromotionText {
     color: #C4C4C4;
     font-size: 16px;
-    font-weight: 300;
     line-height: 36px;
 }
 
@@ -217,7 +215,6 @@
     color: #fff;
     display: inline-flex;
     font-size: 20px;
-    font-weight: 300;
     height: 60px;
     justify-content: center;
     text-decoration: none;

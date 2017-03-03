@@ -1,7 +1,7 @@
 // Create our own material2 theme.
 @import '~@angular/material/core/theming/all-theme';
 @include mat-core();
-$primary: mat-palette($mat-pink);
+$primary: mat-palette($mat-deep-orange);
 $accent: mat-palette($mat-amber, A200, A100, A400);
 $theme: mat-light-theme($primary, $accent);
 @include angular-material-theme($theme);
@@ -54,13 +54,18 @@ $theme: mat-light-theme($primary, $accent);
     }
 
     .CardIntro-title {
-        color: map-get($mat-pink, 500);
+        color: map-get($mat-deep-orange, 500);
         font-size: 28px;
         margin-bottom: 30px;
     }
 
     .CardIntro-subtext {
         font-size: 16px;
+        line-height: 1.7;
         margin-bottom: 40px;
+
+        a {
+            color: rgba(0, 0, 0, 0.5);
+        }
     }
 }
