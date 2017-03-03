@@ -34,7 +34,7 @@ body {
 .GlobalHeader {
     display: flex;
     justify-content: space-between;
-    padding: 30px;
+    padding: 30px 40px;
     align-items: center;
 }
 
@@ -83,11 +83,16 @@ body {
 }
 
 .GlobalFooter {
-    align-items: center;
     background-color: #2e2e2e;
+}
+
+.GlobalFooterContent {
+    align-items: center;
     display: flex;
     height: 60px;
-    padding: 0 30px;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 720px;
 }
 
 .GlobalFooter-link {
