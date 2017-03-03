@@ -157,7 +157,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             resp.data,
-            {'non_field_errors': ['The fields repo, email must make a unique set.']}
+            {'non_field_errors': ['Email address is already in use.']}
         )
 
         # Create an email map on an unrelated repo and then attempt to use this on

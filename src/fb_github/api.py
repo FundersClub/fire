@@ -47,7 +47,7 @@ class EmailMapSerializer(BaseSerializer):
             serializers.UniqueTogetherValidator(
                 queryset=models.EmailMap.objects.all(),
                 fields=('repo', 'email'),
-                message='Email address is already in use',
+                message='Email address is already in use.',
             )
         ]
 
