@@ -27,7 +27,7 @@ class IncomingMessage(models.Model):
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.Pending)
     subject = models.CharField(max_length=500)
     to_email = models.EmailField(max_length=200)
-    uuid = models.UUIDField(default=uuid4)
+    uuid = models.UUIDField(default=uuid4, unique=True)
 
     def reply_from_template(self, template_name, extra_context=None):
         context = {

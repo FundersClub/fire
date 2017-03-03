@@ -11,6 +11,7 @@ from rest_framework import (
     status,
 )
 from rest_framework.decorators import detail_route
+from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import (
     CreateModelMixin,
     DestroyModelMixin,
@@ -50,6 +51,12 @@ class EmailMapSerializer(BaseSerializer):
                 message='Email address is already in use.',
             )
         ]
+        extra_kwargs = {
+            'repo': {
+                'lookup_field': 'uuid',
+                'lookup_url_kwarg': 'uuid',
+             },
+        }
 
     def update(self, instance, validated_data):
         # Not allowed to update repo.
@@ -79,6 +86,10 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
             'email_slug': {
                 'required': True,
             },
+            'url': {
+                'lookup_field': 'uuid',
+                'lookup_url_kwarg': 'uuid',
+             },
         }
 
     def validate_email_slug(self, value):
@@ -90,8 +101,21 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
         return {
             'github': obj.gh_url,
             'emailmap_add': reverse('emailmap-list', request=self.context['request']),
-            'purge_attachments': reverse('repository-purge-attachments', args=[obj.pk], request=self.context['request']),
+            'purge_attachments': reverse('repository-purge-attachments', args=[obj.uuid], request=self.context['request']),
         }
+
+
+class RepositoryApproveSerializer(RepositorySerializer):
+    class Meta(RepositorySerializer.Meta):
+        fields = (
+            'full_name',
+            'inviter_login',
+            'login',
+            'name',
+            'status',
+            'url',
+        )
+        read_only_fields = fields
 
 
 ################################################################################
@@ -122,9 +146,11 @@ class RepositoryViewSet(
     UpdateModelMixin,
     GenericViewSet,
 ):
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
+    permission_classes = (permissions.IsAuthenticated, )
     queryset = models.Repository.objects.all()
     serializer_class = RepositorySerializer
-    permission_classes = (permissions.IsAuthenticated, )
 
     def get_queryset(self):
         return (super(RepositoryViewSet, self).get_queryset()
@@ -133,7 +159,7 @@ class RepositoryViewSet(
         )
 
     @detail_route(methods=['post'])
-    def purge_attachments(self, request, pk=None):
+    def purge_attachments(self, request, uuid=None):
         repo = self.get_object()
 
         qs = fb_emails_models.Attachment.objects.filter(
@@ -144,6 +170,28 @@ class RepositoryViewSet(
             attachment.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @detail_route(methods=['post'])
+    def approve(self, request, uuid=None):
+        # We can't use `self.get_object()` because:
+        # 1) It filters only for active repos and this one is potentially
+        #    not active yet
+        # 2) We want to always return a response even if the current user
+        #    does not have access to this particular repo
+        repo = get_object_or_404(models.Repository, uuid=uuid)
+
+        # See if we're going to approve this repo
+        if ((repo.status == models.Repository.Status.PendingInviterApproval) and
+            (repo.inviter_login == request.user.username)):
+            repo.approve_by_inviter(request.user)
+
+        # Select which serializer class to use based on the current user's access
+        serializer_class = RepositoryApproveSerializer
+        if request.user in repo.admins.all():
+            serializer_class = self.get_serializer_class()
+
+        serializer = serializer_class(repo, context=self.get_serializer_context())
+        return Response(serializer.data)
 
 
 ################################################################################

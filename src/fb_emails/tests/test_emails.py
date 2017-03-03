@@ -1,5 +1,7 @@
 import os
 
+from unittest import skip
+
 from django.conf import settings
 from django.core import mail
 from django.test import (
@@ -102,6 +104,7 @@ ID: b162081f6c7a4d29aa36050a275751f1
 
 class EmailsTestCase(RequestsMockMixin, TestCase):
     @mock_github_api
+    @skip('no frontend to support this')
     def test_association_email(self):
         # Repo we'll be testing against (IncomingMessageFactory defaults to fake@)
         repo = RepositoryFactory.create(email_slug='fake', login='firebot-test', name='Hello-World')

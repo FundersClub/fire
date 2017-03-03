@@ -1,23 +1,23 @@
-.RepositoryData {
-    padding: 50px 60px;
+/* Make tab bar centered, white. */
+.mat-tab-nav-bar {
+    border-bottom: 0px;
+    z-index: 1;
+}
+
+.mat-tab-link {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    height: 55px;
+    min-width: 100px;
+}
+
+.mat-tab-link.active {
+    opacity: 1;
 }
 
 /* Our Repository-wide defaults. */
 :host /deep/ {
-    .Intro {
-        text-align: center;
-    }
-
-    .Intro-title {
-        font-size: 28px;
-        margin-bottom: 16px;
-    }
-
-    .Intro-subtext {
-        font-size: 16px;
-        margin-bottom: 40px;
-    }
-
     .ErrorMessage {
         color: red;
         white-space: nowrap;
@@ -56,22 +56,4 @@
         border-bottom: 12px solid #fff;
         transform: translateX(-12px);
     }
-}
-
-/* Make tab bar centered, white. */
-.mat-tab-nav-bar {
-    border-bottom: 0px;
-    z-index: 1;
-}
-
-.mat-tab-link {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 300;
-    height: 55px;
-    min-width: 100px;
-}
-
-.mat-tab-link.active {
-    opacity: 1;
 }

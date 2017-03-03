@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth-github/auth.module';
 import { PageNotFoundComponent } from './not-found.component';
 import { RepositoryModule } from './repository/repository.module';
 import { UserIsAuthedGuard } from './user-auth.service';
@@ -15,7 +16,9 @@ import { UserService } from './user.service';
         BrowserModule,
         HttpModule,
         MaterialModule,
-        // Order of the following modules is important.
+        // Order of the following modules is important because
+        // they have Routers within them.
+        AuthModule,
         RepositoryModule,
         AppRoutingModule,
     ],

@@ -40,7 +40,7 @@ npm test
 
 ### GitHub intergration notes
  - Locally, `GITHUB_TOKEN` is a personal access token for @firebot-test-local
- - On Heroku, `GITHUB_TOKEN` is a personal access token for @firebot-test
+ - On Heroku, `GITHUB_TOKEN` is a personal access token for @fire-bot
 
 ### Frontend build notes
 Right now, the frontend can publish a compiled/linked frontend to `dist-frontend` by running `npm run build`. This isn't terribly useful right now.

@@ -4,7 +4,11 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
-from django.db import models
+from django.db import (
+    models,
+    transaction,
+)
+from django.utils import timezone
 from djchoices import DjangoChoices, ChoiceItem as C
 
 from fb_github.client import get_github_client
@@ -38,6 +42,7 @@ class Repository(models.Model):
     name = models.CharField(max_length=200)
     original_invitation_data = JSONField()
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.PendingAccept)
+    uuid = models.UUIDField(default=uuid4, unique=True)
 
     objects = RepositoryQuerySet.as_manager()
 
@@ -97,6 +102,23 @@ class Repository(models.Model):
             msg=msg,
             repo=self,
         )
+
+    @transaction.atomic
+    def approve_by_inviter(self, user):
+        assert self.status == Repository.Status.PendingInviterApproval
+
+        self.approved_at = timezone.now()
+        self.status = Repository.Status.Active
+        self.save(update_fields=['approved_at', 'status'])
+
+        self.admins.add(user)
+
+        for emailaddress in user.emailaddress_set.filter(verified=True):
+            self.emailmap_set.create(
+                email=emailaddress.email,
+                login=user.username,
+                user=user,
+            )
 
 
 class EmailMap(models.Model):

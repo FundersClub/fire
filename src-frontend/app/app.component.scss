@@ -1,3 +1,12 @@
+// Create our own material2 theme.
+@import '~@angular/material/core/theming/all-theme';
+@include mat-core();
+$primary: mat-palette($mat-pink);
+$accent: mat-palette($mat-amber, A200, A100, A400);
+$theme: mat-light-theme($primary, $accent);
+@include angular-material-theme($theme);
+
+// App-specific styles.
 .AppHeader {
     .UserLinks {
         animation: fadeIn .1s 1s linear both;
@@ -28,11 +37,30 @@
     padding: 20px 40px 40px 40px;
     width: 720px;
 
-    /deep/ .SectionTitle {
+    .SectionTitle {
         color: #fff;
         font-size: 36px;
         font-weight: 300;
         margin-bottom: 40px;
         text-align: center;
+    }
+
+    .SectionCard {
+        padding: 60px 70px 70px;
+    }
+
+    .CardIntro {
+        text-align: center;
+    }
+
+    .CardIntro-title {
+        color: map-get($mat-pink, 500);
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .CardIntro-subtext {
+        font-size: 16px;
+        margin-bottom: 40px;
     }
 }
