@@ -36,27 +36,6 @@
     margin: 30px 0 60px;
 }
 
-.HeroCta {
-    transition: box-shadow .2s linear;
-    will-change: box-shadow;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    height: 60px;
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.0);
-    border: 1px solid #FFFFFF;
-    border-radius: 3px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 300;
-}
-
-.HeroCta:hover {
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
-}
-
 .FeatureList {
     margin: 100px 0;
     padding: 0;
@@ -96,6 +75,91 @@
     font-weight: 300;
     line-height: 36px;
     color: #3D3D3D;
+}
+
+.HowTo {
+    min-height: 700px;
+    position: relative;
+}
+
+.HowTo:after {
+    background-size: 100%;
+    background:
+        url(../images/background-curves.svg) no-repeat scroll top center/cover,
+        linear-gradient(60deg, #CC3A99 0%, #CC3A40 100%) no-repeat scroll top center/cover;
+    content: '';
+    height: 100%;
+    position: absolute;
+    top: 0;
+    transform: rotate(180deg);
+    width: 100%;
+    z-index: -2;
+}
+
+.HowTo:before {
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 x=%220%22 y=%220%22 viewBox=%220 0 1800 26%22 preserveAspectRatio=%22none%22%3E%3Cpath fill=%22%23fafafa%22 d=%22M900,19.8C594.4,19.8,293.9,13.1,0,0v26h1800V0C1506.1,13.1,1205.6,19.8,900,19.8z%22/%3E%3C/svg%3E")
+        no-repeat scroll bottom center/cover;
+    background-size: 100%;
+    content: '';
+    height: 50px;
+    position: absolute;
+    top: -5px; /* Couple extra pixels to ensure overlap on screen scaling */
+    transform: rotate(180deg);
+    width: 100%;
+    z-index: -1;
+}
+
+.HowToContent {
+    margin: 0 auto;
+    padding: 100px 40px;
+    width: 720px;
+}
+
+.HowToTitle {
+    font-size: 40px;
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+    margin: 0 0 30px;
+}
+
+.HowToText {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 36px;
+    text-align: center;
+}
+
+.HowToVideo {
+    align-items: center;
+    border: 2px solid #ccc;
+    color: #ccc;
+    display: flex;
+    height: 500px;
+    justify-content: center;
+    margin: 50px 0;
+    width: 100%;
+}
+
+.HowToCta {
+    text-align: center;
+}
+
+.HowToCtaSubtext {
+    color: #fff;
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.HowToCtaSubtext a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.HowToCtaSubtext a:hover {
+    text-decoration: underline;
 }
 
 .Promotion {
@@ -143,4 +207,25 @@
 
 .CatalystLogo {
     margin-top: 10px;
+}
+
+.StaticCta {
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid #FFFFFF;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.0);
+    color: #fff;
+    display: inline-flex;
+    font-size: 20px;
+    font-weight: 300;
+    height: 60px;
+    justify-content: center;
+    text-decoration: none;
+    transition: box-shadow .2s linear;
+    width: 250px;
+    will-change: box-shadow;
+}
+
+.StaticCta:hover {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
 }
