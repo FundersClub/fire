@@ -87,6 +87,7 @@ body {
     background-color: #2e2e2e;
     display: flex;
     height: 60px;
+    padding: 0 30px;
 }
 
 .GlobalFooter-link {
@@ -95,13 +96,22 @@ body {
     text-decoration: none;
 }
 
+.GlobalFooter-link:hover {
+    color: #eee;
+}
+
 .GlobalFooter-link + .GlobalFooter-link {
     margin-left: 20px;
 }
 
 .GlobalFooter-logo {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    opacity: .8;
+    width: 30px;
+}
+
+.GlobalFooter-logo:hover {
+    opacity: 1;
 }
 
 /* Convenient to dump this stuff here. */
