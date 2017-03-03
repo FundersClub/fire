@@ -4,6 +4,13 @@ import { DOCUMENT } from '@angular/platform-browser'
 
 @Component({
     templateUrl: './authenticate-github.component.html',
+    styles: [`
+        .GitHubLogo {
+            left: -2px;
+            position: relative;
+            top: -2px;
+        }
+    `],
 })
 export class AuthenticateGitHubComponent implements OnInit {
     readonly oAuthUrlBase = '/accounts/github/login/?process=login&next=';

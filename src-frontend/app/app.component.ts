@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import '../static/css/global-layout.css';
-import '@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -8,7 +7,9 @@ import { UserService } from './user.service';
 @Component({
     selector: 'firebot',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    // Make this stylesheet "global" by disabling view encapsulation.
+    styleUrls: ['./app.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
     user: User;

@@ -108,6 +108,10 @@ strong {
     font-weight: 600;
 }
 
+.text-center {
+    text-align: center;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
