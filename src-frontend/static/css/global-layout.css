@@ -44,9 +44,10 @@ body {
 }
 
 .GlobalLogo-text {
-    margin-left: 10px;
-    font-size: 34px;
     color: #fff;
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 0 10px;
 }
 
 .GlobalMain {
@@ -74,7 +75,7 @@ body {
     height: 50px;
     background-size: 100%;
     content: '';
-    top: 450px;
+    top: 455px; /* Couple extra pixels to ensure overlap on screen scaling */
     background:
         url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 x=%220%22 y=%220%22 viewBox=%220 0 1800 26%22 preserveAspectRatio=%22none%22%3E%3Cpath fill=%22%23fafafa%22 d=%22M900,19.8C594.4,19.8,293.9,13.1,0,0v26h1800V0C1506.1,13.1,1205.6,19.8,900,19.8z%22/%3E%3C/svg%3E")
         no-repeat scroll bottom center/cover;

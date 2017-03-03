@@ -10,19 +10,127 @@
             // since this is a purely static page.
             window['preventBootstrap'] = true;
         </script>
+        <!-- Typekit for custom font -->
+        <script src="https://use.typekit.net/alt2uzr.js"></script>
+        <script>try { Typekit.load(); } catch(e) {}</script>
+        <!-- Google Analytics -->
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-33329700-5', 'auto');
+            ga('send', 'pageview');
+        </script>
     </head>
     <body>
         <main class="GlobalMain">
-            <header class="StaticHeader">
-                header
+            <header class="GlobalHeader">
+                <div class="GlobalLogo">
+                    <img
+                        alt="Firebot logo"
+                        height="50"
+                        width="50"
+                        src="static/images/firebot-logo.png"
+                    >
+                    <h1 class="GlobalLogo-text">firebot</h1>
+                </div>
+
+                <a
+                    class="LoginLink"
+                    href="/accounts/github/login/?process=login&next=%2Frepos"
+                >
+                    <img
+                        class="GitHubLogo"
+                        alt="GitHub logo"
+                        height="18"
+                        width="18"
+                        src="static/images/github-logo.png"
+                    >
+                    Login
+                </a>
+
+
             </header>
 
             <div class="StaticContent">
-                content
-            </header>
+                <div class="Hero">
+                    <h2 class="HeroTitle">
+                        Allow your entire team to quickly<br>
+                        create GitHub issues over email
+                    </h2>
+                    <a
+                        class="HeroCta"
+                        href="#"
+                    >
+                        Coming Soon
+                    </a>
+                </div>
+
+                <ul class="FeatureList">
+                    <li class="Feature">
+                        <div class="FeatureCopy">
+                            <h3 class="FeatureTitle">
+                                Effortless issue creation
+                            </h3>
+                            <div class="FeatureText">
+                                Let your whole team create issues from anywhere over email. Now there’s no longer a need for your entire team to join GitHub.
+                            </div>
+                        </div>
+                        <div class="FeatureImage">?</div>
+                    </li>
+                    <li class="Feature">
+                        <div class="FeatureImage">?</div>
+                        <div class="FeatureCopy">
+                            <h3 class="FeatureTitle">
+                                Free and easy to setup
+                            </h3>
+                            <div class="FeatureText">
+                                Setup takes less than 5 minutes and can be handled by a single engineer with admin access. Firebot is 100% free to use.
+                            </div>
+                        </div>
+                    </li>
+                    <li class="Feature">
+                        <div class="FeatureCopy">
+                            <h3 class="FeatureTitle">
+                                Images and attachments
+                            </h3>
+                            <div class="FeatureText">
+                                Add files as attachments or include inline images and firebot automatically includes them in the Issue. No filetype restrictions.
+                            </div>
+                        </div>
+                        <div class="FeatureImage">?</div>
+                    </li>
+                </ul>
+            </div>
         </main>
+        <div class="Promotion">
+            <div class="PromotionContent">
+                <div class="PromotionLeft">
+                    <h3 class="PromotionTitle">
+                        Built by FundersClub for Founders
+                    </h3>
+                    <div class="PromotionText">
+                        FundersClub has been building software since its founding – Catalyst is our effort to share our most useful tools with the world.<br>
+                        <a href="https://fundersclub.com/catalyst">Learn more about Catalyst</a>
+                    </div>
+                </div>
+                <div class="PromotionRight">
+                    <img
+                        class="CatalystLogo"
+                        alt="FundersClub Catalyst logo"
+                        height="87"
+                        width="360"
+                        src="static/images/catalyst-logo.png"
+                    >
+                </div>
+            </div>
+        </div>
         <footer class="GlobalFooter">
-            footer
+            <a href="/" class="GlobalFooter-link GlobalFooter-logo"></a>
+            <a href="/" class="GlobalFooter-link">Terms of Service</a>
+            <a href="/" class="GlobalFooter-link">Privacy Policy</a>
+            <a href="/" class="GlobalFooter-link">Contact</a>
         </footer>
     </body>
 </html>

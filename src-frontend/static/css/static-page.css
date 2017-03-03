@@ -1,7 +1,146 @@
-.StaticHeader {
-    height: 100px;
+.LoginLink {
+    display: flex;
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.LoginLink:hover {
+    text-decoration: underline;
+}
+
+.GitHubLogo {
+    position: relative;
+    left: -7px;
+    top: 3px;
 }
 
 .StaticContent {
+    margin: 0 auto;
+    padding: 20px 40px 40px 40px;
+    width: 720px;
+}
 
+.Hero {
+    height: 350px;
+    text-align: center;
+}
+
+.HeroTitle {
+    font-size: 40px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 48px;
+    color: #fff;
+    margin: 30px 0 60px;
+}
+
+.HeroCta {
+    transition: box-shadow .2s linear;
+    will-change: box-shadow;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 60px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.0);
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.HeroCta:hover {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
+}
+
+.FeatureList {
+    margin: 100px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.Feature {
+    display: flex;
+}
+
+.Feature + .Feature {
+    margin-top: 160px;
+}
+
+.FeatureImage {
+    flex: 0 0 40%;
+    color: #ccc;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.FeatureImage,
+.FeatureCopy {
+    flex: 0 0 50%;
+}
+
+.FeatureTitle {
+    font-size: 40px;
+    font-weight: 300;
+    color: #e91e63;
+    margin: 0 0 10px 0;
+}
+
+.FeatureText {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 36px;
+    color: #3D3D3D;
+}
+
+.Promotion {
+    background-color: #333;
+}
+
+.PromotionContent {
+    display: flex;
+    margin: 0 auto;
+    padding: 100px 40px;
+    width: 720px;
+}
+
+.PromotionLeft {
+    flex: 0 0 calc(50% - 40px);
+    margin-right: 40px;
+}
+
+.PromotionRight {
+    flex: 0 0 50%;
+}
+
+.PromotionTitle {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    margin: 0 0 10px 0;
+}
+
+.PromotionText {
+    color: #C4C4C4;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 36px;
+}
+
+.PromotionText a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.PromotionText a:hover {
+    text-decoration: underline;
+}
+
+.CatalystLogo {
+    margin-top: 10px;
 }
