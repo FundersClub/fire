@@ -43,6 +43,13 @@ class EmailMapSerializer(BaseSerializer):
             'repo',
             'url',
         )
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=models.EmailMap.objects.all(),
+                fields=('repo', 'email'),
+                message='Email address is already in use',
+            )
+        ]
 
     def update(self, instance, validated_data):
         # Not allowed to update repo.
