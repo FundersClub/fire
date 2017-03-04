@@ -1,6 +1,6 @@
 Hey {{ msg.from_name }},
 
-Great job creating an issue using Firebot! If you'd like to get updates on your issue (e.g. new comments or it being closed), Firebot needs to know your GitHub username.
+Great job creating an issue using the Fire bot! If you'd like to get updates on your issue (e.g. new comments or it being closed), Fire needs to know your GitHub username.
 
 Add your GitHub info now:
 {{ settings.BASE_URL }}{% url 'fb_github:associate-email' repo.login repo.name msg.uuid %}
@@ -8,4 +8,4 @@ Add your GitHub info now:
 If you are not interested in receiving updates or don't have a GitHub account, simply ignore this email. I will not contact you again about this repository.
 
 Thanks,
-Firebot
+Fire

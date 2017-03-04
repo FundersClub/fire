@@ -1,7 +1,7 @@
-Greetings, [Firebot](https://firebot.fundersclub.com/) here!
+Greetings, [Fire](https://firebot.fundersclub.com/) here!
 
-@{{ repo.inviter_login }} recently invited me to join this fine repository. Before Firebot is enabled, however, @{{ repo.inviter_login }} has one more step to do...
+@{{ repo.inviter_login }} recently invited me to join this fine repository. Before Fire is enabled, however, @{{ repo.inviter_login }} has one more step to do...
 
-**[Complete Firebot setup now]({{ settings.BASE_URL }}/approve/{{ repo.uuid }}/)**
+**[Complete Fire setup now]({{ settings.BASE_URL }}/approve/{{ repo.uuid }}/)**
 
-Only @{{ repo.inviter_login }} will be able to enable Firebot using the above link. If Firebot was added in error or you would no longer like to use Firebot, feel free to remove the `fire-bot` collaborator from your repository and you won't be bothered again!
+Only @{{ repo.inviter_login }} will be able to enable the Fire bot using the above link. If Fire was added in error or you would no longer like to use it, feel free to remove the `fire-bot` collaborator from your repository and you won't be bothered again!
