@@ -166,32 +166,23 @@
 }
 
 .PromotionContent {
-    display: flex;
     margin: 0 auto;
-    padding: 100px 40px;
+    padding: 70px 40px;
+    text-align: center;
     width: 720px;
-}
-
-.PromotionLeft {
-    flex: 0 0 calc(50% - 40px);
-    margin-right: 40px;
-}
-
-.PromotionRight {
-    flex: 0 0 50%;
 }
 
 .PromotionTitle {
     color: #fff;
     font-size: 24px;
     font-weight: 300;
-    margin: 0 0 10px 0;
+    margin: 40px 0 10px;
 }
 
 .PromotionText {
     color: #C4C4C4;
     font-size: 16px;
-    line-height: 36px;
+    line-height: 32px;
 }
 
 .PromotionText a {
@@ -203,15 +194,11 @@
     text-decoration: underline;
 }
 
-.CatalystLogo {
-    margin-top: 10px;
-}
-
 .StaticCta {
     align-items: center;
     border-radius: 3px;
     border: 1px solid #FFFFFF;
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.0);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.0);
     color: #fff;
     display: inline-flex;
     font-size: 20px;
@@ -224,5 +211,5 @@
 }
 
 .StaticCta:hover {
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.3);
 }
