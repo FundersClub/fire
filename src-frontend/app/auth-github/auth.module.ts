@@ -6,7 +6,6 @@ import { AuthenticateGitHubComponent } from './authenticate-github.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { RepositoryService } from '../repository/repository.service';
 import { UserCantApproveRepoGuard } from './wrong-user.service';
-import { UserHasAddedGitHubGuard } from './user-has-github.service';
 import { WrongUserComponent } from './wrong-user.component';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { WrongUserComponent } from './wrong-user.component';
     ],
     providers: [
         UserCantApproveRepoGuard,
-        UserHasAddedGitHubGuard,
     ],
 })
 export class AuthModule {}

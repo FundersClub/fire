@@ -1,7 +1,10 @@
 <div class="SectionTitle">
     Welcome to fire!
 </div>
-<md-card class="SectionCard">
+<md-card
+    *ngIf="displayAsVerify"
+    class="SectionCard"
+>
     <div class="CardIntro">
         <div class="CardIntro-title">
             Verify your GitHub
@@ -24,6 +27,34 @@
                 width="16"
             >
             Verify Your GitHub
+        </a>
+    </div>
+</md-card>
+<md-card
+    *ngIf="!displayAsVerify"
+    class="SectionCard"
+>
+    <div class="CardIntro">
+        <div class="CardIntro-title">
+            Login required
+        </div>
+        <div class="CardIntro-subtext">
+            You must login before you may view that page.
+        </div>
+    </div>
+    <div class="text-center">
+        <a
+            md-raised-button
+            color="primary"
+            href="{{ oAuthUrl }}"
+        >
+            <img
+                class="GitHubLogo"
+                height="16"
+                src="../../static/images/github-logo.png"
+                width="16"
+            >
+            Login Now
         </a>
     </div>
 </md-card>

@@ -15,6 +15,10 @@ import { DOCUMENT } from '@angular/platform-browser'
 export class AuthenticateGitHubComponent implements OnInit {
     readonly oAuthUrlBase = '/accounts/github/login/?process=login&next=';
     oAuthUrl: string;
+    // This page can display as either a vanilla "login now" page, or the more
+    // nuanced "verify now" page (during firebot approval). This will probably
+    // change someday when the "verify" flow gets fancier.
+    displayAsVerify = false;;
 
     constructor(
         @Inject(DOCUMENT) private document: any,
@@ -22,10 +26,8 @@ export class AuthenticateGitHubComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.oAuthUrl = (
-            this.document.location.origin +
-            this.oAuthUrlBase +
-            this.route.snapshot.queryParams['repo']
-        );
+        let returnTo = this.route.snapshot.queryParams['returnTo'];
+        this.displayAsVerify = returnTo.startsWith('/approve');
+        this.oAuthUrl = this.document.location.origin + this.oAuthUrlBase + returnTo;
     }
 }
