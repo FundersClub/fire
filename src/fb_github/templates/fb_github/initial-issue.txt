@@ -5,3 +5,9 @@ Greetings, @fire-bot from [FundersClub Catalyst](https://firebot.fundersclub.com
 **[Complete Fire bot setup now]({{ settings.BASE_URL }}/approve/{{ repo.uuid }}/)**
 
 (Only @{{ repo.inviter_login }} will be able to enable me using the above link. If someone added me to your repo by mistake or you would no longer like to use my services, feel free to remove @fire-bot from your repo's collaborators and I won't bother you again!)
+
+**Once I am installed, here is what you can do:**
+- [ ] The subject of your email will become the title of the issue
+- [ ] Add any copy in the email body to describe bugs, feature request, or anything else that needs to make it to GitHub
+- [ ] Include attachments (images, videos, or anything) to give some context
+- [ ] Forward emails from Intercom, bug report form, Sentry, or any other service to me, and I'll file an issue for it
