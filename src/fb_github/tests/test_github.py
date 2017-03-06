@@ -273,12 +273,21 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
 
         url = reverse('repository-approve', args=[self.repo1.uuid])
 
-        # Try to GET/POST without a user, should fail
+        # GET without a user is not allowed
         resp = self.client.get(url)
-        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
+        # POST without a user does not approve the repo
         resp = self.client.post(url)
-        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data, {
+            'full_name': 'login0/name0',
+            'inviter_login': 'user1',
+            'login': 'login0',
+            'name': 'name0',
+            'status': 'pending-accept',
+            'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
+        })
 
         # Try as the wrong user
         self.client.force_authenticate(user=self.user2)

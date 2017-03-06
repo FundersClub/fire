@@ -158,6 +158,13 @@ class RepositoryViewSet(
             .filter(admins=self.request.user)
         )
 
+    def dispatch(self, request, *args, **kwargs):
+        # Workaround to skip authentication checking for the approve view
+        if request.resolver_match.url_name == 'repository-approve':
+            self.permission_classes = (permissions.AllowAny, )
+
+        return super().dispatch(request, *args, **kwargs)
+
     @detail_route(methods=['post'])
     def purge_attachments(self, request, uuid=None):
         repo = self.get_object()
