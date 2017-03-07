@@ -4,6 +4,8 @@ import { MaterialModule } from '@angular/material';
 
 import { AuthenticateGitHubComponent } from './authenticate-github.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { LoginComponent } from './login.component';
+import { OauthUrlService } from './oauth-url.service'
 import { RepositoryService } from '../repository/repository.service';
 import { UserCantApproveRepoGuard } from './wrong-user.service';
 import { WrongUserComponent } from './wrong-user.component';
@@ -17,8 +19,10 @@ import { WrongUserComponent } from './wrong-user.component';
     declarations: [
         AuthenticateGitHubComponent,
         WrongUserComponent,
+        LoginComponent,
     ],
     providers: [
+        OauthUrlService,
         UserCantApproveRepoGuard,
     ],
 })

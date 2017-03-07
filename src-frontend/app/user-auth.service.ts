@@ -17,8 +17,11 @@ export class UserIsAuthedGuard implements CanActivate {
                 if (isAuthed) {
                     return true;
                 } else {
+                    // For users looking to approve a given repo, send them to
+                    // a special page that shows additional information.
+                    let dest = url.startsWith('/approve') ? 'authenticate' : 'login';
                     this.router.navigate(
-                        ['/authenticate'],
+                        [`/${dest}`],
                         {
                             queryParams: {
                                 returnTo: url,
