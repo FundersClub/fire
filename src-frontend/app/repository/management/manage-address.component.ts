@@ -14,14 +14,14 @@ export class ManageAddressComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private respositoryService: RepositoryService,
+        private repositoryService: RepositoryService,
     ) {}
 
     ngOnInit() {
         // Always pull a fresh copy of the repo when creating the view. The
         // cached copy in the route's data may be outdatted.
         let data = this.route.parent.snapshot.data as { repository: Repository };
-        this.repository = this.respositoryService.getByUrl(data.repository.url);
+        this.repository = this.repositoryService.getByUrl(data.repository.url);
     }
 
     startEditing() {

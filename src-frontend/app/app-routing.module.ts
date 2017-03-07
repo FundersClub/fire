@@ -6,6 +6,9 @@ import { PageNotFoundComponent } from './not-found.component';
 const appRoutes: Routes = [{
     path: '**',
     component: PageNotFoundComponent,
+    data: {
+        title: 'Page not found'
+    }
 }];
 
 @NgModule({

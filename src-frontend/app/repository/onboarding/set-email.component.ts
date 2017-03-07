@@ -21,7 +21,7 @@ export class SetEmailComponent implements OnInit {
 
     ngOnInit() {
         let data = this.route.parent.snapshot.data as { repository: Repository };
-        this.repository = data.repository;
+        this.repository = this.repositoryService.getByUrl(data.repository.url);
         this.newAddress = this.repository.email_slug;
     }
 

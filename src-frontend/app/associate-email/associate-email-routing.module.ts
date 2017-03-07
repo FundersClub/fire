@@ -11,6 +11,9 @@ const associateEmailRoutes: Routes = [{
     resolve: {
         associateEmail: AssociateEmailResolver,
         user: CurrentUserResolver,
+    },
+    data: {
+        title: 'Associate email'
     }
 }];
 

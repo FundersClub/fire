@@ -7,12 +7,12 @@ import { RepositoryService } from '../repository/repository.service';
 @Injectable()
 export class BasicRepositoryInfoResolver implements Resolve<Repository> {
     constructor(
-        private respositoryService: RepositoryService,
+        private repositoryService: RepositoryService,
         private router: Router
     ) {}
 
     resolve(route: ActivatedRouteSnapshot): Promise<any> {
-        return this.respositoryService.getBasicInfo(route.params['uuid'])
+        return this.repositoryService.getBasicInfo(route.params['uuid'])
             .then((repository: Repository) => {
                 return repository;
             })

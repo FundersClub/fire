@@ -10,16 +10,25 @@ import { WrongUserComponent } from './wrong-user.component';
 const authRoutes: Routes = [{
     path: 'login',
     component: LoginComponent,
+    data: {
+        title: 'Login'
+    }
 }, {
     path: 'authenticate/:uuid',
     component: AuthenticateGitHubComponent,
     resolve: {
         repository: BasicRepositoryInfoResolver,
+    },
+    data: {
+        title: 'Verify your GitHub'
     }
 }, {
     path: 'approve/:uuid',
     canActivate: [UserCantApproveRepoGuard],
     component: WrongUserComponent,
+    data: {
+        title: 'Incorrect user'
+    }
 }];
 
 @NgModule({

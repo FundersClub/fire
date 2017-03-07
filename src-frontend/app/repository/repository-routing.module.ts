@@ -18,6 +18,9 @@ const repositoryRoutes: Routes = [{
     children: [{
         path: '',
         component: RepositoryListComponent,
+        data: {
+            title: 'Repositories'
+        }
     }, {
         path: ':login/:name',
         resolve: {
@@ -31,12 +34,14 @@ const repositoryRoutes: Routes = [{
                 component: SetEmailComponent,
                 data: {
                     progressBarValue: 33,
+                    title: 'Choose an email'
                 }
             }, {
                 path: 'team',
                 component: SetTeamComponent,
                 data: {
                     progressBarValue: 66,
+                    title: 'Add your team'
                 }
             }]
         }, {
@@ -45,12 +50,21 @@ const repositoryRoutes: Routes = [{
             children: [{
                 path: 'team',
                 component: ManageTeamComponent,
+                data: {
+                    title: 'Team'
+                }
             }, {
                 path: 'settings',
                 component: ManageSettingsComponent,
+                data: {
+                    title: 'Settings'
+                }
             }, {
                 path: '',
                 component: ManageAddressComponent,
+                data: {
+                    title: 'Send'
+                }
             }]
         }],
     }],

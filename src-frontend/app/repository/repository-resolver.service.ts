@@ -7,7 +7,7 @@ import { RepositoryService } from './repository.service';
 @Injectable()
 export class RepositoryResolver implements Resolve<Repository> {
     constructor(
-        private respositoryService: RepositoryService,
+        private repositoryService: RepositoryService,
         private router: Router
     ) {}
 
@@ -15,7 +15,7 @@ export class RepositoryResolver implements Resolve<Repository> {
         // Ensure a repo with the specified info actually exists.
         // This check also ensures that this user has permissions to
         // this repo (since the backend does that).
-        const repository = this.respositoryService.getByDisplayName(
+        const repository = this.repositoryService.getByDisplayName(
             route.params['login'],
             route.params['name']
         )
