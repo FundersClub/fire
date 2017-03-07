@@ -29,9 +29,15 @@ const repositoryRoutes: Routes = [{
             children: [{
                 path: 'email',
                 component: SetEmailComponent,
+                data: {
+                    progressBarValue: 33,
+                }
             }, {
                 path: 'team',
                 component: SetTeamComponent,
+                data: {
+                    progressBarValue: 66,
+                }
             }]
         }, {
             path: '',

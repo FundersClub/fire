@@ -1,0 +1,17 @@
+.ProgressBar {
+    border-radius: 5px;
+    height: 7px;
+    margin-bottom: 30px;
+}
+
+/deep/ {
+    .mat-progress-bar-buffer {
+        background-color: rgba(255, 255, 255, .2);
+    }
+
+    .mat-progress-bar-fill:after {
+        background-color: rgba(255, 255, 255, 1);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}

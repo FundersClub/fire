@@ -36,7 +36,7 @@ export class UserCantApproveRepoGuard implements CanActivate {
                         }
                         // If repo is now active, send em' over.
                         if (repo.status == 'active') {
-                            this.router.navigate(['/repos', repo.login, repo.name]);
+                            this.router.navigate(['/repos', repo.login, repo.name, 'set-up', 'email']);
                             return false;
                         // Otherwise, give em them bad news.
                         } else {
