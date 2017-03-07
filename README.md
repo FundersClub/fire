@@ -31,6 +31,9 @@ Otherwise, you'll need to set up the DB manually. This means:
 ./bin/run-dev-server (to run backend at http://localhost:12000/)
 npm start (to run frontend at http://localhost:12001/)
 ```
+You'll need to run both the backend and the frontend separately. The frontend uses Webpack, which runs its own webserver and is responsible for proxying relevant API calls to the Django backend (see `webpack.dev.js`'s `proxy`). Once both servers are running, navigate to `http://localhost:12001/` to use the app (with hot-reload, etc enabled).
+
+If you'd like to simulate the production environment locally, run `npm run build` to produce the compiled static assets. Then, navigate to `http://localhost:12000/`. The compiled frontend will now be served via Django.
 
 ### Running tests
 ```
@@ -41,6 +44,3 @@ npm test
 ### GitHub intergration notes
  - Locally, `GITHUB_TOKEN` is a personal access token for @firebot-test-local
  - On Heroku, `GITHUB_TOKEN` is a personal access token for @fire-bot
-
-### Frontend build notes
-Right now, the frontend can publish a compiled/linked frontend to `dist-frontend` by running `npm run build`. This isn't terribly useful right now.
