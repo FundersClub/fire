@@ -281,10 +281,10 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data, {
-            'full_name': 'login0/name0',
-            'inviter_login': 'user1',
-            'login': 'login0',
-            'name': 'name0',
+            'full_name': '{}/{}'.format(self.repo1.login, self.repo1.name),
+            'inviter_login': self.user1.username,
+            'login': self.repo1.login,
+            'name': self.repo1.name,
             'status': 'pending-accept',
             'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
         })
@@ -298,10 +298,10 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data, {
-            'full_name': 'login0/name0',
-            'inviter_login': 'user1',
-            'login': 'login0',
-            'name': 'name0',
+            'full_name': '{}/{}'.format(self.repo1.login, self.repo1.name),
+            'inviter_login': self.user1.username,
+            'login': self.repo1.login,
+            'name': self.repo1.name,
             'status': 'pending-accept',
             'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
         })
@@ -351,10 +351,10 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.post(url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data, {
-            'full_name': 'login0/name0',
-            'inviter_login': 'user1',
-            'login': 'login0',
-            'name': 'name0',
+            'full_name': '{}/{}'.format(self.repo1.login, self.repo1.name),
+            'inviter_login': self.user1.username,
+            'login': self.repo1.login,
+            'name': self.repo1.name,
             'status': 'pending-inviter-approval',
             'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
         })

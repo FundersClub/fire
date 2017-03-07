@@ -1,8 +1,12 @@
+import html2text
 from uuid import uuid4
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
-from django.core.mail import send_mail
+from django.core.mail import (
+    EmailMultiAlternatives,
+    send_mail,
+)
 from django.db import models
 from django.template.loader import render_to_string
 
@@ -29,7 +33,7 @@ class IncomingMessage(models.Model):
     to_email = models.EmailField(max_length=200)
     uuid = models.UUIDField(default=uuid4, unique=True)
 
-    def reply_from_template(self, template_name, extra_context=None):
+    def reply_from_template(self, template_name, extra_context=None, html=False):
         context = {
             'msg': self,
             'settings': settings,
@@ -37,13 +41,24 @@ class IncomingMessage(models.Model):
         if extra_context:
             context.update(extra_context)
 
-        return send_mail(
-            'Re: ' + self.subject,
-            render_to_string(template_name, context),
-            settings.DEFAULT_FROM_EMAIL,
-            ['{} <{}>'.format(self.from_name, self.from_email) if self.from_name else self.from_email],
-            fail_silently=False,
-        )
+        body = render_to_string(template_name, context)
+        subject = 'Re: ' + self.subject
+        to = '{} <{}>'.format(self.from_name, self.from_email) if self.from_name else self.from_email
+
+        if html:
+            h = html2text.HTML2Text(bodywidth=0)
+            text_content = h.handle(body)
+            msg = EmailMultiAlternatives(subject, text_content, settings.DEFAULT_FROM_EMAIL, [to])
+            msg.attach_alternative(body, "text/html")
+            msg.send(fail_silently=False)
+        else:
+            return send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,
+                [to],
+                fail_silently=False,
+            )
 
 
 def attachment_file_name(instance, filename):

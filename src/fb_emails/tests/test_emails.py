@@ -1,7 +1,5 @@
 import os
 
-from unittest import skip
-
 from django.conf import settings
 from django.core import mail
 from django.test import (
@@ -104,7 +102,6 @@ ID: b162081f6c7a4d29aa36050a275751f1
 
 class EmailsTestCase(RequestsMockMixin, TestCase):
     @mock_github_api
-    @skip('no frontend to support this')
     def test_association_email(self):
         # Repo we'll be testing against (IncomingMessageFactory defaults to fake@)
         repo = RepositoryFactory.create(email_slug='fake', login='firebot-test', name='Hello-World')
@@ -119,9 +116,9 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Great job creating an issue using the Fire bot' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
 
-        expected_url = settings.BASE_URL + reverse('fb-github-associate-email', args=[msg.uuid])
+        expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
         del mail.outbox[:]
 
@@ -136,9 +133,9 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Great job creating an issue using the Fire bot' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
 
-        expected_url = settings.BASE_URL + reverse('fb-github-associate-email', args=[msg.uuid])
+        expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
         del mail.outbox[:]
 
@@ -168,9 +165,9 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Great job creating an issue using the Fire bot' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
 
-        expected_url = settings.BASE_URL + reverse('fb-github-associate-email', args=[msg.uuid])
+        expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
         del mail.outbox[:]
 
@@ -182,8 +179,8 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Great job creating an issue using the Fire bot' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
 
-        expected_url = settings.BASE_URL + reverse('fb-github-associate-email', args=[msg.uuid])
+        expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
         del mail.outbox[:]
