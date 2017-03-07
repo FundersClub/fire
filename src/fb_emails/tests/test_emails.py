@@ -33,7 +33,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertEqual(msg.from_name, 'Eran Rundstein')
         self.assertEqual(msg.status, IncomingMessage.Status.UnrecognizedUsername)
         self.assertEqual(msg.subject, 'Attachment test')
-        self.assertEqual(msg.to_email, 'test@firebot.fundersclub.com')
+        self.assertEqual(msg.to_email, 'test@fire.fundersclub.com')
         self.assertIsNotNone(msg.processed_at)
 
         for attachment in msg.attachment_set.all():
@@ -42,7 +42,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: Attachment test')
         self.assertTrue(
-            'I do not recognize the e-mail address test@firebot.fundersclub.com. Have you added the Fire bot to your repository?'
+            'I do not recognize the e-mail address test@fire.fundersclub.com. Have you added the Fire bot to your repository?'
             in mail.outbox[0].body
         )
 

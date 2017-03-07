@@ -84,7 +84,7 @@ BASE_URL = 'http://localhost:12001'
 ###############################################################################
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_DOMAIN = 'firebot.fundersclub.com'
+EMAIL_DOMAIN = 'fire.fundersclub.com'
 DEFAULT_FROM_EMAIL = 'bot@' + EMAIL_DOMAIN
 SENDGRID_API_KEY = 'unused'
 SENDGRID_WEBHOOK_SECRET = 'secret'

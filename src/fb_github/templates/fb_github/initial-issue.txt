@@ -1,4 +1,4 @@
-Greetings, @fire-bot from [FundersClub Catalyst](https://firebot.fundersclub.com/) here!
+Greetings, @fire-bot from [FundersClub Catalyst](https://fire.fundersclub.com/) here!
 
 @{{ repo.inviter_login }} recently invited me (@fire-bot) to join this repository and help your team easily create issues over email. @{{ repo.inviter_login }} still needs to click to complete a few steps before I am all set:
 

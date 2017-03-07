@@ -4,7 +4,7 @@ Content-Disposition: form-data; name="headers"
 From: Eran Rundstein <eran@fundersclub.com>
 Date: Mon, 20 Feb 2017 13:33:04 -0800
 Subject: Fwd: [FundersClub Production] error: ReferenceError: clearOverlappingSelection is not defined
-To: test@firebot.fundersclub.com
+To: test@fire.fundersclub.com
 Content-Type: multipart/alternative; boundary=94eb2c05ae023eea400548fd025a
 
 --xYzZY
@@ -14,7 +14,7 @@ Content-Disposition: form-data; name="dkim"
 --xYzZY
 Content-Disposition: form-data; name="to"
 
-test@firebot.fundersclub.com
+test@fire.fundersclub.com
 --xYzZY
 Content-Disposition: form-data; name="html"
 
@@ -394,7 +394,7 @@ Content analysis details:   (0.0 points, 5.0 required)
 --xYzZY
 Content-Disposition: form-data; name="envelope"
 
-{"to":["test@firebot.fundersclub.com"],"from":"eran@fundersclub.com"}
+{"to":["test@fire.fundersclub.com"],"from":"eran@fundersclub.com"}
 --xYzZY
 Content-Disposition: form-data; name="attachments"
 
