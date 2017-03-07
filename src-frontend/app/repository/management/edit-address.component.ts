@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
-import { Repository } from './repository.model';
-import { RepositoryService } from './repository.service';
+import { Repository } from '../repository.model';
+import { RepositoryService } from '../repository.service';
 
 @Component({
     selector: 'edit-address',

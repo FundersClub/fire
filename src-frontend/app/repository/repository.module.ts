@@ -3,7 +3,7 @@ import { CommonModule }   from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 
-import { EditAddressComponent } from './edit-address.component';
+import { EditAddressComponent } from './management/edit-address.component';
 import { EditTeamComponent } from './management/edit-team.component';
 import { EmailMapAddComponent } from './email-map/email-map-add.component';
 import { EmailMapEditComponent } from './email-map/email-map-edit.component';
