@@ -8,8 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth-github/auth.module';
 import { PageNotFoundComponent } from './not-found.component';
 import { RepositoryModule } from './repository/repository.module';
-import { UserIsAuthedGuard } from './user-auth.service';
-import { UserService } from './user.service';
 
 @NgModule({
     imports: [
@@ -27,8 +25,6 @@ import { UserService } from './user.service';
         PageNotFoundComponent,
     ],
     providers: [
-        UserIsAuthedGuard,
-        UserService,
         {
             provide: XSRFStrategy,
             useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken'),

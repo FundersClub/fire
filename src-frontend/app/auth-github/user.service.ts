@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './user.model';
-import { RepositoryService } from './repository/repository.service';
+import { RepositoryService } from '../repository/repository.service';
 
 @Injectable()
 export class UserService {

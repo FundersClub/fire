@@ -1,4 +1,4 @@
-import { Repository } from './repository/repository.model';
+import { Repository } from '../repository/repository.model';
 
 export class User {
     constructor(

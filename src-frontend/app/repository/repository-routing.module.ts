@@ -10,7 +10,7 @@ import { RepositoryListComponent } from './repository-list.component';
 import { RepositoryResolver } from './repository-resolver.service';
 import { SetEmailComponent } from './onboarding/set-email.component';
 import { SetTeamComponent } from './onboarding/set-team.component';
-import { UserIsAuthedGuard } from '../user-auth.service';
+import { UserIsAuthedGuard } from '../auth-github/user-auth.service';
 
 const repositoryRoutes: Routes = [{
     path: 'repos',

@@ -9,6 +9,8 @@ import { LoginComponent } from './login.component';
 import { OauthUrlService } from './oauth-url.service'
 import { RepositoryService } from '../repository/repository.service';
 import { UserCantApproveRepoGuard } from './wrong-user.service';
+import { UserIsAuthedGuard } from './user-auth.service';
+import { UserService } from './user.service';
 import { WrongUserComponent } from './wrong-user.component';
 
 @NgModule({
@@ -26,6 +28,8 @@ import { WrongUserComponent } from './wrong-user.component';
         BasicRepositoryInfoResolver,
         OauthUrlService,
         UserCantApproveRepoGuard,
+        UserIsAuthedGuard,
+        UserService,
     ],
 })
 export class AuthModule {}

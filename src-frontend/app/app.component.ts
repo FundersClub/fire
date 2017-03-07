@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import '../static/css/global-layout.css';
 
-import { User } from './user.model';
-import { UserService } from './user.service';
+import { User } from './auth-github/user.model';
+import { UserService } from './auth-github/user.service';
 
 @Component({
     selector: 'firebot',

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Repository } from '../repository/repository.model';
 import { RepositoryService } from '../repository/repository.service';
-import { UserIsAuthedGuard } from '../user-auth.service';
+import { UserIsAuthedGuard } from './user-auth.service';
 
 @Injectable()
 export class UserCantApproveRepoGuard implements CanActivate {
