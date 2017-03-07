@@ -207,21 +207,24 @@ class RepositoryViewSet(
 ################################################################################
 
 class MeView(APIView):
-    def get(self, request, format=None):
+    @classmethod
+    def get_me_data(cls, request):
         if not request.user.is_authenticated():
-            resp = {
+            return {
                 'is_authenticated': False,
             }
-        else:
-            resp = {
-                'repositories': RepositoryViewSet.as_view({'get': 'list'})(request).data,
-                'username': request.user.username,
-                'is_authenticated': True,
-                'urls': {
-                    'logout': reverse('account_logout', request=request),
-                },
-            }
-        return Response(resp)
+
+        return {
+            'repositories': RepositoryViewSet.as_view({'get': 'list'})(request).data,
+            'username': request.user.username,
+            'is_authenticated': True,
+            'urls': {
+                'logout': reverse('account_logout', request=request),
+            },
+        }
+
+    def get(self, request, format=None):
+        return Response(self.__class__.get_me_data(request))
 
 
 class AssociateEmailView(APIView):

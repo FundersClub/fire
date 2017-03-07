@@ -22,7 +22,7 @@ urlpatterns = [
 
     # Static files
     url(r'^$', serve, {'path': 'static.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
-    url(r'^.+', serve, {'path': 'app.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='repos'),
+    url(r'^.+', firebot.views.app_html, name='repos'),
 ]
 
 if settings.DEBUG:
