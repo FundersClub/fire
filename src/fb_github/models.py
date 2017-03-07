@@ -37,6 +37,7 @@ class Repository(models.Model):
     approved_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     email_slug = models.SlugField(default=email_slug_default, unique=True)
+    initial_issue = models.ForeignKey('Issue', null=True, blank=True)
     inviter_login = models.CharField(max_length=200)
     login = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -120,6 +121,11 @@ class Repository(models.Model):
                 user=user,
             )
 
+        try:
+            self.initial_issue.gh_issue.close()
+        except:
+            pass
+
 
 class EmailMap(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -147,7 +153,7 @@ class Issue(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     gh_data = JSONField()
     issue_number = models.PositiveIntegerField()
-    msg = models.OneToOneField('fb_emails.IncomingMessage')
+    msg = models.OneToOneField('fb_emails.IncomingMessage', blank=True, null=True)
     repo = models.ForeignKey(Repository)
 
     def __str__(self):

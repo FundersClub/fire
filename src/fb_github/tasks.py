@@ -48,13 +48,19 @@ def accept_new_repo(repo_id):
         'settings': settings,
     })
 
-    repo.gh_repo.create_issue(
+    gh_issue = repo.gh_repo.create_issue(
         title='Finish adding @fire-bot to your repo',
         body=body,
     )
+    repo.initial_issue = Issue.objects.create(
+        body=body,
+        gh_data=gh_issue.as_dict(),
+        issue_number=gh_issue.number,
+        repo=repo,
+    )
 
     repo.status = Repository.Status.PendingInviterApproval
-    repo.save(update_fields=['status'])
+    repo.save(update_fields=['status', 'initial_issue'])
 
 
 @shared_task()
