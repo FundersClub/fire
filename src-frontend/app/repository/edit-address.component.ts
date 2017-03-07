@@ -5,15 +5,15 @@ import { RepositoryService } from './repository.service';
 
 @Component({
     selector: 'edit-address',
-    styleUrls: ['./edit-address.component.scss'],
     templateUrl: './edit-address.component.html',
 })
 export class EditAddressComponent implements OnInit {
     @Input() repository: Repository;
     @Output() editCanceled = new EventEmitter();
     @Output() editSaved = new EventEmitter();
-    newAddress: string;
     errorMessage: string;
+    newAddress: string;
+    saving = false;
 
     constructor(
         private repositoryService: RepositoryService,
@@ -29,9 +29,13 @@ export class EditAddressComponent implements OnInit {
     }
 
     save() {
+        this.saving = true;
         this.errorMessage = '';
         this.repositoryService.updateAddress(this.repository, this.newAddress)
             .then((updatedRepository) => this.editSaved.emit(updatedRepository))
-            .catch((errorMessage: string) => this.errorMessage = errorMessage);
+            .catch((errorMessage: string) => {
+                this.errorMessage = errorMessage;
+                this.saving = false;
+            });
     }
 }

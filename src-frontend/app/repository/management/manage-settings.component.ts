@@ -5,7 +5,6 @@ import { Repository } from '../repository.model';
 import { RepositoryService } from '../repository.service';
 
 @Component({
-    selector: 'manage-settings',
     templateUrl: './manage-settings.component.html',
 })
 export class ManageSettingsComponent {
@@ -20,7 +19,7 @@ export class ManageSettingsComponent {
     ngOnInit() {
         // Always pull a fresh copy of the repo when creating the view. The
         // cached copy in the route's data may be outdatted.
-        let data = this.route.snapshot.data as { repository: Repository };
+        let data = this.route.parent.snapshot.data as { repository: Repository };
         this.repository = this.respositoryService.getByUrl(data.repository.url);
     }
 

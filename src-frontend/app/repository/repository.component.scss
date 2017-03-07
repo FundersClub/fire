@@ -19,11 +19,6 @@
 
 /* Our Repository-wide defaults. */
 :host /deep/ {
-    .ErrorMessage {
-        color: red;
-        white-space: nowrap;
-    }
-
     .mat-tab-links {
         color: red;
         justify-content: center;

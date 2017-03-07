@@ -9,7 +9,7 @@ import { Repository } from './repository.model';
     templateUrl: './repository.component.html',
 })
 export class RepositoryComponent implements OnInit, AfterViewInit {
-    repo: Repository;
+    repository: Repository;
     @ViewChild(MdTabNavBar) private tabs: MdTabNavBar;
 
     constructor(
@@ -18,7 +18,7 @@ export class RepositoryComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.route.data.subscribe((data: { repository: Repository }) => {
-            this.repo = data.repository;
+            this.repository = data.repository;
         });
     }
 

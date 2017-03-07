@@ -68,4 +68,23 @@ $theme: mat-light-theme($primary, $accent);
             color: rgba(0, 0, 0, 0.5);
         }
     }
+
+    .Form {
+        font-size: 18px;
+    };
+
+    .Form--saving {
+        // Match disabled state of other inputs.
+        color: rgba(0, 0, 0, .38);
+    }
+
+    .CardCtas {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .ErrorMessage {
+        color: red;
+        white-space: nowrap;
+    }
 }

@@ -9,13 +9,6 @@
             align-items: baseline;
         }
 
-        .MemberForm {};
-
-        .MemberForm--saving {
-            // Match disabled state of other inputs.
-            color: rgba(0, 0, 0, .38);
-        }
-
         .LoginField {
             flex: 0 0 40%;
         }

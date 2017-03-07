@@ -4,9 +4,12 @@ import { RouterModule, Routes }  from '@angular/router';
 import { ManageAddressComponent } from './management/manage-address.component';
 import { ManageSettingsComponent } from './management/manage-settings.component';
 import { ManageTeamComponent } from './management/manage-team.component';
+import { OnboardingComponent } from './onboarding/onboarding.component';
 import { RepositoryComponent } from './repository.component';
 import { RepositoryListComponent } from './repository-list.component';
 import { RepositoryResolver } from './repository-resolver.service';
+import { SetEmailComponent } from './onboarding/set-email.component';
+import { SetTeamComponent } from './onboarding/set-team.component';
 import { UserIsAuthedGuard } from '../user-auth.service';
 
 const repositoryRoutes: Routes = [{
@@ -17,12 +20,22 @@ const repositoryRoutes: Routes = [{
         component: RepositoryListComponent,
     }, {
         path: ':login/:name',
-        component: RepositoryComponent,
         resolve: {
             repository: RepositoryResolver,
         },
         children: [{
+            path: 'set-up',
+            component: OnboardingComponent,
+            children: [{
+                path: 'email',
+                component: SetEmailComponent,
+            }, {
+                path: 'team',
+                component: SetTeamComponent,
+            }]
+        }, {
             path: '',
+            component: RepositoryComponent,
             children: [{
                 path: 'team',
                 component: ManageTeamComponent,

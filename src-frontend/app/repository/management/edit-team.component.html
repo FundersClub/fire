@@ -1,0 +1,12 @@
+<ul class="TeamMembers">
+    <li *ngFor="let emailMap of repository.emailmap_set; trackBy: trackByFn">
+        <email-map-edit
+            [emailMap]="emailMap"
+        ></email-map-edit>
+    </li>
+    <li>
+        <email-map-add
+            [repository]="repository"
+        ></email-map-add>
+    </li>
+</ul>

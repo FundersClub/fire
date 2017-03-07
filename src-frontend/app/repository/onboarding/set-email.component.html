@@ -1,13 +1,23 @@
+<div class="CardIntro">
+    <div class="CardIntro-title">
+        Set your fire email address
+    </div>
+    <div class="CardIntro-subtext">
+        Choose the email address you want to send issues to. You're free to change this whenever you'd like.
+    </div>
+</div>
+
 <form
-    autocomplete="off"
     class="Form text-center"
     (ngSubmit)="save()"
-    #addressForm="ngForm"
+    #setEmailForm="ngForm"
     [ngClass]="{'Form--saving': saving}"
 >
     <div>
         <md-input-container>
             <input
+                autocomplete="off"
+                autofocus
                 mdInput
                 [(ngModel)]="newAddress"
                 required
@@ -20,7 +30,6 @@
                 {{ errorMessage }}
             </md-hint>
         </md-input-container>
-
         @firebot.fundersclub.com
     </div>
 
@@ -29,17 +38,9 @@
             md-raised-button
             color="primary"
             type="submit"
-            [disabled]="!addressForm.form.valid || saving"
+            [disabled]="!setEmailForm.form.valid || saving"
         >
-            Save
-        </button>
-        <button
-            md-button
-            color="primary"
-            (click)="cancel()"
-            type="button"
-        >
-            Cancel
+            Next
         </button>
     </div>
 </form>

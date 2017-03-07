@@ -13,6 +13,8 @@ export class RepositoryResolver implements Resolve<Repository> {
 
     resolve(route: ActivatedRouteSnapshot): Repository {
         // Ensure a repo with the specified info actually exists.
+        // This check also ensures that this user has permissions to
+        // this repo (since the backend does that).
         const repository = this.respositoryService.getByDisplayName(
             route.params['login'],
             route.params['name']
