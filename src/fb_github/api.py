@@ -26,6 +26,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from fb_emails import models as fb_emails_models
 from fb_github import models
+from fb_github.tasks import update_issue_after_email_association
 from firebot.api import BaseSerializer
 
 
@@ -223,6 +224,41 @@ class MeView(APIView):
         return Response(resp)
 
 
+class AssociateEmailView(APIView):
+    def dispatch(self, request, *args, **kwargs):
+        self.msg = get_object_or_404(
+            fb_emails_models.IncomingMessage,
+            uuid=kwargs['msg_uuid'],
+        )
+        self.repo = self.msg.issue.repo
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        existing_entry = self.repo.emailmap_set.filter(email=self.msg.from_email).first()
+
+        return Response({
+            'repository': {
+                'login': self.repo.login,
+                'name': self.repo.name,
+            },
+            'email': self.msg.from_email,
+            'login': existing_entry.login if existing_entry else None,
+        })
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        self.repo.emailmap_set.create(
+            email=self.msg.from_email,
+            login=request.user.username,
+            user=request.user,
+        )
+        update_issue_after_email_association.delay(self.msg.issue.id)
+
+        return self.get(request, *args, **kwargs)
+
+
 ################################################################################
 # Router
 ################################################################################
@@ -234,5 +270,6 @@ router.register('repository', RepositoryViewSet)
 
 urlpatterns = [
     url(r'^me/$', MeView.as_view(), name='fb-github-me'),
+    url(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email'),
     url(r'^', include(router.urls)),
 ]

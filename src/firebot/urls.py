@@ -19,7 +19,6 @@ urlpatterns = [
     ])),
     url(r'^test-500/$', firebot.views.test_500),
     url(r'^emails/', include('fb_emails.urls')),
-    url(r'^github/', include('fb_github.urls')),
 
     # Static files
     url(r'^$', serve, {'path': 'static.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
