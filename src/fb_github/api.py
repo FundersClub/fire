@@ -237,12 +237,14 @@ class AssociateEmailView(APIView):
         existing_entry = self.repo.emailmap_set.filter(email=self.msg.from_email).first()
 
         return Response({
+            'email': self.msg.from_email,
+            'login': existing_entry.login if existing_entry else None,
             'repository': {
+                'full_name': self.repo.full_name,
                 'login': self.repo.login,
                 'name': self.repo.name,
             },
-            'email': self.msg.from_email,
-            'login': existing_entry.login if existing_entry else None,
+            'url': reverse('fb-github-associate-email', args=[self.msg.uuid], request=request),
         })
 
     def post(self, request, *args, **kwargs):

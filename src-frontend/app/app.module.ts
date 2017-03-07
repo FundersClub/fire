@@ -5,6 +5,7 @@ import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AssociateEmailModule } from './associate-email/associate-email.module'
 import { AuthModule } from './auth-github/auth.module';
 import { PageNotFoundComponent } from './not-found.component';
 import { RepositoryModule } from './repository/repository.module';
@@ -16,6 +17,7 @@ import { RepositoryModule } from './repository/repository.module';
         MaterialModule,
         // Order of the following modules is important because
         // they have Routers within them.
+        AssociateEmailModule,
         AuthModule,
         RepositoryModule,
         AppRoutingModule,

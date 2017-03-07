@@ -1,0 +1,78 @@
+<md-card
+    *ngIf="usernameAlreadySet"
+    class="SectionCard"
+>
+    <div class="CardIntro">
+        <div class="CardIntro-title">
+            Email already configured
+        </div>
+        <div class="CardIntro-subtext">
+            This email address ({{ associateEmail.email }}) is already associated with a GitHub username ({{ associateEmail.login }}).
+        </div>
+    </div>
+</md-card>
+
+<md-card
+    *ngIf="!usernameAlreadySet && user.is_authenticated"
+    class="SectionCard"
+>
+    <div class="CardIntro">
+        <div class="CardIntro-title">
+            Confirm your GitHub username
+        </div>
+        <div class="CardIntro-subtext">
+            Please confirm that <strong>{{ associateEmail.email }}</strong> should be associated with <strong>@{{ user.username }}</strong>.<br>
+            Issues created by {{ associateEmail.email }} will automatically tag {{ user.username }} so they receive updates about comments and other activity.
+        </div>
+    </div>
+    <div class="text-center">
+        <button
+            md-raised-button
+            color="primary"
+            type="button"
+            (click)="confirm()"
+            [disabled]="confirming || showConfirmationMessage"
+        >
+            Confirm
+        </button>
+        <div *ngIf="showConfirmationMessage">
+            <br>
+            Confirmed! Future Issues will automatically tag your GitHub username.
+        </div>
+        <div
+            *ngIf="error"
+            class="ErrorMessage"
+        >
+            {{ error }}
+        </div>
+    </div>
+</md-card>
+
+<md-card
+    *ngIf="!usernameAlreadySet && !user.is_authenticated"
+    class="SectionCard"
+>
+    <div class="CardIntro">
+        <div class="CardIntro-title">
+            Provide your GitHub username
+        </div>
+        <div class="CardIntro-subtext">
+            Fire needs to know what GitHub username should be associated with <strong>{{ associateEmail.email }}</strong>. Please login to provide your username.
+        </div>
+    </div>
+    <div class="text-center">
+        <a
+            md-raised-button
+            color="primary"
+            [href]="loginUrl"
+        >
+            <img
+                class="GitHubLogoInBtn"
+                height="16"
+                src="../../static/images/github-logo.png"
+                width="16"
+            >
+            Login Now
+        </a>
+    </div>
+</md-card>
