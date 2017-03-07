@@ -3,6 +3,7 @@ import logging
 from celery import shared_task
 from django.conf import settings
 from django.template.loader import render_to_string
+from github3.exceptions import ForbiddenError
 
 from fb_github.client import (
     get_github_client,
@@ -79,4 +80,7 @@ def update_issue_after_email_association(issue_id):
     new_sent_by = 'sent by {} (@{})'.format(msg.from_name, map_entry.login)
     body[0] = body[0].replace(orig_sent_by, new_sent_by)
 
-    gh_issue.edit(gh_issue.title, '\n'.join(body))
+    try:
+        gh_issue.edit(gh_issue.title, '\n'.join(body))
+    except ForbiddenError:
+        pass
