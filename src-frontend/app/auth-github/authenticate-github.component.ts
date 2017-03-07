@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OauthUrlService } from './oauth-url.service'
+import { Repository } from '../repository/repository.model';
 
 @Component({
     templateUrl: './authenticate-github.component.html',
@@ -15,6 +16,7 @@ import { OauthUrlService } from './oauth-url.service'
 })
 export class AuthenticateGitHubComponent implements OnInit {
     oAuthUrl: string;
+    repository: Repository;
 
     constructor(
         private oAuthUrlService: OauthUrlService,
@@ -22,7 +24,9 @@ export class AuthenticateGitHubComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        let returnTo = this.route.snapshot.queryParams['returnTo'];
+        let data = this.route.snapshot.data as { repository: Repository };
+        this.repository = data.repository;
+        let returnTo = this.route.snapshot.queryParams['returnTo'] || '/repos';
         this.oAuthUrl = this.oAuthUrlService.get(returnTo);
     }
 }

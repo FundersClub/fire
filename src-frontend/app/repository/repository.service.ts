@@ -119,4 +119,17 @@ export class RepositoryService {
             }
         );
     }
+
+    getBasicInfo(uuid: string): Promise<any> {
+        const url = `/api/github/repository/${uuid}/approve/`;
+        return new Promise((resolve, reject) => {
+            this.http.post(url, {}).toPromise()
+                .then((response) => {
+                    const repository = response.json() as Repository;
+                    resolve(repository);
+                })
+                .catch((error) => reject(error.json()));
+            }
+        );
+    }
 }

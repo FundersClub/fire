@@ -6,6 +6,7 @@ export class Repository {
         public email_slug: string,
         public emailmap_set: Array<EmailMap>,
         public full_name: string, // `{login}/{name}`
+        public inviter_login: string,
         public login: string, // Owner of repo
         public name: string,
         public status: string, // "active", "pending-accept", "pending-inviter-approval"

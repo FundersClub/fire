@@ -4,6 +4,7 @@ import { MaterialModule } from '@angular/material';
 
 import { AuthenticateGitHubComponent } from './authenticate-github.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { BasicRepositoryInfoResolver } from './basic-repo-info.service';
 import { LoginComponent } from './login.component';
 import { OauthUrlService } from './oauth-url.service'
 import { RepositoryService } from '../repository/repository.service';
@@ -22,6 +23,7 @@ import { WrongUserComponent } from './wrong-user.component';
         LoginComponent,
     ],
     providers: [
+        BasicRepositoryInfoResolver,
         OauthUrlService,
         UserCantApproveRepoGuard,
     ],

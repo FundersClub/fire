@@ -7,8 +7,8 @@
             Verify your GitHub
         </div>
         <div class="CardIntro-subtext">
-            Before we enable fire, we need to verify your GitHub username<br>
-            matches the username which originally added fire to your repo.
+            Before we enable fire on <strong>{{ repository.full_name }}</strong>, we need to verify that your GitHub username
+            is <strong>{{ repository.inviter_login }}</strong>. Only <strong>{{ repository.inviter_login }}</strong> may enable fire on this repo.
         </div>
     </div>
     <div class="text-center">
