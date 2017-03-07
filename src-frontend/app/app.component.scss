@@ -87,4 +87,10 @@ $theme: mat-light-theme($primary, $accent);
         color: red;
         white-space: nowrap;
     }
+
+    .GitHubLogoInBtn {
+        left: -2px;
+        position: relative;
+        top: -2px;
+    }
 }

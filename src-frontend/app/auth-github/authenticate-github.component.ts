@@ -5,14 +5,7 @@ import { OauthUrlService } from './oauth-url.service'
 import { Repository } from '../repository/repository.model';
 
 @Component({
-    templateUrl: './authenticate-github.component.html',
-    styles: [`
-        .GitHubLogo {
-            left: -2px;
-            position: relative;
-            top: -2px;
-        }
-    `],
+    templateUrl: './authenticate-github.component.html'
 })
 export class AuthenticateGitHubComponent implements OnInit {
     oAuthUrl: string;

@@ -4,14 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OauthUrlService } from './oauth-url.service'
 
 @Component({
-    templateUrl: './login.component.html',
-    styles: [`
-        .GitHubLogo {
-            left: -2px;
-            position: relative;
-            top: -2px;
-        }
-    `],
+    templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
     oAuthUrl: string;
