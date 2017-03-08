@@ -11,6 +11,12 @@ import { INITIAL_DATA_CACHE, loadInitialDataCache } from './initial-data-cache';
 import { PageNotFoundComponent } from './not-found.component';
 import { RepositoryModule } from './repository/repository.module';
 
+// Stubbing this out as a factory to make AoT happy.
+// https://github.com/angular/angular/issues/14200
+export function xsrfFactory() {
+    return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken')
+}
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -31,7 +37,7 @@ import { RepositoryModule } from './repository/repository.module';
         {
             // Ensure CSRF tokens are included in headers during API requests.
             provide: XSRFStrategy,
-            useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken'),
+            useFactory: xsrfFactory,
         },
         {
             // Inject serverside data if we got it.
