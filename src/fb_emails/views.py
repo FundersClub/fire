@@ -34,12 +34,15 @@ class SendGridParseView(View):
         )
 
         for name, info in json.loads(data.get('attachment-info', '{}')).items():
-            Attachment.objects.create(
+            attachment = Attachment(
                 content_id=info.get('content-id', ''),
                 content_type=info.get('type', ''),
                 file=request.FILES[name],
                 msg=msg,
             )
+            if attachment.content_type:
+                attachment.file.content_type = attachment.content_type
+            attachment.save()
 
         transaction.on_commit(partial(process_incoming_message.delay, msg.id))
         return HttpResponse()
