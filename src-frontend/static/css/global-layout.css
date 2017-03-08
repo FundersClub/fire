@@ -5,6 +5,7 @@ body {
     background: #fafafa;
     font-family: "futura-pt", sans-serif;
     font-weight: 400;
+    min-width: 800px;
 }
 
 /* Hack a bunch of material design overrides */
