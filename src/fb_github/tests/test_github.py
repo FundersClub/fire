@@ -21,14 +21,14 @@ class GitHubTestCase(RequestsMockMixin, TestCase):
         msg = IncomingMessageFactory.create()
         issue = repo.create_issue_from_incoming_msg(msg)
         self.assertTrue(msg.body_text in issue.body)
-        self.assertTrue('sent by {} ({})'.format(msg.from_name, msg.from_email) in issue.body)
+        self.assertTrue('Sent by {} ({})'.format(msg.from_name, msg.from_email) in issue.body)
 
         # Add email to map and try again
         msg = IncomingMessageFactory.create()
         repo.emailmap_set.create(email=msg.from_email, login='lenny')
         issue = repo.create_issue_from_incoming_msg(msg)
         self.assertTrue(msg.body_text in issue.body)
-        self.assertTrue('sent by @lenny ({})'.format(msg.from_email) in issue.body)
+        self.assertTrue('Sent by @lenny ({})'.format(msg.from_email) in issue.body)
 
 
 class GitHubAPITestCase(RequestsMockMixin, APITestCase):

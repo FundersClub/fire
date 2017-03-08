@@ -2,7 +2,7 @@ Greetings, @fire-bot from [FundersClub Catalyst](https://fire.fundersclub.com/) 
 
 @{{ repo.inviter_login }} recently invited me (@fire-bot) to join this repository and help your team easily create issues over email. @{{ repo.inviter_login }} still needs to click to complete a few steps before I am all set:
 
-**[Complete Fire bot setup now]({{ settings.BASE_URL }}/approve/{{ repo.uuid }}/)**
+**[Complete fire setup now]({{ settings.BASE_URL }}/approve/{{ repo.uuid }}/)**
 
 (Only @{{ repo.inviter_login }} will be able to enable me using the above link. If someone added me to your repo by mistake or you would no longer like to use my services, feel free to remove @fire-bot from your repo's collaborators and I won't bother you again!)
 

@@ -40,7 +40,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: Attachment test')
         self.assertTrue(
-            'I do not recognize the e-mail address test@fire.fundersclub.com. Have you added the Fire bot to your repository?'
+            'I do not recognize the e-mail address test@fire.fundersclub.com. Have you added fire (@fire-bot) to your repository?'
             in mail.outbox[0].body
         )
 
@@ -78,7 +78,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertEqual(msg.issue.issue_number, 1347)
         self.assertEqual(msg.status, IncomingMessage.Status.Processed)
         self.assertIsNotNone(msg.processed_at)
-        self.assertTrue('sent by {} ({})'.format(msg.from_name, msg.from_email) in msg.issue.body)
+        self.assertTrue('Sent by {} ({})'.format(msg.from_name, msg.from_email) in msg.issue.body)
 
         test_text = """
 \---------- Forwarded message ----------
@@ -116,7 +116,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using fire.' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
@@ -133,7 +133,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using fire.' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
@@ -165,7 +165,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using fire.' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
@@ -179,7 +179,7 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: ' + msg.subject)
-        self.assertTrue('Congratulations! You just created your first issue using firebot.' in mail.outbox[0].body)
+        self.assertTrue('Congratulations! You just created your first issue using fire.' in mail.outbox[0].body)
 
         expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)

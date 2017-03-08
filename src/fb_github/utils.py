@@ -60,10 +60,10 @@ def msg_to_markdown(repo, msg):
     else:
         tag = msg.from_name
 
-    return u'*Opened via [firebot]({}/), sent by {} ({})*\n\n{}{}'.format(
-        settings.BASE_URL,
+    return u'*Sent by {} ({}). Created by [fire]({}/).*\n\n---\n{}{}'.format(
         tag,
         msg.from_email,
+        settings.BASE_URL,
         msg_body,
         attachments_text,
     )

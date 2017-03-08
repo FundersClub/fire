@@ -1,6 +1,6 @@
 Hey {{ msg.from_name }},
 
-I do not recognize the e-mail address {{ msg.to_email }}. Have you added the Fire bot to your repository?
+I do not recognize the e-mail address {{ msg.to_email }}. Have you added fire (@fire-bot) to your repository?
 *{{ email_slug }}* is not currently associated with any repository.
 
 Thanks,

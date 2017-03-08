@@ -71,13 +71,13 @@ def update_issue_after_email_association(issue_id):
     gh_issue = issue.gh_issue
 
     body = gh_issue.body.splitlines()
-    orig_sent_by = 'sent by {} ({})'.format(msg.from_name, msg.from_email)
+    orig_sent_by = 'Sent by {} ({})'.format(msg.from_name, msg.from_email)
     if orig_sent_by not in body[0]:
         print('Ok')
         return
 
     map_entry = issue.repo.emailmap_set.filter(email=msg.from_email).get()
-    new_sent_by = 'sent by {} (@{})'.format(msg.from_name, map_entry.login)
+    new_sent_by = 'Sent by {} (@{})'.format(msg.from_name, map_entry.login)
     body[0] = body[0].replace(orig_sent_by, new_sent_by)
 
     try:
