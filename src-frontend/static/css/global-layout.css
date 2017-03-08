@@ -64,7 +64,7 @@ body {
     /* Gradient is $mat-orange(600) to $mat-deep-orange(600). */
     background:
         url(../images/background-curves.svg) no-repeat scroll top center/cover,
-        linear-gradient(60deg, #fb8c00 0%, #f4511e 100%) no-repeat scroll top center/cover;
+        linear-gradient(215deg, #fb8c00 0%, #f4511e 100%) no-repeat scroll top center/cover;
     background-size: 100%;
     content: '';
     z-index: -2;

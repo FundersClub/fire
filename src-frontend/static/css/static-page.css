@@ -3,7 +3,6 @@
     text-decoration: none;
     color: #fff;
     font-size: 20px;
-    font-weight: 300;
 }
 
 .LoginLink:hover {
@@ -61,13 +60,17 @@
 .FeatureImage,
 .FeatureCopy {
     flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .FeatureTitle {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 300;
     /* $mat-deep-orange(500) */
     color: #ff5722;
+    line-height: 46px;
     margin: 0 0 10px 0;
 }
 
@@ -132,6 +135,12 @@
     text-align: center;
 }
 
+.HowToList {
+    margin: 0;
+    list-style-position: inside;
+    padding: 0;
+}
+
 .HowToVideo {
     align-items: center;
     border: 2px solid #ccc;
@@ -149,6 +158,7 @@
 
 .HowToCtaSubtext {
     color: #fff;
+    font-weight: 300;
     margin-top: 10px;
 }
 
@@ -172,25 +182,21 @@
     width: 720px;
 }
 
-.PromotionTitle {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 300;
-    margin: 40px 0 10px;
-}
-
 .PromotionText {
     color: #C4C4C4;
     font-size: 16px;
     line-height: 32px;
+    padding: 0 80px;
 }
 
-.PromotionText a {
+.PromotionLink {
     color: #fff;
+    display: inline-block;
+    margin-top: 13px;
     text-decoration: none;
 }
 
-.PromotionText a:hover {
+.PromotionLink:hover {
     text-decoration: underline;
 }
 
