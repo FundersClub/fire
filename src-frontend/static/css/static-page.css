@@ -142,12 +142,8 @@
 }
 
 .HowToVideo {
-    align-items: center;
-    border: 2px solid #ccc;
-    color: #ccc;
+    border: 1px solid #ccc;
     display: flex;
-    height: 500px;
-    justify-content: center;
     margin: 50px 0;
     width: 100%;
 }
