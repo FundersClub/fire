@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AssociateEmailModule } from './associate-email/associate-email.module'
 import { AuthModule } from './auth-github/auth.module';
-import { INITIAL_DATA_CACHE } from './initial-data-cache';
+import { INITIAL_DATA_CACHE, loadInitialDataCache } from './initial-data-cache';
 import { PageNotFoundComponent } from './not-found.component';
 import { RepositoryModule } from './repository/repository.module';
 
@@ -29,13 +29,14 @@ import { RepositoryModule } from './repository/repository.module';
     ],
     providers: [
         {
+            // Ensure CSRF tokens are included in headers during API requests.
             provide: XSRFStrategy,
             useValue: new CookieXSRFStrategy('csrftoken', 'X-CSRFToken'),
         },
         {
-            provide: INITIAL_DATA_CACHE,
             // Inject serverside data if we got it.
-            useFactory: () => window['ME_DATA']
+            provide: INITIAL_DATA_CACHE,
+            useFactory: loadInitialDataCache
         },
     ],
     entryComponents: [
