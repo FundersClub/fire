@@ -29,7 +29,7 @@ class SendGridParseView(View):
             from_email=from_email,
             from_name=from_name,
             original_post_data=dict(data),
-            subject=data['subject'],
+            subject=data.get('subject', '<No subject>'),
             to_email=json.loads(data['envelope'])['to'][0],
         )
 
