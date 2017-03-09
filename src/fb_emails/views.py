@@ -25,7 +25,7 @@ class SendGridParseView(View):
 
         msg = IncomingMessage.objects.create(
             body_html=data.get('html', ''),
-            body_text=data['text'],
+            body_text=data.get('text', ''),
             from_email=from_email,
             from_name=from_name,
             original_post_data=dict(data),
