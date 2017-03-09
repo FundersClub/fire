@@ -50,7 +50,7 @@ def accept_new_repo(repo_id):
     })
 
     gh_issue = repo.gh_repo.create_issue(
-        title='Finish adding @fire-bot to your repo',
+        title='Finish adding @{} to your repo'.format(settings.GITHUB_BOT_USERNAME),
         body=body,
     )
     repo.initial_issue = Issue.objects.create(

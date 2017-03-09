@@ -68,7 +68,7 @@ CELERY_TASK_EAGER_PROPAGATES = True
 # GitHub
 ###############################################################################
 
-# @firebot-test-local
+GITHUB_BOT_USERNAME = 'firebot-test-local'
 GITHUB_TOKEN = '173c367ffc34aafe96118576eae3fde982a337ab'
 
 

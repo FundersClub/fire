@@ -36,6 +36,7 @@ def process_incoming_message(msg_id):
         )
     except Repository.DoesNotExist:
         msg.reply_from_template('fb_emails/unknown-repo.txt', {
+            'bot_username': settings.GITHUB_BOT_USERNAME,
             'email_slug': email_slug,
         })
         msg.status = IncomingMessage.Status.UnrecognizedUsername

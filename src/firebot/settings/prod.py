@@ -93,6 +93,7 @@ CELERY_BROKER_URL = os.environ['REDIS_URL']
 # GitHub
 ###############################################################################
 
+GITHUB_BOT_USERNAME = os.environ['GITHUB_BOT_USERNAME']
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 
 

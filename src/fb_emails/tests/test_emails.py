@@ -40,7 +40,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Re: Attachment test')
         self.assertTrue(
-            'I do not recognize the e-mail address test@fire.fundersclub.com. Have you added fire (@fire-bot) to your repository?'
+            'I do not recognize the e-mail address test@{}. Have you added fire (@{}) to your repository?'.format(settings.EMAIL_DOMAIN, settings.GITHUB_BOT_USERNAME)
             in mail.outbox[0].body
         )
 

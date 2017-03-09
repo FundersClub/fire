@@ -1,7 +1,7 @@
 Greetings, [fire]({{ settings.BASE_URL }}) here!
 
-@{{ repo.inviter_login }} recently invited @fire-bot to this repository. Before fire is enabled, @{{ repo.inviter_login }} needs to complete a few steps:
+@{{ repo.inviter_login }} recently invited @{{ settings.GITHUB_BOT_USERNAME }} to this repository. Before fire is enabled, @{{ repo.inviter_login }} needs to complete a few steps:
 
 **[Complete fire setup now]({{ settings.BASE_URL }}/approve/{{ repo.uuid }}/)**
 
-*Only @{{ repo.inviter_login }} will be able to enable fire using the above link. If someone added fire by mistake, feel free to remove @fire-bot from your repo's collaborators.*
+*Only @{{ repo.inviter_login }} will be able to enable fire using the above link. If someone added fire by mistake, feel free to remove @{{ settings.GITHUB_BOT_USERNAME }} from your repo's collaborators.*

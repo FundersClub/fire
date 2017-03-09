@@ -40,7 +40,3 @@ If you'd like to simulate the production environment locally, run `npm run build
 ./manage.py test
 npm test
 ```
-
-### GitHub intergration notes
- - Locally, `GITHUB_TOKEN` is a personal access token for @firebot-test-local
- - On Heroku, `GITHUB_TOKEN` is a personal access token for @fire-bot
