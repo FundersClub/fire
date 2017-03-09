@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 from django.test import TestCase
@@ -203,6 +204,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                         },
                     ],
                     'email': self.repo1.email,
+                    'email_domain': settings.EMAIL_DOMAIN,
                     'email_slug': self.repo1.email_slug,
                     'full_name': self.repo1.full_name,
                     'login': self.repo1.login,
@@ -232,6 +234,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 {
                     'emailmap_set': [],
                     'email': self.repo2.email,
+                    'email_domain': settings.EMAIL_DOMAIN,
                     'email_slug': self.repo2.email_slug,
                     'full_name': self.repo2.full_name,
                     'login': self.repo2.login,
@@ -326,6 +329,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 },
             ],
             'email': self.repo1.email,
+            'email_domain': settings.EMAIL_DOMAIN,
             'email_slug': self.repo1.email_slug,
             'full_name': self.repo1.full_name,
             'login': self.repo1.login,
@@ -376,6 +380,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 },
             ],
             'email': self.repo1.email,
+            'email_domain': settings.EMAIL_DOMAIN,
             'email_slug': self.repo1.email_slug,
             'full_name': self.repo1.full_name,
             'login': self.repo1.login,

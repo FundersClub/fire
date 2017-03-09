@@ -3,6 +3,7 @@ import { EmailMap } from './email-map/email-map.model';
 export class Repository {
     constructor(
         public email: string,
+        public email_domain: string,
         public email_slug: string,
         public emailmap_set: Array<EmailMap>,
         public full_name: string, // `{login}/{name}`

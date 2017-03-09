@@ -68,12 +68,14 @@ class EmailMapSerializer(BaseSerializer):
 class RepositorySerializer(serializers.HyperlinkedModelSerializer):
     emailmap_set = EmailMapSerializer(many=True, read_only=True)
     urls = serializers.SerializerMethodField()
+    email_domain = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Repository
         fields = (
             'emailmap_set',
             'email',
+            'email_domain',
             'email_slug',
             'full_name',
             'login',
@@ -104,6 +106,9 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
             'emailmap_add': reverse('emailmap-list', request=self.context['request']),
             'purge_attachments': reverse('repository-purge-attachments', args=[obj.uuid], request=self.context['request']),
         }
+
+    def get_email_domain(self, obj):
+        return settings.EMAIL_DOMAIN
 
 
 class RepositoryApproveSerializer(RepositorySerializer):
