@@ -77,6 +77,9 @@ GITHUB_TOKEN = '173c367ffc34aafe96118576eae3fde982a337ab'
 ###############################################################################
 
 BASE_URL = 'http://localhost:12001'
+CONTACT_URL = 'https://fundersclub.com/contact/'
+PRIVACY_POLICY_URL = 'https://fundersclub.com/catalyst-privacy-policy/'
+TERMS_OF_SERVICE_URL = 'https://fundersclub.com/terms-of-use/'
 
 
 ###############################################################################

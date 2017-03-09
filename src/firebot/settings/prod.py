@@ -102,6 +102,9 @@ GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 ###############################################################################
 
 BASE_URL = os.environ['FIREBOT_BASE_URL']
+CONTACT_URL = os.environ['CONTACT_URL']
+PRIVACY_POLICY_URL = os.environ['PRIVACY_POLICY_URL']
+TERMS_OF_SERVICE_URL = os.environ['TERMS_OF_SERVICE_URL']
 
 
 ###############################################################################

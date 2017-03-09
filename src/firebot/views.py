@@ -12,10 +12,16 @@ def test_500(request):
 
 
 def app_html(request):
+    # Inject data into frontend.
+    data_to_update = [
+        ('#CONTACT_URL', settings.CONTACT_URL),
+        ('#PRIVACY_POLICY_URL', settings.PRIVACY_POLICY_URL),
+        ('#TERMS_OF_SERVICE_URL', settings.TERMS_OF_SERVICE_URL),
+        ('window.ME_DATA = null;', 'window.ME_DATA = {};'.format(json.dumps(MeView.get_me_data(request))))
+    ]
+
     buf = open(os.path.join(settings.STATIC_FRONTEND_ROOT, 'app.html')).read()
-    me_data = MeView.get_me_data(request)
-    buf = buf.replace(
-        'window.ME_DATA = null;',
-        'window.ME_DATA = {};'.format(json.dumps(me_data))
-    )
+    for token, data in data_to_update:
+        buf = buf.replace(token, data)
+
     return HttpResponse(buf)
