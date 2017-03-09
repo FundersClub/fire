@@ -114,21 +114,15 @@ SOCIALACCOUNT_PROVIDERS = {
 # Django Rest Framework
 ###############################################################################
 
-# TODO review this
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.BasicAuthentication',
-#     ),
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     'PAGE_SIZE': 20,
-#     'DEFAULT_PARSER_CLASSES': (
-#         'rest_framework.parsers.JSONParser',
-#         'rest_framework.parsers.FormParser',
-#         'rest_framework.parsers.MultiPartParser',
-#     ),
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+}
 
 
 ###############################################################################
