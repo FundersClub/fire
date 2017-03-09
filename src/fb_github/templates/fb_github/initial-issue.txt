@@ -1,4 +1,4 @@
-Greetings, @fire-bot from [FundersClub Catalyst](https://fire.fundersclub.com/) here!
+Greetings, [fire]({{ settings.BASE_URL }}) here!
 
 @{{ repo.inviter_login }} recently invited @fire-bot to this repository. Before fire is enabled, @{{ repo.inviter_login }} needs to complete a few steps:
 
