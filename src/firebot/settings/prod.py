@@ -8,6 +8,7 @@ from firebot.settings.base import *  # noqa
 # Django
 ###############################################################################
 
+ADMIN_URL = os.environ.get('DJANGO_ADMIN_URL')
 ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(',')
 CSRF_COOKIE_SECURE = True
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'YES'

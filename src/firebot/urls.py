@@ -13,7 +13,7 @@ import firebot.views
 urlpatterns = [
     # Django Views
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^{}/'.format(getattr(settings, 'ADMIN_URL', 'admin')), admin.site.urls),
     url(r'^api/', include([
         url(r'^github/', include('fb_github.api')),
     ])),
