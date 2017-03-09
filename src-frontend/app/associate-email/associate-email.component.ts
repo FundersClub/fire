@@ -9,7 +9,7 @@ import { User } from '../auth-github/user.model';
 @Component({
     templateUrl: './associate-email.component.html'
 })
-export class AssociateEmailComponent {
+export class AssociateEmailComponent implements OnInit {
     associateEmail: AssociateEmail;
     confirming = false;
     error: Object;
