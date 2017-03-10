@@ -34,7 +34,7 @@ INSTALLED_APPS += (  # noqa
 )
 
 RAVEN_CONFIG = {
-    'dsn': 'https://ec78c1fd42f144e2aca4facf5a012e87:205e3c07dfb44cbab804e6c40026d268@sentry.io/139935',
+    'dsn': os.environ.get('SENTRY_DSN'),
     'release': os.environ.get('HEROKU_SLUG_COMMIT'),
 }
 
