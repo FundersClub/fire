@@ -32,6 +32,10 @@ export class RepositoryService {
         return this.repositories.find((repo) => repo.url == url);
     }
 
+    getByUuid(uuid: string) {
+        return this.repositories.find((repo) => repo.uuid == uuid);
+    }
+
     updateAddress(repository: Repository, newAddress: string): Promise<any> {
         let data = {email_slug: newAddress};
         return new Promise((resolve, reject) => {
@@ -120,16 +124,20 @@ export class RepositoryService {
         );
     }
 
-    getBasicInfo(uuid: string): Promise<any> {
+    getBasicInfo(uuid: string): Promise<Repository> {
         const url = `/api/github/repository/${uuid}/approve/`;
         return new Promise((resolve, reject) => {
-            this.http.post(url, {}).toPromise()
-                .then((response) => {
-                    const repository = response.json() as Repository;
-                    resolve(repository);
-                })
-                .catch((error) => reject(error.json()));
+            const respository = this.getByUuid(uuid);
+            if (respository ) {
+                resolve(respository);
+            } else {
+                this.http.post(url, {}).toPromise()
+                    .then((response) => {
+                        const repository = response.json() as Repository;
+                        resolve(repository);
+                    })
+                    .catch((error) => reject(error.json()));
             }
-        );
+        });
     }
 }

@@ -26,17 +26,17 @@ export class UserCantApproveRepoGuard implements CanActivate {
             if(!auth) {
                return false;
             } else {
-                return this.http.post(url, {uuid: uuid}).toPromise()
-                    .then((response) => {
-                        let repo = response.json() as Repository;
+                return this.repositoryService
+                    .getBasicInfo(uuid)
+                    .then((repository) => {
                         // Add repo to list. Only reason it would already be there is because
                         // you're a dev testing this flow. But will check anyways.
-                        if (!this.repositoryService.getByUrl(repo.url)) {
-                            this.repositoryService.add(repo);
+                        if (!this.repositoryService.getByUrl(repository.url)) {
+                            this.repositoryService.add(repository);
                         }
                         // If repo is now active, send em' over.
-                        if (repo.status == 'active') {
-                            this.router.navigate(['/repos', repo.login, repo.name, 'set-up', 'email']);
+                        if (repository.status == 'active') {
+                            this.router.navigate(['/repos', repository.login, repository.name, 'set-up', 'email']);
                             return false;
                         // Otherwise, give em them bad news.
                         } else {

@@ -3,6 +3,7 @@ import { RouterModule, Routes }  from '@angular/router';
 
 import { AuthenticateGitHubComponent } from './authenticate-github.component';
 import { BasicRepositoryInfoResolver } from './basic-repo-info.service';
+import { CurrentUserResolver } from '../associate-email/current-user-resolver.service';
 import { LoginComponent } from './login.component';
 import { UserCantApproveRepoGuard } from './wrong-user.service';
 import { WrongUserComponent } from './wrong-user.component';
@@ -26,9 +27,13 @@ const authRoutes: Routes = [{
     path: 'approve/:uuid',
     canActivate: [UserCantApproveRepoGuard],
     component: WrongUserComponent,
+    resolve: {
+        repository: BasicRepositoryInfoResolver,
+        user: CurrentUserResolver,
+    },
     data: {
         title: 'Incorrect user'
-    }
+    },
 }];
 
 @NgModule({

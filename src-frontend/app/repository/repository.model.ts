@@ -15,6 +15,7 @@ export class Repository {
             github: string,
             emailmap_add: string,
             purge_attachments: string
-        }
+        },
+        public uuid: string,
     ) {}
 }

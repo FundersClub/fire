@@ -7,8 +7,7 @@
             Incorrect User
         </div>
         <div class="CardIntro-subtext">
-            The username you just logged in with doesn't match the username which<br>
-            was used to add fire to your repository. Please logout and try again.
+            @{{ repository.inviter_login }} invited the fire bot to this repository, but you just authenticated as @{{ user.username }}.  Please ask @{{ repository.inviter_login }} to complete the signup process.
         </div>
     </div>
 </md-card>
