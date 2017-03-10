@@ -1,4 +1,6 @@
 // Scripts and styles required for the static page
+import 'normalize.css/normalize.css';
+import './static/css/global-layout.css';
 import './static/css/static-page.css';
 
 document.getElementById('SetUpNow').addEventListener('click', function(event) {

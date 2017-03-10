@@ -51,13 +51,6 @@ export function xsrfFactory() {
 })
 export class AppModule {
     ngDoBootstrap(appRef: ApplicationRef) {
-        // In some cases we don't actually want to kick off anything (e.g.
-        // we're loading a purely static page). If that global flag is set,
-        // quit here.
-        if (window['preventBootstrap']) {
-            return;
-        }
-
         appRef.bootstrap(AppComponent);
     }
 }
