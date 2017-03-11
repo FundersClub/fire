@@ -4,10 +4,12 @@
 <md-card class="SectionCard">
     <div class="CardIntro">
         <div class="CardIntro-title">
-            Incorrect User
+            Wrong User
         </div>
         <div class="CardIntro-subtext">
-            @{{ repository.inviter_login }} invited the fire bot to this repository, but you just authenticated as @{{ user.username }}.  Please ask @{{ repository.inviter_login }} to complete the signup process.
+            <strong>@{{ repository.inviter_login }}</strong> add fire to <strong>{{ repository.full_name }}</strong>, but you're logged in as <strong>@{{ user.username }}</strong>. Only <strong>@{{ repository.inviter_login }}</strong> can complete setup.<br>
+            <br>
+            You may <a href="{{ user.urls.logout }}">logout</a> if necessary.
         </div>
     </div>
 </md-card>

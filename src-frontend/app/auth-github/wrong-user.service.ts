@@ -19,7 +19,6 @@ export class UserCantApproveRepoGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         let uuid = route.params['uuid'];
-        let url = `/api/github/repository/${uuid}/approve/`;
 
         // Only run this check if user successfully logged in.
         return this.authGuard.canActivate(route, state).then((auth: boolean) => {
@@ -27,13 +26,8 @@ export class UserCantApproveRepoGuard implements CanActivate {
                return false;
             } else {
                 return this.repositoryService
-                    .getBasicInfo(uuid)
+                    .fetchBasicInfo(uuid)
                     .then((repository) => {
-                        // Add repo to list. Only reason it would already be there is because
-                        // you're a dev testing this flow. But will check anyways.
-                        if (!this.repositoryService.getByUrl(repository.url)) {
-                            this.repositoryService.add(repository);
-                        }
                         // If repo is now active, send em' over.
                         if (repository.status == 'active') {
                             this.router.navigate(['/repos', repository.login, repository.name, 'set-up', 'email']);

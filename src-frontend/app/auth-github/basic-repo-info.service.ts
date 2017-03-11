@@ -12,7 +12,7 @@ export class BasicRepositoryInfoResolver implements Resolve<Repository> {
     ) {}
 
     resolve(route: ActivatedRouteSnapshot): Promise<any> {
-        return this.repositoryService.getBasicInfo(route.params['uuid'])
+        return this.repositoryService.fetchBasicInfo(route.params['uuid'])
             .then((repository: Repository) => {
                 return repository;
             })

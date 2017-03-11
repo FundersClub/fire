@@ -15,11 +15,14 @@ export class RepositoryService {
     ) {}
 
     add(repository: Repository) {
-        this.repositories.push(repository);
+        // Sanity check to ensure we don't create dupes.
+        if (!this.getByUuid(repository.uuid)) {
+            this.repositories.push(repository);
+        }
     }
 
-    all() {
-        return this.repositories;
+    active() {
+        return this.repositories.filter((repo) => repo.status == 'active');
     }
 
     getByDisplayName(login: string, name: string) {
@@ -124,17 +127,21 @@ export class RepositoryService {
         );
     }
 
-    getBasicInfo(uuid: string): Promise<Repository> {
+    fetchBasicInfo(uuid: string): Promise<Repository> {
+        // URL path below is funky, just roll with it. Behind the scenes,
+        // this POST also "approves" the repo if we're the right user.
         const url = `/api/github/repository/${uuid}/approve/`;
         return new Promise((resolve, reject) => {
+            // If we happen to have this repo already, great.
             const respository = this.getByUuid(uuid);
             if (respository ) {
                 resolve(respository);
             } else {
                 this.http.post(url, {}).toPromise()
                     .then((response) => {
-                        const repository = response.json() as Repository;
-                        resolve(repository);
+                        let repo = response.json() as Repository;
+                        this.add(repo);
+                        resolve(repo);
                     })
                     .catch((error) => reject(error.json()));
             }

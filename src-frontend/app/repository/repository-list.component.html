@@ -1,6 +1,6 @@
 <div class="SectionTitle">Choose a Repository</div>
 <md-card
-    *ngFor="let repo of repositoryService.all()"
+    *ngFor="let repo of repositoryService.active()"
     class="Repository"
 >
     <a
