@@ -205,6 +205,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                     'email': self.repo1.email,
                     'email_slug': self.repo1.email_slug,
                     'full_name': self.repo1.full_name,
+                    'inviter_login': self.repo1.inviter_login,
                     'login': self.repo1.login,
                     'name': self.repo1.name,
                     'status': 'active',
@@ -214,6 +215,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                         'emailmap_add': 'http://testserver/api/github/email-map/',
                         'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
                     },
+                    'uuid': str(self.repo1.uuid),
                 },
             ],
             'username': self.user1.username,
@@ -234,6 +236,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                     'email': self.repo2.email,
                     'email_slug': self.repo2.email_slug,
                     'full_name': self.repo2.full_name,
+                    'inviter_login': self.repo2.inviter_login,
                     'login': self.repo2.login,
                     'name': self.repo2.name,
                     'status': 'active',
@@ -243,6 +246,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                         'emailmap_add': 'http://testserver/api/github/email-map/',
                         'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo2.uuid),
                     },
+                    'uuid': str(self.repo2.uuid),
 
                 },
             ],
@@ -329,6 +333,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
             'email_slug': self.repo1.email_slug,
             'full_name': self.repo1.full_name,
             'login': self.repo1.login,
+            'inviter_login': self.repo1.inviter_login,
             'name': self.repo1.name,
             'status': 'pending-accept',
             'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
@@ -337,6 +342,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 'emailmap_add': 'http://testserver/api/github/email-map/',
                 'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
             },
+            'uuid': str(self.repo1.uuid),
         })
 
         # Switch to the correct state and try both users again
@@ -378,6 +384,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
             'email': self.repo1.email,
             'email_slug': self.repo1.email_slug,
             'full_name': self.repo1.full_name,
+            'inviter_login': self.repo1.inviter_login,
             'login': self.repo1.login,
             'name': self.repo1.name,
             'status': 'active',
@@ -387,4 +394,5 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 'emailmap_add': 'http://testserver/api/github/email-map/',
                 'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
             },
+            'uuid': str(self.repo1.uuid),
         })
