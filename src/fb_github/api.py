@@ -78,11 +78,13 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
             'email_domain',
             'email_slug',
             'full_name',
+            'inviter_login',
             'login',
             'name',
             'status',
             'url',
             'urls',
+            'uuid',
         )
         read_only_fields = [f for f in fields if f != 'email_slug']
         extra_kwargs = {

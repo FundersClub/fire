@@ -4,11 +4,12 @@
 <md-card class="SectionCard">
     <div class="CardIntro">
         <div class="CardIntro-title">
-            Incorrect User
+            Wrong User
         </div>
         <div class="CardIntro-subtext">
-            The username you just logged in with doesn't match the username which<br>
-            was used to add fire to your repository. Please logout and try again.
+            <strong>@{{ repository.inviter_login }}</strong> add fire to <strong>{{ repository.full_name }}</strong>, but you're logged in as <strong>@{{ user.username }}</strong>. Only <strong>@{{ repository.inviter_login }}</strong> can complete setup.<br>
+            <br>
+            You may <a href="{{ user.urls.logout }}">logout</a> if necessary.
         </div>
     </div>
 </md-card>
