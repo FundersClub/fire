@@ -29,6 +29,11 @@ module.exports = {
                 loader: 'null-loader'
             },
             {
+                test: /\.scss$/,
+                include: helpers.root('src-frontend', 'app'),
+                loaders: ['raw-loader', 'sass-loader']
+            },
+            {
                 test: /\.css$/,
                 include: helpers.root('src-frontend', 'app'),
                 loader: 'raw-loader'
