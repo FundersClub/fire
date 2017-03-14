@@ -98,3 +98,17 @@ EMAIL_DOMAIN = 'fire.fundersclub.com'
 DEFAULT_FROM_EMAIL = 'bot@' + EMAIL_DOMAIN
 SENDGRID_API_KEY = 'unused'
 SENDGRID_WEBHOOK_SECRET = 'secret'
+
+
+###############################################################################
+# Google Analytics
+###############################################################################
+
+GA_UA_ID = 'UA-33329700-5'
+
+
+###############################################################################
+# Typekit (for loading Futura, the default font)
+###############################################################################
+
+TYPEKIT_ID = 'tgz5lkq'

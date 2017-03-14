@@ -117,3 +117,17 @@ DEFAULT_FROM_EMAIL = 'bot@' + EMAIL_DOMAIN
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 SENDGRID_WEBHOOK_SECRET = os.environ['SENDGRID_WEBHOOK_SECRET']
+
+
+###############################################################################
+# Google Analytics
+###############################################################################
+
+GA_UA_ID = os.environ['GA_UA_ID']
+
+
+###############################################################################
+# Typekit (for loading Futura, the default font)
+###############################################################################
+
+TYPEKIT_ID = os.environ['TYPEKIT_ID']

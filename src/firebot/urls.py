@@ -5,7 +5,6 @@ from django.conf.urls import (
 )
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.static import serve
 
 import firebot.views
 
@@ -20,9 +19,9 @@ urlpatterns = [
     url(r'^test-500/$', firebot.views.test_500),
     url(r'^emails/', include('fb_emails.urls')),
 
-    # Static files
-    url(r'^$', serve, {'path': 'static.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
-    url(r'^.+', firebot.views.app_html, name='repos'),
+    # Static homepage and clientside app
+    url(r'^$', firebot.views.static_html, name='static'),
+    url(r'^.+', firebot.views.app_html, name='app'),
 ]
 
 if settings.DEBUG:
