@@ -1,3 +1,5 @@
+<img src="https://cloud.githubusercontent.com/assets/899450/23774315/f3983d3a-04d7-11e7-9ee7-a02e436755cf.png" alt="Fire" width="286" height="150">
+
 # fire
 
 A bot that creates GitHub Issues via email. Read more at https://fire.fundersclub.com/.
