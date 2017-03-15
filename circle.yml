@@ -5,6 +5,7 @@ machine:
 dependencies:
     post:
         - pip install -r py-requirements/dev.txt
+        - cp src/firebot/settings/local_settings_example.py src/firebot/settings/local_settings.py
 
 deployment:
     production:
