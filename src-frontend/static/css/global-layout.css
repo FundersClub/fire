@@ -113,14 +113,16 @@ body {
 }
 
 .GlobalFooter-logo {
-    height: 30px;
-    opacity: .8;
-    width: 30px;
-    /* Improve alignment with rest of footer links. */
-    margin-right: -10px;
+    align-items: center;
+    display: flex;
 }
 
-.GlobalFooter-logo:hover {
+.GlobalFooter-logoImage {
+    margin-right: 5px;
+    opacity: .6;
+}
+
+.GlobalFooter-logo:hover .GlobalFooter-logoImage {
     opacity: 1;
 }
 
