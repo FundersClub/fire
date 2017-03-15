@@ -4,8 +4,8 @@ A bot that creates GitHub Issues via email. Read more at https://fire.fundersclu
 
 ### To get set up:
 ```
-git clone git@github.com:FundersClub/firebot.git
-cd firebot
+git clone git@github.com:FundersClub/fire.git
+cd fire
 python3.6 -m venv venv
 . ./venv/bin/activate
 pip install -r py-requirements/dev.txt
