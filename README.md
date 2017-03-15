@@ -1,6 +1,6 @@
-# firebot
+# fire
 
-This shit is on fire!
+A bot that creates GitHub Issues via email. Read more at https://fire.fundersclub.com/.
 
 ### To get set up:
 ```
