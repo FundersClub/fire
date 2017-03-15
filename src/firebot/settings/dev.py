@@ -76,7 +76,7 @@ CELERY_TASK_EAGER_PROPAGATES = True
 ###############################################################################
 
 GITHUB_BOT_USERNAME = 'firebot-test-local'
-GITHUB_TOKEN = '173c367ffc34aafe96118576eae3fde982a337ab'
+# GITHUB_TOKEN needs to be defined in local_settings.py
 
 
 ###############################################################################
@@ -98,3 +98,10 @@ EMAIL_DOMAIN = 'fire.fundersclub.com'
 DEFAULT_FROM_EMAIL = 'bot@' + EMAIL_DOMAIN
 SENDGRID_API_KEY = 'unused'
 SENDGRID_WEBHOOK_SECRET = 'secret'
+
+
+###############################################################################
+# Local settings
+###############################################################################
+
+from .local_settings import *  # noqa
