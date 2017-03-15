@@ -30,12 +30,9 @@ def sync_github_emails_on_signup(sender, request, user, **kwargs):
 
     # Create email address objects for all GitHub emails we currently have
     for gh_email in gh_emails:
-        if gh_email.primary:
-            assert user.emailaddress_set.filter(email=gh_email.email, primary=True).exists()
-        else:
-            user.emailaddress_set.get_or_create(
-                email=gh_email.email,
-                defaults={
-                    'verified': gh_email.verified,
-                },
-            )
+        user.emailaddress_set.get_or_create(
+            email=gh_email.email,
+            defaults={
+                'verified': gh_email.verified,
+            },
+        )
