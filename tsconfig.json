@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -10,5 +10,11 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "suppressImplicitAnyIndexErrors": true
+  },
+
+  "angularCompilerOptions": {
+    "entryModule": "src-frotnend/app/app.module#AppModule",
+    "genDir": ".",
+    "skipMetadataEmit" : true
   }
 }
