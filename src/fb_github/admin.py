@@ -6,7 +6,15 @@ from django.utils.html import (
     format_html_join,
 )
 
-from fb_github.models import Repository
+from fb_github.models import (
+    EmailMap,
+    Repository,
+)
+
+
+class EmailMapInline(admin.TabularInline):
+    model = EmailMap
+
 
 
 @admin.register(Repository)
@@ -35,6 +43,9 @@ class RepositoryAdmin(admin.ModelAdmin):
         'num_email_maps',
         'num_issues',
     ]
+    inlines = (
+        EmailMapInline,
+    )
 
     def get_queryset(self, request):
         return (super().get_queryset(request)
