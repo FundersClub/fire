@@ -20,6 +20,7 @@ class IncomingMessage(models.Model):
         UnrecognizedUsername = C('unrecognized-username', 'Unrecognized username')
         IssueError = C('issue-error', 'Failed creating issue')
         Processed = C('processed', 'Processed')
+        Sanitized = C('sanitized', 'Sanitized')
 
     body_html = models.TextField()
     body_text = models.TextField()

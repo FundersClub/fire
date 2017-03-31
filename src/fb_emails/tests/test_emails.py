@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from django.conf import settings
@@ -9,7 +10,10 @@ from django.test import (
 from django.urls import reverse
 
 from fb_emails.models import IncomingMessage
-from fb_emails.tasks import process_incoming_message
+from fb_emails.tasks import (
+    process_incoming_message,
+    sanitize_old_emails,
+)
 from fb_emails.tests.factories import IncomingMessageFactory
 from fb_github.tests.factories import RepositoryFactory
 from fb_github.tests.mocks import mock_github_api
@@ -184,3 +188,47 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
         expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
         del mail.outbox[:]
+
+    def test_sanitize_old_emails(self):
+        sanitize_txt = '<redacted>'
+
+        # Create two test emails
+        msg1 = IncomingMessageFactory.create()
+        msg2 = IncomingMessageFactory.create()
+
+        self.assertNotEqual(msg1.subject, sanitize_txt)
+        self.assertNotEqual(msg1.body_html, sanitize_txt)
+        self.assertNotEqual(msg1.body_text, sanitize_txt)
+
+        self.assertNotEqual(msg2.subject, sanitize_txt)
+        self.assertNotEqual(msg2.body_html, sanitize_txt)
+        self.assertNotEqual(msg2.body_text, sanitize_txt)
+
+        # Messages are not old enough so nothing should happen
+        sanitize_old_emails.delay()
+        msg1.refresh_from_db()
+        msg2.refresh_from_db()
+
+        self.assertNotEqual(msg1.subject, sanitize_txt)
+        self.assertNotEqual(msg1.body_html, sanitize_txt)
+        self.assertNotEqual(msg1.body_text, sanitize_txt)
+
+        self.assertNotEqual(msg2.subject, sanitize_txt)
+        self.assertNotEqual(msg2.body_html, sanitize_txt)
+        self.assertNotEqual(msg2.body_text, sanitize_txt)
+
+        # Make msg1 old enough so it should get sanitized
+        msg1.created_at -= datetime.timedelta(days=7)
+        msg1.save()
+
+        sanitize_old_emails.delay()
+        msg1.refresh_from_db()
+        msg2.refresh_from_db()
+
+        self.assertEqual(msg1.subject, sanitize_txt)
+        self.assertEqual(msg1.body_html, sanitize_txt)
+        self.assertEqual(msg1.body_text, sanitize_txt)
+
+        self.assertNotEqual(msg2.subject, sanitize_txt)
+        self.assertNotEqual(msg2.body_html, sanitize_txt)
+        self.assertNotEqual(msg2.body_text, sanitize_txt)
