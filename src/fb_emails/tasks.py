@@ -64,3 +64,20 @@ def process_incoming_message(msg_id):
 
     msg.status = IncomingMessage.Status.Processed
     msg.save(update_fields=['processed_at', 'status'])
+
+
+@shared_task()
+def sanitize_old_emails():
+    week_ago = timezone.now() - timezone.timedelta(days=7)
+    sanitize_txt = '<redacted>'
+    msgs = IncomingMessage.objects.filter(
+        created_at__lte=week_ago
+    ).exclude(
+        status=IncomingMessage.Status.Sanitized
+    ).iterator()
+    for msg in msgs:
+        msg.body_html = msg.body_text = msg.subject = sanitize_txt
+        for key in ('html', 'text', 'subject'):
+            msg.original_post_data[key] = sanitize_txt
+        msg.status = IncomingMessage.Status.Sanitized
+        msg.save()

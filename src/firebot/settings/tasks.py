@@ -12,11 +12,24 @@ CELERY_BEAT_SCHEDULE = {
     },
 
     ###########################################################################
+    # fb_emails
+    ###########################################################################
+    'Sanitize old emails': {
+        'task': 'fb_emails.tasks.sanitize_old_emails',
+        'schedule': crontab(minute='0', hour='10'),  # 3AM PST
+    },
+
+    ###########################################################################
     # fb_github
     ###########################################################################
     'Look for pending repository invitations': {
         'task': 'fb_github.tasks.poll_invitations',
         'schedule': timedelta(seconds=15),
+    },
+
+    'Sanitize old issues': {
+        'task': 'fb_github.tasks.sanitize_old_issues',
+        'schedule': crontab(minute='0', hour='10'),  # 3AM PST
     },
 
 }

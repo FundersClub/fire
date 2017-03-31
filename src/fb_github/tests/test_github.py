@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
@@ -9,6 +11,7 @@ from rest_framework.test import APITestCase
 from firebot.tests import RequestsMockMixin
 from fb_emails.tests.factories import IncomingMessageFactory
 from fb_github.models import Repository
+from fb_github.tasks import sanitize_old_issues
 from fb_github.tests.factories import RepositoryFactory
 from fb_github.tests.mocks import mock_github_api
 
@@ -30,6 +33,48 @@ class GitHubTestCase(RequestsMockMixin, TestCase):
         issue = repo.create_issue_from_incoming_msg(msg)
         self.assertTrue(msg.body_text in issue.body)
         self.assertTrue('Sent by @lenny ({})'.format(msg.from_email) in issue.body)
+
+    @mock_github_api
+    def test_sanitize_old_issues(self):
+        repo = RepositoryFactory.create(email_slug='test', login='firebot-test', name='Hello-World')
+        sanitize_txt = '<redacted>'
+
+        msg1 = IncomingMessageFactory.create()
+        issue1 = repo.create_issue_from_incoming_msg(msg1)
+
+        msg2 = IncomingMessageFactory.create()
+        issue2 = repo.create_issue_from_incoming_msg(msg2)
+
+        self.assertNotEqual(issue1.body, sanitize_txt)
+        self.assertNotEqual(issue1.gh_data, {})
+
+        self.assertNotEqual(issue2.body, sanitize_txt)
+        self.assertNotEqual(issue2.gh_data, {})
+
+        # Run task, nothing interesting should happen
+        sanitize_old_issues.delay()
+        issue1.refresh_from_db()
+        issue2.refresh_from_db()
+
+        self.assertNotEqual(issue1.body, sanitize_txt)
+        self.assertNotEqual(issue1.gh_data, {})
+
+        self.assertNotEqual(issue2.body, sanitize_txt)
+        self.assertNotEqual(issue2.gh_data, {})
+
+        # Make issue1 old enough
+        issue1.created_at -= datetime.timedelta(days=7)
+        issue1.save()
+
+        sanitize_old_issues.delay()
+        issue1.refresh_from_db()
+        issue2.refresh_from_db()
+
+        self.assertEqual(issue1.body, sanitize_txt)
+        self.assertEqual(issue1.gh_data, {})
+
+        self.assertNotEqual(issue2.body, sanitize_txt)
+        self.assertNotEqual(issue2.gh_data, {})
 
 
 class GitHubAPITestCase(RequestsMockMixin, APITestCase):

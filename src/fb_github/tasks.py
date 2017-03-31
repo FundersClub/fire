@@ -3,6 +3,7 @@ import logging
 from celery import shared_task
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils import timezone
 from github3.exceptions import ForbiddenError
 
 from fb_github.client import (
@@ -84,3 +85,12 @@ def update_issue_after_email_association(issue_id):
         gh_issue.edit(gh_issue.title, '\n'.join(body))
     except ForbiddenError:
         pass
+
+
+@shared_task()
+def sanitize_old_issues():
+    week_ago = timezone.now() - timezone.timedelta(days=7)
+    Issue.objects.filter(created_at__lte=week_ago).update(
+        body='<redacted>',
+        gh_data={},
+    )
