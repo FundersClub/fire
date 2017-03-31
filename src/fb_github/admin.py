@@ -16,7 +16,6 @@ class EmailMapInline(admin.TabularInline):
     model = EmailMap
 
 
-
 @admin.register(Repository)
 class RepositoryAdmin(admin.ModelAdmin):
     list_display = (
