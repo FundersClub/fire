@@ -44,8 +44,15 @@ def process_incoming_message(msg_id):
 
         return
 
-    # # If we don't recognize this email address and haven't seen it before,
-    # # offer user to associate their GitHub account with this repo
+    # Got our repo, create an issue
+    if not repo.create_issue_from_incoming_msg(msg):
+        # TODO need to track this, and report back to the user
+        msg.status = IncomingMessage.Status.IssueError
+        msg.save(update_fields=['processed_at', 'status'])
+        return
+
+    # If we don't recognize this email address and haven't seen it before,
+    # offer user to associate their GitHub account with this repo
     email_recognized = repo.emailmap_set.filter(email=msg.from_email).exists()
     email_seen_before = IncomingMessage.objects.filter(
         issue__repo=repo, from_email=msg.from_email
@@ -54,13 +61,6 @@ def process_incoming_message(msg_id):
         msg.reply_from_template('fb_emails/offer-associate.html', {
             'repo': repo,
         }, html=True)
-
-    # Got our repo, create an issue
-    if not repo.create_issue_from_incoming_msg(msg):
-        # TODO need to track this, and report back to the user
-        msg.status = IncomingMessage.Status.IssueError
-        msg.save(update_fields=['processed_at', 'status'])
-        return
 
     msg.status = IncomingMessage.Status.Processed
     msg.save(update_fields=['processed_at', 'status'])
