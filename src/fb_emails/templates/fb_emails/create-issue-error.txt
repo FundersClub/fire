@@ -1,0 +1,4 @@
+Hey,
+
+fire just received an email from {{ msg.from_email }} to your fire email address (e.g. {{ repo.email }}).
+We tried to create an issue, but it seems that we no longer have access to the repository. If you intentionally removed fire, you can ignore this message. otherwise, please re-add the fire-bot user to your repo to continue using fire.

@@ -18,6 +18,7 @@ from fb_emails.tests.factories import IncomingMessageFactory
 from fb_github.tests.factories import RepositoryFactory
 from fb_github.tests.mocks import mock_github_api
 from firebot.tests import RequestsMockMixin
+from firebot.tests.factories import UserFactory
 
 
 class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
@@ -232,3 +233,31 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
         self.assertNotEqual(msg2.subject, sanitize_txt)
         self.assertNotEqual(msg2.body_html, sanitize_txt)
         self.assertNotEqual(msg2.body_text, sanitize_txt)
+
+    @mock_github_api
+    def test_issue_create_error(self):
+        # Hack to replace the issue creation API with one that fails
+        self.requests_mock._adapter._matchers = [
+            m for m in self.requests_mock._adapter._matchers
+            if m._url != 'https://api.github.com/repos/firebot-test/Hello-World/issues'
+        ]
+
+        self.requests_mock.register_uri(
+            'POST',
+            'https://api.github.com/repos/firebot-test/Hello-World/issues',
+            text='{}',
+            status_code=404,
+        )
+
+        # Repo we'll be testing against (IncomingMessageFactory defaults to fake@)
+        repo = RepositoryFactory.create(email_slug='fake', login='firebot-test', name='Hello-World')
+
+        # Ensure we have an admin on this rpeo
+        repo.admins.add(UserFactory.create())
+
+        # Create and process message
+        msg = IncomingMessageFactory.create(from_email='who@dat.com')
+        process_incoming_message.delay(msg.id)
+
+        self.assertTrue(msg.from_email in mail.outbox[0].body)
+        self.assertTrue(repo.email in mail.outbox[0].body)
