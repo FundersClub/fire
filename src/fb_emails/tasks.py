@@ -3,6 +3,8 @@ import logging
 from celery import shared_task
 
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.utils import timezone
 
 from fb_emails.models import IncomingMessage
@@ -46,9 +48,22 @@ def process_incoming_message(msg_id):
 
     # Got our repo, create an issue
     if not repo.create_issue_from_incoming_msg(msg):
-        # TODO need to track this, and report back to the user
         msg.status = IncomingMessage.Status.IssueError
         msg.save(update_fields=['processed_at', 'status'])
+
+        body = render_to_string('fb_emails/create-issue-error.txt', {
+            'msg': msg,
+            'repo': repo,
+        })
+
+        send_mail(
+            'Failed creating issue!',
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            repo.admins.values_list('email', flat=True),
+            fail_silently=False,
+        )
+
         return
 
     # If we don't recognize this email address and haven't seen it before,

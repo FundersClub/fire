@@ -1,0 +1,9 @@
+Hey there,
+
+fire just received an email from {{ msg.from_email }} to your fire email address ({{ repo.email }}). We tried to create an Issue in your Repository, but it seems that we no longer have access.
+
+If you intentionally removed fire, you can ignore this message. Otherwise, please re-add the "fire-bot" user to your Repo (as a Read Only contributor) to continue using fire.
+
+Thanks!
+
+https://fire.fundersclub.com/
