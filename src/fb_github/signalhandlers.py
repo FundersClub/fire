@@ -1,3 +1,4 @@
+from allauth.account.models import EmailAddress
 from django.dispatch import receiver
 
 from allauth.account.signals import user_signed_up
@@ -22,17 +23,18 @@ def sync_github_emails_on_signup(sender, request, user, **kwargs):
         user.email = gh_primary_email.email
         user.save(update_fields=['email'])
 
-        user.emailaddress_set.create(
-            email=gh_primary_email.email,
-            primary=True,
-            verified=gh_primary_email.verified,
-        )
+        # Add email if we don't already have it on our system
+        if not EmailAddress.objects.filter(email=gh_primary_email.email).exists():
+            user.emailaddress_set.create(
+                email=gh_primary_email.email,
+                primary=True,
+                verified=gh_primary_email.verified,
+            )
 
     # Create email address objects for all GitHub emails we currently have
     for gh_email in gh_emails:
-        user.emailaddress_set.get_or_create(
-            email=gh_email.email,
-            defaults={
-                'verified': gh_email.verified,
-            },
-        )
+        if not EmailAddress.objects.filter(email=gh_email.email).exists():
+            user.emailaddress_set.get_or_create(
+                email=gh_email.email,
+                verified=gh_email.verified,
+            )
