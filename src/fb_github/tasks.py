@@ -32,6 +32,9 @@ def poll_invitations():
         )
         if created:
             accept_new_repo.delay(repo.id)
+        else:
+            # Repository already created, just accept the invitation
+            repo_invitation.accept()
 
 
 @shared_task()
