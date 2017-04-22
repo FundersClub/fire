@@ -2,7 +2,7 @@
 
 # Nicer interfaces
 ipython==5.3.0
-ipdb==0.10.2
+ipdb==0.10.3
 
 # Flake8
 flake8==3.3.0
