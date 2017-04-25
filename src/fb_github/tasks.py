@@ -37,35 +37,38 @@ def poll_invitations():
             repo_invitation.accept()
 
 
-@shared_task()
-def accept_new_repo(repo_id):
-    repo = Repository.objects.get(id=repo_id)
+@shared_task(bind=True, max_retries=3)
+def accept_new_repo(self, repo_id):
+    try:
+        repo = Repository.objects.get(id=repo_id)
 
-    if repo.status != Repository.Status.PendingAccept:
-        LOG.warning('Attempted to accept already accepted repo: {}'.format(repo))
-        return
+        if repo.status != Repository.Status.PendingAccept:
+            LOG.warning('Attempted to accept already accepted repo: {}'.format(repo))
+            return
 
-    repo_invitation = RepositoryInvitation(repo.original_invitation_data, get_github_client())
-    repo_invitation.accept()
+        repo_invitation = RepositoryInvitation(repo.original_invitation_data, get_github_client())
+        repo_invitation.accept()
 
-    body = render_to_string('fb_github/initial-issue.txt', {
-        'repo': repo,
-        'settings': settings,
-    })
+        body = render_to_string('fb_github/initial-issue.txt', {
+            'repo': repo,
+            'settings': settings,
+        })
 
-    gh_issue = repo.gh_repo.create_issue(
-        title='Finish adding @{} to your repo'.format(settings.GITHUB_BOT_USERNAME),
-        body=body,
-    )
-    repo.initial_issue = Issue.objects.create(
-        body=body,
-        gh_data=gh_issue.as_dict(),
-        issue_number=gh_issue.number,
-        repo=repo,
-    )
+        gh_issue = repo.gh_repo.create_issue(
+            title='Finish adding @{} to your repo'.format(settings.GITHUB_BOT_USERNAME),
+            body=body,
+        )
+        repo.initial_issue = Issue.objects.create(
+            body=body,
+            gh_data=gh_issue.as_dict(),
+            issue_number=gh_issue.number,
+            repo=repo,
+        )
 
-    repo.status = Repository.Status.PendingInviterApproval
-    repo.save(update_fields=['status', 'initial_issue'])
+        repo.status = Repository.Status.PendingInviterApproval
+        repo.save(update_fields=['status', 'initial_issue'])
+    except Exception as exc:
+        self.retry(exc=exc, countdown=5)
 
 
 @shared_task()
