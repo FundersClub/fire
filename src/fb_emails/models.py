@@ -25,13 +25,13 @@ class IncomingMessage(models.Model):
     body_html = models.TextField()
     body_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    from_email = models.EmailField(max_length=200)
-    from_name = models.CharField(max_length=200)
+    from_email = models.EmailField(max_length=500)
+    from_name = models.CharField(max_length=500)
     original_post_data = JSONField()
     processed_at = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.Pending)
-    subject = models.CharField(max_length=500)
-    to_email = models.EmailField(max_length=200)
+    subject = models.CharField(max_length=2000)
+    to_email = models.EmailField(max_length=500)
     uuid = models.UUIDField(default=uuid4, unique=True)
 
     def reply_from_template(self, template_name, extra_context=None, html=False):
