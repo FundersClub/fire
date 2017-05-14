@@ -37,10 +37,11 @@ def process_incoming_message(msg_id):
             status=Repository.Status.Active,
         )
     except Repository.DoesNotExist:
-        msg.reply_from_template('fb_emails/unknown-repo.txt', {
-            'bot_username': settings.GITHUB_BOT_USERNAME,
-            'email_slug': email_slug,
-        })
+        if email_slug not in settings.FIREBOT_BANNED_EMAIL_SLUGS:
+            msg.reply_from_template('fb_emails/unknown-repo.txt', {
+                'bot_username': settings.GITHUB_BOT_USERNAME,
+                'email_slug': email_slug,
+            })
         msg.status = IncomingMessage.Status.UnrecognizedUsername
         msg.save(update_fields=['processed_at', 'status'])
 
