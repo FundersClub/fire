@@ -23,7 +23,7 @@ uritemplate.py==3.0.2
 boto==2.46.1
 psycopg2==2.7.1
 pytz==2017.2
-requests==2.14.2
+requests==2.16.2
 six==1.10.0
 
 # Celery
