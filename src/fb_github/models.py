@@ -89,7 +89,7 @@ class Repository(models.Model):
 
         # Create issue on github
         gh_issue = self.gh_repo.create_issue(
-            title=msg.subject,
+            title=msg.subject or 'New issue',
             body=body,
         )
         if not gh_issue:
