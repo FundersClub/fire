@@ -3,7 +3,7 @@ Django==1.10.7
 dj-database-url==0.4.2
 django-choices==1.5.0
 django-extensions==1.7.9
-django-storages==1.5.2
+django-storages==1.6.1
 djangorestframework==3.6.3
 whitenoise==3.3.0
 
