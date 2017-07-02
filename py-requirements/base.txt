@@ -1,5 +1,5 @@
 # Django stuff
-Django==1.10.7
+Django==1.11.2
 dj-database-url==0.4.2
 django-choices==1.5.0
 django-extensions==1.7.9
