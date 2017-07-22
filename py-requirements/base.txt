@@ -21,7 +21,7 @@ uritemplate.py==3.0.2
 
 # Misc
 boto==2.48.0
-psycopg2==2.7.1
+psycopg2==2.7.2
 pytz==2017.2
 requests==2.18.1
 six==1.10.0
