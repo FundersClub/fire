@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { RepositoryService } from './repository.service';
+import '../../static/css/static-page.css';
 
 @Component({
     selector: 'repository-list',
