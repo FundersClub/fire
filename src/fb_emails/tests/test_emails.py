@@ -87,7 +87,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
 
         test_text = """
 \---------- Forwarded message ----------
-From: **Sentry** &lt;[noreply@md.getsentry.com](mailto:noreply@md.getsentry.com)&gt;
+From: **Sentry** <[noreply@md.getsentry.com](mailto:noreply@md.getsentry.com)>
 Date: Sat, Feb 18, 2017 at 8:54 PM
 Subject: [FundersClub Production] error: ReferenceError: clearOverlappingSelection is not defined
 To: [eran@fundersclub.com](mailto:eran@fundersclub.com)
