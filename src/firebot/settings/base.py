@@ -24,9 +24,9 @@ INSTALLED_APPS = (
     'django_extensions',
     'rest_framework',
 
-    'firebot',
-    'fb_emails',
-    'fb_github',
+    'firebot.apps.FireBotConfig',
+    'fb_emails.apps.FbEmailsConfig',
+    'fb_github.apps.FbGithubConfig',
 )
 
 MIDDLEWARE = [
