@@ -3,4 +3,4 @@
 gunicorn==19.7.1
 raven==6.2.1
 sendgrid==3.6.5
-sendgrid-django==4.0.4
+sendgrid-django==4.2.0
