@@ -1,15 +1,15 @@
 # Django stuff
 Django==1.10.8 # pyup: >=1.10,<1.11
-dj-database-url==0.4.2
+dj-database-url==0.5.0
 django-choices==1.6.0
-django-extensions==1.9.6
+django-extensions==2.0.0
 django-storages==1.6.5
 djangorestframework==3.7.1
 whitenoise==3.3.0
 
 # Allauth
 defusedxml==0.5.0
-django-allauth==0.33.0
+django-allauth==0.35.0
 oauthlib==2.0.4
 python3-openid==3.1.0
 requests-oauthlib==0.8.0
@@ -22,7 +22,7 @@ uritemplate.py==3.0.2
 # Misc
 boto==2.48.0
 psycopg2==2.7.4
-pytz==2017.2
+pytz==2018.3
 requests==2.18.4
 six==1.11.0
 
