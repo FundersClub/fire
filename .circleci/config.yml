@@ -1,0 +1,69 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
+      - image: circleci/python:3.6.1
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      - image: circleci/postgres:9.4
+        environment:
+            POSTGRES_USER: circleci
+            POSTGRES_DB: circle_test
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "py-requirements/base.txt" }}-{{ checksum "py-requirements/dev.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r py-requirements/dev.txt
+
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            cp src/firebot/settings/local_settings_example.py src/firebot/settings/local_settings.py
+            python manage.py test
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
+      # deploy
+      - add_ssh_keys:
+          fingerprints:
+              - "57:68:9f:3c:f0:c0:02:54:0a:a3:ee:09:26:46:26:14"
+      - deploy:
+          name: Deploy Master to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                git remote add heroku git@heroku.com:fc-firebot.git
+                ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
+                git push heroku master
+            fi
