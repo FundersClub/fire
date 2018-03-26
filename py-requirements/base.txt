@@ -3,7 +3,7 @@ Django==1.10.8 # pyup: >=1.10,<1.11
 dj-database-url==0.5.0
 django-choices==1.6.0
 django-extensions==2.0.6
-django-storages==1.6.5
+django-storages==1.6.6
 djangorestframework==3.7.1
 whitenoise==3.3.1
 
