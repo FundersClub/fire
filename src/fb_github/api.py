@@ -221,8 +221,11 @@ class MeView(APIView):
                 'is_authenticated': False,
             }
 
+        if hasattr(request, '_request'):
+            request = request._request
+
         return {
-            'repositories': RepositoryViewSet.as_view({'get': 'list'})(request._request).data,
+            'repositories': RepositoryViewSet.as_view({'get': 'list'})(request).data,
             'username': request.user.username,
             'is_authenticated': True,
             'urls': {
