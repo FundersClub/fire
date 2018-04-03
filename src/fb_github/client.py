@@ -26,7 +26,7 @@ class GitHub(github3.github.GitHub):
 class RepositoryInvitation(github3.models.GitHubCore):
     def _repr(self):
         return '<RepositoryInvitation [{} by {}]>'.format(
-            self.repository.full_name,
+            self.repository['full_name'],
             self.inviter.login,
         )
 
