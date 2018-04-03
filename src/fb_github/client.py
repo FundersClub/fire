@@ -31,6 +31,11 @@ class RepositoryInvitation(github3.models.GitHubCore):
         )
 
     def _update_attributes(self, invitation):
+        # Hack to add missing attributes
+        invitation['repository']['archived'] = False
+        invitation['repository']['has_projects'] = False
+        invitation['repository']['network_count'] = 0
+
         self.repository = github3.repos.repo.Repository(invitation['repository'], self)
         self.inviter = github3.users.User(invitation['inviter'], self)
         self.invitee = github3.users.User(invitation['invitee'], self)
