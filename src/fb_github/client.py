@@ -32,8 +32,8 @@ class RepositoryInvitation(github3.models.GitHubCore):
 
     def _update_attributes(self, invitation):
         self.repository = invitation['repository']
-        self.inviter = github3.users.User(invitation['inviter'], self)
-        self.invitee = github3.users.User(invitation['invitee'], self)
+        self.inviter = invitation['inviter']
+        self.invitee = invitation['invitee']
 
     def accept(self):
         return self._boolean(
