@@ -216,13 +216,13 @@ class RepositoryViewSet(
 class MeView(APIView):
     @classmethod
     def get_me_data(cls, request):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return {
                 'is_authenticated': False,
             }
 
         return {
-            'repositories': RepositoryViewSet.as_view({'get': 'list'})(request).data,
+            'repositories': RepositoryViewSet.as_view({'get': 'list'})(request._request).data,
             'username': request.user.username,
             'is_authenticated': True,
             'urls': {
@@ -258,7 +258,7 @@ class AssociateEmailView(APIView):
         })
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         self.repo.emailmap_set.create(

@@ -10,6 +10,7 @@ from django.db import (
 )
 from django.utils import timezone
 from djchoices import DjangoChoices, ChoiceItem as C
+from github3.exceptions import GitHubException
 
 from fb_github.client import get_github_client
 from fb_github.utils import msg_to_markdown
@@ -37,7 +38,7 @@ class Repository(models.Model):
     approved_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     email_slug = models.SlugField(default=email_slug_default, unique=True)
-    initial_issue = models.ForeignKey('Issue', null=True, blank=True)
+    initial_issue = models.ForeignKey('Issue', null=True, blank=True, on_delete=models.SET_NULL)
     inviter_login = models.CharField(max_length=200)
     login = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -88,10 +89,15 @@ class Repository(models.Model):
             body = msg.body_text
 
         # Create issue on github
-        gh_issue = self.gh_repo.create_issue(
-            title=msg.subject or 'New issue',
-            body=body,
-        )
+        try:
+            gh_issue = self.gh_repo.create_issue(
+                title=msg.subject or 'New issue',
+                body=body,
+            )
+        except GitHubException:
+            LOG.exception('failed creating github issue for {} {}'.format(self.id, msg.id))
+            return
+
         if not gh_issue:
             LOG.error('failed creating github issue for {} {}'.format(self.id, msg.id))
             return
@@ -131,7 +137,7 @@ class EmailMap(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     email = models.EmailField()
     login = models.CharField(max_length=200)
-    repo = models.ForeignKey(Repository)
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
@@ -153,8 +159,8 @@ class Issue(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     gh_data = JSONField()
     issue_number = models.PositiveIntegerField()
-    msg = models.OneToOneField('fb_emails.IncomingMessage', blank=True, null=True)
-    repo = models.ForeignKey(Repository)
+    msg = models.OneToOneField('fb_emails.IncomingMessage', blank=True, null=True, on_delete=models.SET_NULL)
+    repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
 
     def __str__(self):
         return 'Issue #{} on {}'.format(self.issue_number, self.repo)
