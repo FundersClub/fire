@@ -7,7 +7,7 @@ ipdb==0.11
 # Flake8
 flake8==3.4.1
 mccabe==0.6.1
-pycodestyle==2.3.1
+pycodestyle==2.4.0
 pyflakes==1.6.0
 
 # Testing
