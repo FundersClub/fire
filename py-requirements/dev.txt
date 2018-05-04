@@ -12,5 +12,5 @@ pyflakes==1.6.0
 
 # Testing
 Faker==0.8.12
-factory-boy==2.10.0
+factory-boy==2.11.0
 requests-mock==1.4.0
