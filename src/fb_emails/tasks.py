@@ -33,7 +33,7 @@ def process_incoming_message(msg_id):
 
     try:
         repo = Repository.objects.get(
-            email_slug=email_slug,
+            email_slug__iexact=email_slug,
             status=Repository.Status.Active,
         )
     except Repository.DoesNotExist:
