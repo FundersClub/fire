@@ -9,7 +9,7 @@ whitenoise==3.3.1
 
 # Allauth
 defusedxml==0.5.0
-django-allauth==0.35.0
+django-allauth==0.37.1
 oauthlib==2.0.7
 python3-openid==3.1.0
 requests-oauthlib==0.8.0
