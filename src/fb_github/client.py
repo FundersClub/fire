@@ -26,14 +26,14 @@ class GitHub(github3.github.GitHub):
 class RepositoryInvitation(github3.models.GitHubCore):
     def _repr(self):
         return '<RepositoryInvitation [{} by {}]>'.format(
-            self.repository.full_name,
-            self.inviter.login,
+            self.repository['full_name'],
+            self.inviter['login'],
         )
 
     def _update_attributes(self, invitation):
-        self.repository = github3.repos.repo.Repository(invitation['repository'], self)
-        self.inviter = github3.users.User(invitation['inviter'], self)
-        self.invitee = github3.users.User(invitation['invitee'], self)
+        self.repository = invitation['repository']
+        self.inviter = invitation['inviter']
+        self.invitee = invitation['invitee']
 
     def accept(self):
         return self._boolean(

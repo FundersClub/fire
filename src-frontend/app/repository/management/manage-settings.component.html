@@ -1,5 +1,43 @@
 <div class="CardIntro">
     <div class="CardIntro-title">
+        Options
+    </div>
+</div>
+
+<div class="CardCtas">
+    <form
+        autocomplete="off"
+        class="Form text-center"
+        (ngSubmit)="save()"
+        #addressForm="ngForm"
+        [ngClass]="{'Form--saving': saving}"
+    >
+        <div>
+            <md-checkbox
+                name="include_sender_email_in_issue"
+                [(ngModel)]="options.include_sender_email_in_issue"
+            >
+                Include sender e-mail address in issue
+            </md-checkbox>
+        </div>
+
+        <div class="CardCtas">
+            <button
+                md-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="saving"
+            >
+                Save
+            </button>
+        </div>
+    </form>
+</div>
+
+<br><br>
+
+<div class="CardIntro">
+    <div class="CardIntro-title">
         Purge attachment data?
     </div>
     <div class="CardIntro-subtext">

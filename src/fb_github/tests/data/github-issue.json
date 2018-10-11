@@ -57,6 +57,27 @@
     "type": "User",
     "site_admin": false
   },
+  "assignees": [
+    {
+        "login": "firebot-test",
+        "id": 1,
+        "avatar_url": "https://github.com/images/error/firebot-test_happy.gif",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/firebot-test",
+        "html_url": "https://github.com/firebot-test",
+        "followers_url": "https://api.github.com/users/firebot-test/followers",
+        "following_url": "https://api.github.com/users/firebot-test/following{/other_user}",
+        "gists_url": "https://api.github.com/users/firebot-test/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/firebot-test/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/firebot-test/subscriptions",
+        "organizations_url": "https://api.github.com/users/firebot-test/orgs",
+        "repos_url": "https://api.github.com/users/firebot-test/repos",
+        "events_url": "https://api.github.com/users/firebot-test/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/firebot-test/received_events",
+        "type": "User",
+        "site_admin": false
+      }
+  ],
   "milestone": {
     "url": "https://api.github.com/repos/firebot-test/Hello-World/milestones/1",
     "html_url": "https://github.com/firebot-test/Hello-World/milestones/v1.0",

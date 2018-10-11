@@ -1,6 +1,7 @@
 -r base.txt
 
-gunicorn==19.7.1
-raven==6.2.1
-sendgrid==3.6.5
+gunicorn==19.9.0
+raven==6.9.0
+sendgrid==5.6.0
 sendgrid-django==4.2.0
+

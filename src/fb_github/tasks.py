@@ -23,10 +23,10 @@ LOG = logging.getLogger()
 def poll_invitations():
     for repo_invitation in get_github_client().repository_invitations():
         repo, created = Repository.objects.get_or_create(
-            login=repo_invitation.repository.owner.login,
-            name=repo_invitation.repository.name,
+            login=repo_invitation.repository['owner']['login'],
+            name=repo_invitation.repository['name'],
             defaults={
-                'inviter_login': repo_invitation.inviter.login,
+                'inviter_login': repo_invitation.inviter['login'],
                 'original_invitation_data': repo_invitation.as_dict(),
             },
         )

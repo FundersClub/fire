@@ -85,8 +85,12 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'urls',
             'uuid',
+            'include_sender_email_in_issue',
         )
-        read_only_fields = [f for f in fields if f != 'email_slug']
+        read_only_fields = [f for f in fields if f not in (
+            'email_slug',
+            'include_sender_email_in_issue',
+        )]
         extra_kwargs = {
             'email_slug': {
                 'required': True,
@@ -98,8 +102,12 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
         }
 
     def validate_email_slug(self, value):
+        if value:
+            value = value.lower()
         if value in settings.FIREBOT_BANNED_EMAIL_SLUGS:
             raise serializers.ValidationError('"{}" is not permitted.'.format(value))
+        if self.instance and self.instance.pk and models.Repository.objects.exclude(pk=self.instance.pk).filter(email_slug__iexact=value).exists():
+            raise serializers.ValidationError('"{}" is already taken.'.format(value))
         return value
 
     def get_urls(self, obj):
@@ -216,10 +224,13 @@ class RepositoryViewSet(
 class MeView(APIView):
     @classmethod
     def get_me_data(cls, request):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return {
                 'is_authenticated': False,
             }
+
+        if hasattr(request, '_request'):
+            request = request._request
 
         return {
             'repositories': RepositoryViewSet.as_view({'get': 'list'})(request).data,
@@ -258,7 +269,7 @@ class AssociateEmailView(APIView):
         })
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         self.repo.emailmap_set.create(
