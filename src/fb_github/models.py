@@ -46,6 +46,8 @@ class Repository(models.Model):
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.PendingAccept)
     uuid = models.UUIDField(default=uuid4, unique=True)
 
+    include_sender_email_in_issue = models.BooleanField(default=True)
+
     objects = RepositoryQuerySet.as_manager()
 
     class Meta:
