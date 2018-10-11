@@ -85,8 +85,12 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'urls',
             'uuid',
+            'include_sender_email_in_issue',
         )
-        read_only_fields = [f for f in fields if f != 'email_slug']
+        read_only_fields = [f for f in fields if f not in (
+            'email_slug',
+            'include_sender_email_in_issue',
+        )]
         extra_kwargs = {
             'email_slug': {
                 'required': True,

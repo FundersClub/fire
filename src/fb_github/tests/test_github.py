@@ -110,18 +110,23 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
 
-        # Only email_slug should be updateable
+        # Only soem fields should be updateable
         orig_data = dict(resp.data)
         new_data = dict(resp.data)
         for k in new_data.keys():
-            new_data[k] = 'lol'
+            if k == 'include_sender_email_in_issue':
+                new_data[k] = 'false'
+            else:
+                new_data[k] = 'lol'
 
         resp = self.client.put(url, new_data)
 
         self.assertEqual(resp.data['email_slug'], 'lol')
+        self.assertEqual(resp.data['include_sender_email_in_issue'], False)
 
         resp.data['email'] = orig_data['email']
         resp.data['email_slug'] = orig_data['email_slug']
+        resp.data['include_sender_email_in_issue'] = orig_data['include_sender_email_in_issue']
         self.assertEqual(resp.data, orig_data)
 
         # Changing to a slug that's already in use, empty or banned should fail
@@ -263,6 +268,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                         'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
                     },
                     'uuid': str(self.repo1.uuid),
+                    'include_sender_email_in_issue': True,
                 },
             ],
             'username': self.user1.username,
@@ -295,7 +301,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                         'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo2.uuid),
                     },
                     'uuid': str(self.repo2.uuid),
-
+                    'include_sender_email_in_issue': True,
                 },
             ],
             'username': self.user2.username,
@@ -392,6 +398,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
             },
             'uuid': str(self.repo1.uuid),
+            'include_sender_email_in_issue': True,
         })
 
         # Switch to the correct state and try both users again
@@ -445,4 +452,5 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
                 'purge_attachments': 'http://testserver/api/github/repository/{}/purge_attachments/'.format(self.repo1.uuid),
             },
             'uuid': str(self.repo1.uuid),
+            'include_sender_email_in_issue': True,
         })
