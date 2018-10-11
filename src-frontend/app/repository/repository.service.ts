@@ -39,6 +39,25 @@ export class RepositoryService {
         return this.repositories.find((repo) => repo.uuid == uuid);
     }
 
+    updateOptions(repository: Repository, options: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.http.patch(repository.url, options).toPromise()
+                .then((response) => {
+                    const repo = response.json() as Repository;
+                    // Update repo entry in list with any new serverside data.
+                    const index = this.repositories.findIndex((r) => r.url == repo.url);
+                    if (index > -1) {
+                        this.repositories[index] = repo;
+                    }
+                    resolve(repo);
+                })
+                .catch((error) => {
+                    reject(error.json());
+                });
+            }
+        );
+    }
+
     updateAddress(repository: Repository, newAddress: string): Promise<any> {
         let data = {email_slug: newAddress};
         return new Promise((resolve, reject) => {
