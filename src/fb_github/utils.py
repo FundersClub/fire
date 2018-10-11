@@ -60,9 +60,13 @@ def msg_to_markdown(repo, msg):
     else:
         tag = msg.from_name
 
-    return u'*Sent by {} ({}). Created by [fire]({}/).*\n\n---\n{}{}'.format(
-        tag,
-        msg.from_email,
+    if repo.include_sender_email_in_issue:
+        from_text = '{} ({})'.format(tag, msg.from_email)
+    else:
+        from_text = tag
+
+    return u'*Sent by {}. Created by [fire]({}/).*\n\n---\n{}{}'.format(
+        from_text,
         settings.BASE_URL,
         msg_body,
         attachments_text,
