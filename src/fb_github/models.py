@@ -84,7 +84,7 @@ class Repository(models.Model):
     def create_issue_from_incoming_msg(self, msg):
         try:
             body = msg_to_markdown(self, msg)
-        except:
+        except:  # noqa
             if settings.DEBUG:
                 raise
             LOG.exception('failed msg_to_markdown on {} {}'.format(self.id, msg.id))
@@ -131,7 +131,7 @@ class Repository(models.Model):
 
         try:
             self.initial_issue.gh_issue.close()
-        except:
+        except:  # noqa
             pass
 
 
