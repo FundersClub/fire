@@ -18,5 +18,6 @@ export class Repository {
             purge_attachments: string
         },
         public uuid: string,
+        public include_sender_email_in_issue: boolean,
     ) {}
 }
