@@ -13,7 +13,7 @@ def test_error(self):
         raise Exception('test')
     try:
         f()
-    except:
+    except:  # noqa
         LOG.exception('Exception log test')
     raise Exception('and an actual exception!')
 

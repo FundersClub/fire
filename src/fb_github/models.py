@@ -46,6 +46,8 @@ class Repository(models.Model):
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.PendingAccept)
     uuid = models.UUIDField(default=uuid4, unique=True)
 
+    include_sender_email_in_issue = models.BooleanField(default=True)
+
     objects = RepositoryQuerySet.as_manager()
 
     class Meta:
@@ -82,7 +84,7 @@ class Repository(models.Model):
     def create_issue_from_incoming_msg(self, msg):
         try:
             body = msg_to_markdown(self, msg)
-        except:
+        except:  # noqa
             if settings.DEBUG:
                 raise
             LOG.exception('failed msg_to_markdown on {} {}'.format(self.id, msg.id))
@@ -129,7 +131,7 @@ class Repository(models.Model):
 
         try:
             self.initial_issue.gh_issue.close()
-        except:
+        except:  # noqa
             pass
 
 
