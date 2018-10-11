@@ -1,18 +1,18 @@
 # Django stuff
-Django==2.0.4
+Django==2.1.2
 dj-database-url==0.5.0
-django-choices==1.6.0
-django-extensions==2.0.6
-django-storages==1.6.6
-djangorestframework==3.7.7
+django-choices==1.6.1
+django-extensions==2.1.3
+django-storages==1.7.1
+djangorestframework==3.8.2
 whitenoise==3.3.1
 
 # Allauth
 defusedxml==0.5.0
-django-allauth==0.35.0
-oauthlib==2.0.7
+django-allauth==0.38.0
+oauthlib==2.1.0
 python3-openid==3.1.0
-requests-oauthlib==0.8.0
+requests-oauthlib==1.0.0
 
 # Github
 github3.py==1.0.2
@@ -20,17 +20,17 @@ uritemplate==3.0.0
 uritemplate.py==3.0.2
 
 # Misc
-boto==2.48.0
-psycopg2==2.7.4
-pytz==2018.3
-requests==2.18.4
+boto==2.49.0
+psycopg2==2.7.5
+pytz==2018.5
+requests==2.19.1
 six==1.11.0
 
 # Celery
-celery[redis]==4.1.1
+celery[redis]==4.2.1
 redis==2.10.6
 vine==1.1.4
 
 # HTML processing
-beautifulsoup4==4.6.0
+beautifulsoup4==4.6.3
 html2text==2018.1.9
