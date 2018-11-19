@@ -28,7 +28,7 @@ six==1.11.0
 
 # Celery
 celery[redis]==4.2.1
-redis==2.10.6
+redis==3.0.1
 vine==1.1.4
 
 # HTML processing
