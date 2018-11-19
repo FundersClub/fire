@@ -5,7 +5,7 @@ django-choices==1.6.1
 django-extensions==2.1.3
 django-storages==1.7.1
 djangorestframework==3.9.0
-whitenoise==4.1
+whitenoise==4.1.1
 
 # Allauth
 defusedxml==0.5.0
