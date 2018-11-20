@@ -163,6 +163,7 @@ FIREBOT_BANNED_EMAIL_SLUGS = (
     'inoc',
     'ispfeedback',
     'ispsupport',
+    'issues',
     'list',
     'list-request',
     'maildaemon',
