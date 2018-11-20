@@ -138,6 +138,8 @@ from firebot.settings.tasks import *  # noqa
 # Firebot
 ###############################################################################
 
+FIREBOT_BANNED_EMAIL_DOMAINS = ()
+
 FIREBOT_BANNED_EMAIL_SLUGS = (
     'abuse',
     'admin',

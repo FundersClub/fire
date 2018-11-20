@@ -3,6 +3,7 @@ import json
 from email.utils import parseaddr
 from functools import partial
 
+from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -22,6 +23,10 @@ class SendGridParseView(View):
     def post(self, request, *args, **kwargs):
         data = request.POST
         from_name, from_email = parseaddr(data['from'])
+
+        for banned_domain in settings.FIREBOT_BANNED_EMAIL_DOMAINS:
+            if from_email.endswith('@' + banned_domain):
+                return HttpResponse()
 
         msg = IncomingMessage.objects.create(
             body_html=data.get('html', ''),
