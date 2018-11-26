@@ -15,7 +15,7 @@ python3-openid==3.1.0
 requests-oauthlib==1.0.0
 
 # Github
-github3.py==1.0.2
+github3.py==1.2.0
 uritemplate==3.0.0
 uritemplate.py==3.0.2
 
