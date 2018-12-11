@@ -3,6 +3,7 @@
 # fire
 
 A bot that creates GitHub Issues via email. Read more at https://fire.fundersclub.com/.
+To try it, send an email to fire-test@fire.fundersclub.com and check out https://github.com/FundersClub/fire-test/issues/
 
 ### To get set up:
 ```
