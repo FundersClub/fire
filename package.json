@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 12001",
     "test": "karma start",
-    "build": "rimraf dist-frontend && webpack --config config-frontend/webpack.prod.js --progress --profile --bail"
+    "build": "rimraf dist-frontend && webpack --config config-frontend/webpack.prod.js --progress --profile --bail",
+    "heroku-postbuild": "echo Skip build on Heroku"
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -55,5 +56,6 @@
     "karma-webpack": "2.0.1",
     "phantomjs-prebuilt": "2.1.7",
     "webpack-dev-server": "2.2.0-rc.0"
-  }
+  },
+  "heroku-run-build-script": true
 }
