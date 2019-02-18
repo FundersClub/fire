@@ -32,5 +32,5 @@ redis==3.2.0
 vine==1.2.0
 
 # HTML processing
-beautifulsoup4==4.6.3
+beautifulsoup4==4.7.1
 html2text==2018.1.9
