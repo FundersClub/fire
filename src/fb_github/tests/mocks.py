@@ -16,7 +16,7 @@ def mock_github_api(fn):
 
         self.requests_mock.register_uri(
             'GET',
-            re.compile('https://api.github.com/repos/[\d\w-]+/[\d\w-]+'),
+            re.compile(r'https://api.github.com/repos/[\d\w-]+/[\d\w-]+'),
             text=data('github-repo.json'),
         )
 

@@ -85,7 +85,7 @@ class SendGridParseTestCase(RequestsMockMixin, TransactionTestCase):
         self.assertIsNotNone(msg.processed_at)
         self.assertTrue('Sent by {} ({})'.format(msg.from_name, msg.from_email) in msg.issue.body)
 
-        test_text = """
+        test_text = r"""
 \---------- Forwarded message ----------
 From: **Sentry** <[noreply@md.getsentry.com](mailto:noreply@md.getsentry.com)>
 Date: Sat, Feb 18, 2017 at 8:54 PM

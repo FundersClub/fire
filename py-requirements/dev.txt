@@ -1,14 +1,13 @@
 -r base.txt
 
 # Nicer interfaces
-ipython==7.0.1
+ipython==7.2.0
 ipdb==0.11
 
 # Flake8
-flake8==3.5.0
+flake8==3.7.5
 
 # Testing
-Faker==0.9.1
-Faker==0.9.1
+Faker==1.0.2
 factory-boy==2.11.1
 requests-mock==1.5.2

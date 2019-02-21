@@ -204,8 +204,8 @@ class RepositoryViewSet(
         repo = get_object_or_404(models.Repository, uuid=uuid)
 
         # See if we're going to approve this repo
-        if ((repo.status == models.Repository.Status.PendingInviterApproval) and
-            (repo.inviter_login == request.user.username)):
+        if ((repo.status == models.Repository.Status.PendingInviterApproval)
+            and (repo.inviter_login == request.user.username)):
             repo.approve_by_inviter(request.user)
 
         # Select which serializer class to use based on the current user's access
