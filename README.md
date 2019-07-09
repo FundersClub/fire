@@ -19,7 +19,7 @@ createdb firebot
 
 If you have access to the Heroku app:
 ```
-git remote add herkou https://git.heroku.com/fc-firebot.git
+git remote add heroku https://git.heroku.com/fc-firebot.git
 ./bin/restore-db
 ```
 
