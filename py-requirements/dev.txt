@@ -5,7 +5,7 @@ ipython==7.9.0
 ipdb==0.12.2
 
 # Flake8
-flake8==3.7.5
+flake8==3.7.8
 
 # Testing
 Faker==1.0.2
