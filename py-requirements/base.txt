@@ -24,7 +24,7 @@ boto==2.49.0
 psycopg2==2.8.4
 pytz==2019.3
 requests==2.22.0
-six==1.12.0
+six==1.14.0
 
 # Celery
 celery[redis]==4.2.1
