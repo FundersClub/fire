@@ -8,6 +8,6 @@ ipdb==0.12.3
 flake8==3.7.9
 
 # Testing
-Faker==1.0.2
+Faker==4.0.0
 factory-boy==2.11.1
 requests-mock==1.5.2
