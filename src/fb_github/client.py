@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 def get_github_client(token=None):
-    ghc = github3.login(token=token or settings.GITHUB_TOKEN)
+    ghc = github3.login(settings.GITHUB_BOT_USERNAME, settings.GITHUB_TOKEN)
     assert ghc.__class__ == github3.github.GitHub
     ghc.__class__ = GitHub
     return ghc
