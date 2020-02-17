@@ -57,5 +57,8 @@
     "phantomjs-prebuilt": "2.1.7",
     "webpack-dev-server": "2.2.0-rc.0"
   },
-  "heroku-run-build-script": true
+  "heroku-run-build-script": true,
+  "engines": {
+    "node": "10.16.0"
+  }
 }
