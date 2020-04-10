@@ -3,8 +3,8 @@ import github3
 from django.conf import settings
 
 
-def get_github_client(token=None):
-    ghc = github3.login(settings.GITHUB_BOT_USERNAME, settings.GITHUB_TOKEN)
+def get_github_client(username=None, token=None):
+    ghc = github3.login(username or settings.GITHUB_BOT_USERNAME, token or settings.GITHUB_TOKEN)
     assert ghc.__class__ == github3.github.GitHub
     ghc.__class__ = GitHub
     return ghc

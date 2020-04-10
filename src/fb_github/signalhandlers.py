@@ -12,7 +12,7 @@ def sync_github_emails_on_signup(sender, request, user, **kwargs):
     if not sociallogin or sociallogin.account.provider != 'github':
         return
 
-    gh_client = get_github_client(sociallogin.token.token)
+    gh_client = get_github_client(sociallogin.account.extra_data['login'], sociallogin.token.token)
     gh_emails = list(gh_client.emails())
 
     # If we don't have an email address, grab one from GitHub
