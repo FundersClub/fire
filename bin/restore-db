@@ -9,7 +9,7 @@ set -e
 dropdb firebot
 
 # The || true is because even when this succeeds it sometimes return a non-zero value :(
-heroku pg:pull DATABASE_URL firebot --app fc-firebot || true
+heroku pg:pull DATABASE_URL firebot --app fc-firebot '--exclude-table-data=fb_emails_incomingmessage;socialaccount_socialtoken;django_session;fb_github_issue;fb_emails_attachment' || true
 
 # Sanitize
 psql firebot << EOF
