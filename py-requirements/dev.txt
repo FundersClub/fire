@@ -10,4 +10,4 @@ flake8==3.7.9
 # Testing
 Faker==4.0.2
 factory-boy==2.12.0
-requests-mock==1.5.2
+requests-mock==1.7.0
