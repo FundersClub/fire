@@ -28,7 +28,7 @@ requests==2.23.0
 six==1.15.0
 
 # Celery
-celery[redis]==4.2.1
+celery[redis]==4.4.2
 redis==3.2.0
 vine==1.2.0
 
