@@ -1,7 +1,7 @@
 -r base.txt
 
 # Nicer interfaces
-ipython==7.2.0
+ipython==7.14.0
 ipdb==0.11
 
 # Flake8
