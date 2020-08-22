@@ -36,6 +36,7 @@ class SendGridParseView(View):
             original_post_data=dict(data),
             subject=data.get('subject', '<No subject>'),
             to_email=json.loads(data['envelope'])['to'][0],
+            spam_score=data.get('spam_score', 0),
         )
 
         for name, info in json.loads(data.get('attachment-info', '{}')).items():

@@ -33,6 +33,7 @@ class IncomingMessage(models.Model):
     subject = models.CharField(max_length=2000)
     to_email = models.EmailField(max_length=500)
     uuid = models.UUIDField(default=uuid4, unique=True)
+    spam_score = models.DecimalField(max_digits=10, decimal_places=4, default=0)
 
     def reply_from_template(self, template_name, extra_context=None, html=False):
         context = {
