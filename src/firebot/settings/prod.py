@@ -112,7 +112,7 @@ FIREBOT_BANNED_EMAIL_DOMAINS = os.environ['FIREBOT_BANNED_EMAIL_DOMAINS'].split(
 # Emails
 ###############################################################################
 
-EMAIL_BACKEND = 'sgbackend.SendGridBackend'
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 EMAIL_DOMAIN = os.environ['FIREBOT_EMAIL_DOMAIN']
 DEFAULT_FROM_EMAIL = 'bot@' + EMAIL_DOMAIN
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
