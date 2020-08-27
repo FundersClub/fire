@@ -1,3 +1,4 @@
+import json
 import os
 
 
@@ -138,7 +139,17 @@ from firebot.settings.tasks import *  # noqa
 # Firebot
 ###############################################################################
 
-FIREBOT_BANNED_EMAIL_DOMAINS = ()
+FIREBOT_BANNED_EMAIL_DOMAINS = []
+
+# Support banning disposable email domains based on a list grabbed from
+# https://github.com/groundcat/disposable-email-domain-list
+if os.environ.get('FIREBOT_BAN_DISPOSABLE_DOMAINS') == '1':
+    FIREBOT_BANNED_EMAIL_DOMAINS += json.load(open(os.path.join(
+        BASE_DIR,
+        'disposable-domains-list.json',
+    )))
+    print('Ignoring {} email domains in base.py'.format(len(FIREBOT_BANNED_EMAIL_DOMAINS)))
+
 
 FIREBOT_BANNED_EMAIL_SLUGS = (
     'abuse',
