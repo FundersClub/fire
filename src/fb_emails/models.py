@@ -47,6 +47,9 @@ class IncomingMessage(models.Model):
         subject = 'Re: ' + self.subject
         to = '{} <{}>'.format(self.from_name, self.from_email) if self.from_name else self.from_email
 
+        # Sendgrid doesn't like square brackets in the `to` field.
+        to = to.replace('[', '').replace(']', '')
+
         if html:
             h = html2text.HTML2Text(bodywidth=0)
             text_content = h.handle(body)
