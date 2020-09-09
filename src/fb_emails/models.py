@@ -45,7 +45,10 @@ class IncomingMessage(models.Model):
 
         body = render_to_string(template_name, context)
         subject = 'Re: ' + self.subject
-        to = '{} <{}>'.format(self.from_name, self.from_email) if self.from_name else self.from_email
+        to = '"{}" <{}>'.format(
+            self.from_name.replace('"', ''),
+            self.from_email,
+        ) if self.from_name else self.from_email
 
         # Sendgrid doesn't like square brackets in the `to` field.
         to = to.replace('[', '').replace(']', '')
