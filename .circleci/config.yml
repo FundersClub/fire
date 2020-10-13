@@ -58,7 +58,7 @@ jobs:
       # deploy
       - add_ssh_keys:
           fingerprints:
-              - "57:68:9f:3c:f0:c0:02:54:0a:a3:ee:09:26:46:26:14"
+              - "7b:82:85:a1:01:fa:ca:ae:d0:3c:cf:2d:94:48:2d:3e"
       - deploy:
           name: Deploy Master to Heroku
           command: |
