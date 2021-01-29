@@ -1,5 +1,5 @@
 -r base.txt
 
 gunicorn==19.9.0
-raven==6.10.0
+sentry-sdk==0.19.5
 django-sendgrid-v5==0.9.0
