@@ -102,6 +102,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_ADAPTER = 'firebot.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'firebot.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': [
