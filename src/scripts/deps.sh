@@ -18,6 +18,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+export UV_BUILD_CONSTRAINT="${APP_ROOT}/build-constraints.txt"
 
 REQUIREMENTS_FILE="${REQUIREMENTS_FILE:-requirements.txt}"
 LOCK_FILE="${LOCK_FILE:-requirements.lock.txt}"
@@ -75,6 +76,10 @@ _compile() {
   local out_dir tmp
   out_dir="$(dirname "${out}")"
   tmp="$(mktemp "${out_dir}/.lock-compile.XXXXXX")"
+  # Check the recorded resolution; only upgrade-* should refresh unrelated pins.
+  if [[ -f "${lock_path}" ]]; then
+    cp "${lock_path}" "${tmp}"
+  fi
   if uv_base pip compile "${req_path}" -o "${tmp}" -p "${PYTHON_VERSION}" --no-header ${UV_COMPILE_EXTRA_ARGS}; then
     mv -f "${tmp}" "${out}"
   else

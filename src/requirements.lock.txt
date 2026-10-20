@@ -31,7 +31,7 @@ django==2.2.21
     #   django-choices
     #   django-sendgrid-v5
     #   django-storages
-django-allauth==0.40.0
+django-allauth @ git+https://github.com/pennersr/django-allauth@83a0f77688f7d89939db454e3708d34e523accf3
     # via -r ../py-requirements/base.txt
 django-choices==1.6.2
     # via -r ../py-requirements/base.txt
