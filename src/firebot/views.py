@@ -2,11 +2,13 @@ import json
 import os
 
 from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 
 from fb_github.api import MeView
 
 
+@staff_member_required
 def test_500(request):
     raise Exception('test!')
 
