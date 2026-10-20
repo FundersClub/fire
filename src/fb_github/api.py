@@ -272,11 +272,15 @@ class AssociateEmailView(APIView):
         if not request.user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        self.repo.emailmap_set.create(
+        entry, _ = self.repo.emailmap_set.get_or_create(
             email=self.msg.from_email,
-            login=request.user.username,
-            user=request.user,
+            defaults={'login': request.user.username, 'user': request.user},
         )
+        if entry.login != request.user.username or entry.user_id not in (None, request.user.id):
+            return Response(
+                {'detail': 'This email already has a different GitHub association.'},
+                status=status.HTTP_409_CONFLICT,
+            )
         update_issue_after_email_association.delay(self.msg.issue.id)
 
         return self.get(request, *args, **kwargs)
