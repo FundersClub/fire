@@ -1,5 +1,6 @@
 import datetime
 import os
+import re
 
 from django.conf import settings
 from django.core import mail
@@ -17,6 +18,7 @@ from fb_emails.tasks import (
 from fb_emails.tests.factories import IncomingMessageFactory
 from fb_github.tests.factories import RepositoryFactory
 from fb_github.tests.mocks import mock_github_api
+from fb_github.utils import check_associate_email_token
 from firebot.tests import RequestsMockMixin
 from firebot.tests.factories import UserFactory
 
@@ -125,6 +127,10 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
 
         expected_url = settings.BASE_URL + '/associate-email/{}/'.format(msg.uuid)
         self.assertTrue(expected_url in mail.outbox[0].body)
+
+        # The link carries a signed token for this message's sender
+        token = re.search(re.escape(expected_url) + r'([^/"]+)/', mail.outbox[0].body).group(1)
+        self.assertTrue(check_associate_email_token(msg, token))
         del mail.outbox[:]
 
         # Send another message, we shouldn't receive an email this time unless it's from a new address

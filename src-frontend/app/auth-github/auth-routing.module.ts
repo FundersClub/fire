@@ -15,11 +15,10 @@ const authRoutes: Routes = [{
         title: 'Login'
     }
 }, {
+    // Shown to logged-out users, so it can't fetch repo info (the approve
+    // endpoint requires authentication).
     path: 'authenticate/:uuid',
     component: AuthenticateGitHubComponent,
-    resolve: {
-        repository: BasicRepositoryInfoResolver,
-    },
     data: {
         title: 'Verify your GitHub'
     }

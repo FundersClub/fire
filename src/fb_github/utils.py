@@ -4,6 +4,37 @@ import html2text
 from bs4 import BeautifulSoup
 
 from django.conf import settings
+from django.core import signing
+
+
+ASSOCIATE_EMAIL_TOKEN_SALT = 'associate-email'
+ASSOCIATE_EMAIL_TOKEN_MAX_AGE = 60 * 60 * 24 * 30  # 30 days
+
+
+def make_associate_email_token(msg):
+    """Signed token proving the bearer received the offer-associate email for `msg`."""
+    return signing.dumps(
+        {'msg': str(msg.uuid), 'email': msg.from_email.lower()},
+        salt=ASSOCIATE_EMAIL_TOKEN_SALT,
+    )
+
+
+def check_associate_email_token(msg, token):
+    if not token:
+        return False
+    try:
+        payload = signing.loads(
+            token,
+            salt=ASSOCIATE_EMAIL_TOKEN_SALT,
+            max_age=ASSOCIATE_EMAIL_TOKEN_MAX_AGE,
+        )
+    except signing.BadSignature:
+        return False
+    return (
+        isinstance(payload, dict)
+        and payload.get('msg') == str(msg.uuid)
+        and payload.get('email') == msg.from_email.lower()
+    )
 
 
 def msg_to_markdown(repo, msg):

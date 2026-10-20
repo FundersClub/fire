@@ -1,8 +1,15 @@
+from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.providers.github.provider import GitHubProvider
 from django.conf import settings
 from django.conf.urls import (
     include,
     url,
 )
+from django.db import (
+    IntegrityError,
+    transaction,
+)
+from django.http import Http404
 
 from rest_framework import (
     permissions,
@@ -27,6 +34,7 @@ from rest_framework.viewsets import GenericViewSet
 from fb_emails import models as fb_emails_models
 from fb_github import models
 from fb_github.tasks import update_issue_after_email_association
+from fb_github.utils import check_associate_email_token
 from firebot.api import BaseSerializer
 
 
@@ -174,13 +182,6 @@ class RepositoryViewSet(
             .filter(admins=self.request.user)
         )
 
-    def dispatch(self, request, *args, **kwargs):
-        # Workaround to skip authentication checking for the approve view
-        if request.resolver_match.url_name == 'repository-approve':
-            self.permission_classes = (permissions.AllowAny, )
-
-        return super().dispatch(request, *args, **kwargs)
-
     @detail_route(methods=['post'])
     def purge_attachments(self, request, uuid=None):
         repo = self.get_object()
@@ -203,9 +204,12 @@ class RepositoryViewSet(
         #    does not have access to this particular repo
         repo = get_object_or_404(models.Repository, uuid=uuid)
 
-        # See if we're going to approve this repo
+        # See if we're going to approve this repo. Only the GitHub account that
+        # sent the invitation may approve it, so match on the immutable GitHub
+        # user id of the caller's linked social account (never the Django
+        # username, which can be chosen freely at signup).
         if ((repo.status == models.Repository.Status.PendingInviterApproval)
-            and (repo.inviter_login == request.user.username)):
+            and self._is_inviter(repo, request.user)):
             repo.approve_by_inviter(request.user)
 
         # Select which serializer class to use based on the current user's access
@@ -215,6 +219,18 @@ class RepositoryViewSet(
 
         serializer = serializer_class(repo, context=self.get_serializer_context())
         return Response(serializer.data)
+
+    @staticmethod
+    def _is_inviter(repo, user):
+        inviter = (repo.original_invitation_data or {}).get('inviter') or {}
+        inviter_id = inviter.get('id')
+        if inviter_id is None:
+            return False
+        return SocialAccount.objects.filter(
+            user=user,
+            provider=GitHubProvider.id,
+            uid=str(inviter_id),
+        ).exists()
 
 
 ################################################################################
@@ -246,16 +262,38 @@ class MeView(APIView):
 
 
 class AssociateEmailView(APIView):
+    """
+    Lets the sender of an email claim their own address on the repo it was
+    sent to. Access requires either the signed token from the offer-associate
+    email (proving the caller received mail at `from_email`) or being an admin
+    of the repo.
+    """
     def dispatch(self, request, *args, **kwargs):
         self.msg = get_object_or_404(
             fb_emails_models.IncomingMessage,
             uuid=kwargs['msg_uuid'],
+            issue__isnull=False,
         )
         self.repo = self.msg.issue.repo
+        self.token = kwargs.get('token')
         return super().dispatch(request, *args, **kwargs)
 
+    def _has_valid_token(self):
+        return check_associate_email_token(self.msg, self.token)
+
+    def _is_repo_admin(self, user):
+        return user.is_authenticated and self.repo.is_editable_by(user)
+
     def get(self, request, *args, **kwargs):
+        if not self._has_valid_token() and not self._is_repo_admin(request.user):
+            raise Http404
+
         existing_entry = self.repo.emailmap_set.filter(email=self.msg.from_email).first()
+
+        if self.token:
+            url = reverse('fb-github-associate-email-token', args=[self.msg.uuid, self.token], request=request)
+        else:
+            url = reverse('fb-github-associate-email', args=[self.msg.uuid], request=request)
 
         return Response({
             'email': self.msg.from_email,
@@ -265,18 +303,28 @@ class AssociateEmailView(APIView):
                 'login': self.repo.login,
                 'name': self.repo.name,
             },
-            'url': reverse('fb-github-associate-email', args=[self.msg.uuid], request=request),
+            'url': url,
         })
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        self.repo.emailmap_set.create(
-            email=self.msg.from_email,
-            login=request.user.username,
-            user=request.user,
-        )
+        if not self._has_valid_token() and not self._is_repo_admin(request.user):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            with transaction.atomic():
+                self.repo.emailmap_set.create(
+                    email=self.msg.from_email,
+                    login=request.user.username,
+                    user=request.user,
+                )
+        except IntegrityError:
+            return Response(
+                {'detail': 'Email address is already associated with a GitHub username.'},
+                status=status.HTTP_409_CONFLICT,
+            )
         update_issue_after_email_association.delay(self.msg.issue.id)
 
         return self.get(request, *args, **kwargs)
@@ -294,5 +342,6 @@ router.register('repository', RepositoryViewSet)
 urlpatterns = [
     url(r'^me/$', MeView.as_view(), name='fb-github-me'),
     url(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email'),
+    url(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/(?P<token>[\w:.-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email-token'),
     url(r'^', include(router.urls)),
 ]

@@ -13,7 +13,8 @@ export class AssociateEmailResolver implements Resolve<AssociateEmail> {
 
     resolve(route: ActivatedRouteSnapshot): Promise<AssociateEmail> {
         const uuid = route.params['uuid'];
-        return this.associateEmailService.getByUuid(uuid)
+        const token = route.params['token'];
+        return this.associateEmailService.getByUuid(uuid, token)
             .then((associateEmail) => associateEmail)
             .catch((error) => {
                 // No email found... 404.

@@ -9,6 +9,7 @@ from django.utils import timezone
 
 from fb_emails.models import IncomingMessage
 from fb_github.models import Repository
+from fb_github.utils import make_associate_email_token
 
 
 LOG = logging.getLogger(__name__)
@@ -75,6 +76,7 @@ def process_incoming_message(msg_id):
     ).exclude(id=msg.id).exists()
     if not email_recognized and not email_seen_before:
         msg.reply_from_template('fb_emails/offer-associate.html', {
+            'associate_token': make_associate_email_token(msg),
             'repo': repo,
         }, html=True)
 
