@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.conf.urls import (
-    include,
-    url,
-)
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import (
+    include,
+    re_path,
+)
 from django.views.static import serve
 
 import firebot.views
@@ -12,17 +12,17 @@ import firebot.views
 
 urlpatterns = [
     # Django Views
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^{}/'.format(getattr(settings, 'ADMIN_URL', 'admin')), admin.site.urls),
-    url(r'^api/', include([
-        url(r'^github/', include('fb_github.api')),
+    re_path(r'^accounts/', include('allauth.urls')),
+    re_path(r'^{}/'.format(getattr(settings, 'ADMIN_URL', 'admin')), admin.site.urls),
+    re_path(r'^api/', include([
+        re_path(r'^github/', include('fb_github.api')),
     ])),
-    url(r'^test-500/$', firebot.views.test_500),
-    url(r'^emails/', include('fb_emails.urls')),
+    re_path(r'^test-500/$', firebot.views.test_500),
+    re_path(r'^emails/', include('fb_emails.urls')),
 
     # Static files
-    url(r'^$', serve, {'path': 'static.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
-    url(r'^.+', firebot.views.app_html, name='repos'),
+    re_path(r'^$', serve, {'path': 'static.html', 'document_root': settings.STATIC_FRONTEND_ROOT}, name='index'),
+    re_path(r'^.+', firebot.views.app_html, name='repos'),
 ]
 
 if settings.DEBUG:

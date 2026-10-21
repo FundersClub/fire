@@ -1,37 +1,27 @@
+# Direct dependencies only; exact pins live in src/requirements.lock.txt
+# (regenerate with src/scripts/deps.sh lock).
+
 # Django stuff
-Django==2.2.21
-dj-database-url==0.5.0
-django-choices==1.6.2
-django-extensions==2.1.5
-django-storages==1.7.1
-djangorestframework==3.9.1
-whitenoise==4.1.2
+Django>=5.2,<5.3
+dj-database-url>=2.3
+django-extensions>=4.1
+django-storages[s3]>=1.14
+djangorestframework>=3.16
+whitenoise>=6.9
 
 # Allauth
-defusedxml==0.5.0
-oauthlib==3.0.1
-python3-openid==3.1.0
-requests-oauthlib==1.2.0
-# Specific allauth version that is not yet released, which switches to header authorization.
-django-allauth @ git+https://github.com/pennersr/django-allauth@83a0f77688f7d89939db454e3708d34e523accf3
+django-allauth[socialaccount]>=65.13
 
 # Github
-github3.py==1.0.2
-uritemplate==3.0.0
-uritemplate.py==3.0.2
+github3.py>=4.0
 
 # Misc
-boto==2.49.0
-psycopg2==2.7.7
-pytz==2018.9
-requests==2.21.0
-six==1.12.0
+psycopg[binary]>=3.2
+requests>=2.32
 
 # Celery
-celery[redis]==4.2.1
-redis==3.2.0
-vine==1.2.0
+celery[redis]>=5.5
 
 # HTML processing
-beautifulsoup4==4.7.1
-html2text==2018.1.9
+beautifulsoup4>=4.13
+html2text>=2025.4

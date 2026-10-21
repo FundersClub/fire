@@ -5,7 +5,7 @@ from django.utils import timezone
 from fb_github import models
 
 
-class RepositoryFactory(factory.DjangoModelFactory):
+class RepositoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Repository
 

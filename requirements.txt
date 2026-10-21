@@ -1,0 +1,2 @@
+# Heroku installs from the repo root; the locked set lives with the app in src/ (see src/scripts/deps.sh).
+-r src/requirements.lock.txt

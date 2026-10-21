@@ -1,130 +1,150 @@
-amqp==2.6.1
+amqp==5.4.1
     # via kombu
-beautifulsoup4==4.7.1
+asgiref==3.12.1
+    # via
+    #   django
+    #   django-allauth
+beautifulsoup4==4.15.0
     # via -r ../py-requirements/base.txt
-billiard==3.5.0.5
+billiard==4.3.1
     # via celery
-boto==2.49.0
+boto3==1.43.116
+    # via django-storages
+botocore==1.43.116
+    # via
+    #   boto3
+    #   s3transfer
+celery==5.6.3
     # via -r ../py-requirements/base.txt
-celery==4.2.1
-    # via -r ../py-requirements/base.txt
-certifi==2026.2.25
+certifi==2026.10.19
     # via
     #   requests
     #   sentry-sdk
-cffi==2.0.0
+cffi==2.1.1
     # via cryptography
-chardet==3.0.4
+charset-normalizer==3.5.2
     # via requests
-cryptography==46.0.7
-    # via sendgrid
-defusedxml==0.5.0
+click==8.5.0
     # via
-    #   -r ../py-requirements/base.txt
-    #   python3-openid
-dj-database-url==0.5.0
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1.2
+    # via celery
+click-repl==0.4.1
+    # via celery
+cryptography==50.0.2
+    # via
+    #   pyjwt
+    #   sendgrid
+dj-database-url==3.1.2
     # via -r ../py-requirements/base.txt
-django==2.2.21
+django==5.2.18
     # via
     #   -r ../py-requirements/base.txt
+    #   dj-database-url
     #   django-allauth
-    #   django-choices
+    #   django-extensions
     #   django-sendgrid-v5
     #   django-storages
-django-allauth @ git+https://github.com/pennersr/django-allauth@83a0f77688f7d89939db454e3708d34e523accf3
+    #   djangorestframework
+django-allauth==65.20.1
     # via -r ../py-requirements/base.txt
-django-choices==1.6.2
+django-extensions==4.1
     # via -r ../py-requirements/base.txt
-django-extensions==2.1.5
-    # via -r ../py-requirements/base.txt
-django-sendgrid-v5==0.9.0
+django-sendgrid-v5==1.3.1
     # via -r ../py-requirements/prod.txt
-django-storages==1.7.1
+django-storages==1.14.6
     # via -r ../py-requirements/base.txt
-djangorestframework==3.9.1
+djangorestframework==3.18.3
     # via -r ../py-requirements/base.txt
-future==1.0.0
-    # via django-sendgrid-v5
-github3-py==1.0.2
+github3-py==4.0.1
     # via -r ../py-requirements/base.txt
-gunicorn==19.9.0
+gunicorn==26.2.0
     # via -r ../py-requirements/prod.txt
-html2text==2018.1.9
+html2text==2025.4.15
     # via -r ../py-requirements/base.txt
-idna==2.8
+idna==3.20
     # via requests
-kombu==4.6.11
-    # via celery
-markupsafe==3.0.3
-    # via werkzeug
-oauthlib==3.0.1
+jmespath==1.1.0
     # via
-    #   -r ../py-requirements/base.txt
-    #   requests-oauthlib
-psycopg2==2.7.7
+    #   boto3
+    #   botocore
+kombu==5.6.2
+    # via celery
+markupsafe==3.0.4
+    # via werkzeug
+oauthlib==4.0.0
+    # via django-allauth
+packaging==26.3
+    # via kombu
+prompt-toolkit==3.0.53
+    # via click-repl
+psycopg==3.3.6
     # via -r ../py-requirements/base.txt
-pycparser==3.0
+psycopg-binary==3.3.6
+    # via psycopg
+pycparser==3.11
     # via cffi
+pyjwt==2.15.1
+    # via
+    #   django-allauth
+    #   github3-py
 python-dateutil==2.9.0.post0
-    # via github3-py
+    # via
+    #   botocore
+    #   celery
+    #   github3-py
 python-http-client==3.3.7
     # via
     #   django-sendgrid-v5
     #   sendgrid
-python3-openid==3.1.0
-    # via
-    #   -r ../py-requirements/base.txt
-    #   django-allauth
-pytz==2018.9
-    # via
-    #   -r ../py-requirements/base.txt
-    #   celery
-    #   django
-redis==3.2.0
-    # via
-    #   -r ../py-requirements/base.txt
-    #   celery
-requests==2.21.0
+redis==6.4.0
+    # via kombu
+requests==2.34.2
     # via
     #   -r ../py-requirements/base.txt
     #   django-allauth
     #   github3-py
-    #   requests-oauthlib
-requests-oauthlib==1.2.0
-    # via
-    #   -r ../py-requirements/base.txt
-    #   django-allauth
+s3transfer==0.19.3
+    # via boto3
 sendgrid==6.12.5
     # via django-sendgrid-v5
-sentry-sdk==0.19.5
+sentry-sdk==2.72.0
     # via -r ../py-requirements/prod.txt
-six==1.12.0
-    # via
-    #   -r ../py-requirements/base.txt
-    #   django-extensions
-    #   python-dateutil
-soupsieve==2.8.3
+six==1.17.0
+    # via python-dateutil
+soupsieve==3.0.3
     # via beautifulsoup4
-sqlparse==0.5.5
+sqlparse==0.6.0
     # via django
-typing-extensions==4.15.0
-    # via cryptography
-uritemplate==3.0.0
+typing-extensions==4.16.0
     # via
-    #   -r ../py-requirements/base.txt
-    #   github3-py
-    #   uritemplate-py
-uritemplate-py==3.0.2
-    # via -r ../py-requirements/base.txt
-urllib3==1.24.3
+    #   beautifulsoup4
+    #   click-repl
+    #   psycopg
+tzdata==2026.5
+    # via kombu
+tzlocal==5.4.4
+    # via celery
+uritemplate==4.2.0
+    # via github3-py
+urllib3==2.8.0
     # via
+    #   botocore
     #   requests
     #   sentry-sdk
-vine==1.2.0
+vine==5.1.0
     # via
-    #   -r ../py-requirements/base.txt
     #   amqp
-werkzeug==3.1.8
+    #   celery
+    #   kombu
+wcwidth==0.9.3
+    # via prompt-toolkit
+werkzeug==3.1.9
     # via sendgrid
-whitenoise==4.1.2
+whitenoise==6.12.0
     # via -r ../py-requirements/base.txt

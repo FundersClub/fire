@@ -5,7 +5,7 @@ from django.conf import settings
 from fb_emails import models
 
 
-class IncomingMessageFactory(factory.DjangoModelFactory):
+class IncomingMessageFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.IncomingMessage
 

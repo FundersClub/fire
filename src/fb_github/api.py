@@ -1,15 +1,15 @@
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.github.provider import GitHubProvider
 from django.conf import settings
-from django.conf.urls import (
-    include,
-    url,
-)
 from django.db import (
     IntegrityError,
     transaction,
 )
 from django.http import Http404
+from django.urls import (
+    include,
+    re_path,
+)
 
 from rest_framework import (
     permissions,
@@ -17,7 +17,7 @@ from rest_framework import (
     serializers,
     status,
 )
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -182,7 +182,7 @@ class RepositoryViewSet(
             .filter(admins=self.request.user)
         )
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def purge_attachments(self, request, uuid=None):
         repo = self.get_object()
 
@@ -195,7 +195,7 @@ class RepositoryViewSet(
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @detail_route(methods=['post'])
+    @action(detail=True, methods=['post'])
     def approve(self, request, uuid=None):
         # We can't use `self.get_object()` because:
         # 1) It filters only for active repos and this one is potentially
@@ -340,8 +340,8 @@ router.register('email-map', EmailMapViewSet)
 router.register('repository', RepositoryViewSet)
 
 urlpatterns = [
-    url(r'^me/$', MeView.as_view(), name='fb-github-me'),
-    url(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email'),
-    url(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/(?P<token>[\w:.-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email-token'),
-    url(r'^', include(router.urls)),
+    re_path(r'^me/$', MeView.as_view(), name='fb-github-me'),
+    re_path(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email'),
+    re_path(r'^associate-email/(?P<msg_uuid>[\w\d-]+)/(?P<token>[\w:.-]+)/$', AssociateEmailView.as_view(), name='fb-github-associate-email-token'),
+    re_path(r'^', include(router.urls)),
 ]

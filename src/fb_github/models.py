@@ -3,13 +3,11 @@ import logging
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
 from django.db import (
     models,
     transaction,
 )
 from django.utils import timezone
-from djchoices import DjangoChoices, ChoiceItem as C
 from github3.exceptions import GitHubException
 
 from fb_github.client import get_github_client
@@ -29,10 +27,10 @@ class RepositoryQuerySet(models.QuerySet):
 
 
 class Repository(models.Model):
-    class Status(DjangoChoices):
-        PendingAccept = C('pending-accept', 'Pending accept')
-        PendingInviterApproval = C('pending-inviter-approval', 'Pending inviter approval')
-        Active = C('active', 'Active')
+    class Status(models.TextChoices):
+        PendingAccept = 'pending-accept', 'Pending accept'
+        PendingInviterApproval = 'pending-inviter-approval', 'Pending inviter approval'
+        Active = 'active', 'Active'
 
     admins = models.ManyToManyField(settings.AUTH_USER_MODEL)
     approved_at = models.DateTimeField(null=True, blank=True)
@@ -42,7 +40,7 @@ class Repository(models.Model):
     inviter_login = models.CharField(max_length=200)
     login = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    original_invitation_data = JSONField()
+    original_invitation_data = models.JSONField()
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.PendingAccept)
     uuid = models.UUIDField(default=uuid4, unique=True)
 
@@ -159,7 +157,7 @@ class EmailMap(models.Model):
 class Issue(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    gh_data = JSONField()
+    gh_data = models.JSONField()
     issue_number = models.PositiveIntegerField()
     msg = models.OneToOneField('fb_emails.IncomingMessage', blank=True, null=True, on_delete=models.SET_NULL)
     repo = models.ForeignKey(Repository, on_delete=models.CASCADE)
