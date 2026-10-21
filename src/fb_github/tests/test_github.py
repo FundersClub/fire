@@ -1,7 +1,11 @@
 import datetime
 
+from unittest import mock
+
+from allauth.socialaccount.models import SocialAccount
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core import signing
 from django.shortcuts import reverse
 from django.test import TestCase
 
@@ -10,8 +14,17 @@ from rest_framework.test import APITestCase
 
 from firebot.tests import RequestsMockMixin
 from fb_emails.tests.factories import IncomingMessageFactory
-from fb_github.models import Repository
+from fb_github.models import (
+    EmailMap,
+    Issue,
+    Repository,
+)
 from fb_github.tasks import sanitize_old_issues
+from fb_github.utils import (
+    ASSOCIATE_EMAIL_TOKEN_MAX_AGE,
+    ASSOCIATE_EMAIL_TOKEN_SALT,
+    make_associate_email_token,
+)
 from fb_github.tests.factories import RepositoryFactory
 from fb_github.tests.mocks import mock_github_api
 
@@ -325,27 +338,23 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         })
 
     def test_approve(self):
-        self.repo1.inviter_login = self.user1.username
+        # user1 is the GitHub account (id 1001, login octocat) that invited the bot
+        self.repo1.inviter_login = 'octocat'
+        self.repo1.original_invitation_data = {'inviter': {'id': 1001, 'login': 'octocat'}}
         self.repo1.status = Repository.Status.PendingAccept
         self.repo1.save()
+        SocialAccount.objects.create(user=self.user1, provider='github', uid='1001')
 
         url = reverse('repository-approve', args=[self.repo1.uuid])
 
-        # GET without a user is not allowed
+        # Anonymous users are rejected outright
         resp = self.client.get(url)
-        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
 
-        # POST without a user does not approve the repo
         resp = self.client.post(url)
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
-        self.assertEqual(resp.data, {
-            'full_name': '{}/{}'.format(self.repo1.login, self.repo1.name),
-            'inviter_login': self.user1.username,
-            'login': self.repo1.login,
-            'name': self.repo1.name,
-            'status': 'pending-accept',
-            'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
-        })
+        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
+        self.repo1.refresh_from_db()
+        self.assertEqual(self.repo1.status, Repository.Status.PendingAccept)
 
         # Try as the wrong user
         self.client.force_authenticate(user=self.user2)
@@ -357,7 +366,7 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data, {
             'full_name': '{}/{}'.format(self.repo1.login, self.repo1.name),
-            'inviter_login': self.user1.username,
+            'inviter_login': self.repo1.inviter_login,
             'login': self.repo1.login,
             'name': self.repo1.name,
             'status': 'pending-accept',
@@ -414,12 +423,33 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data, {
             'full_name': '{}/{}'.format(self.repo1.login, self.repo1.name),
-            'inviter_login': self.user1.username,
+            'inviter_login': self.repo1.inviter_login,
             'login': self.repo1.login,
             'name': self.repo1.name,
             'status': 'pending-inviter-approval',
             'url': 'http://testserver/api/github/repository/{}/'.format(self.repo1.uuid),
         })
+
+        # A local account whose self-chosen username matches the inviter's
+        # GitHub login must not be able to approve
+        impostor = get_user_model().objects.create_user(username='octocat')
+        self.client.force_authenticate(user=impostor)
+        resp = self.client.post(url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data['status'], 'pending-inviter-approval')
+        self.assertNotIn('emailmap_set', resp.data)
+
+        # Nor can a different linked GitHub account
+        other_gh = get_user_model().objects.create_user(username='other-gh')
+        SocialAccount.objects.create(user=other_gh, provider='github', uid='2002')
+        self.client.force_authenticate(user=other_gh)
+        resp = self.client.post(url)
+        self.assertEqual(resp.data['status'], 'pending-inviter-approval')
+
+        self.repo1.refresh_from_db()
+        self.assertEqual(self.repo1.status, Repository.Status.PendingInviterApproval)
+        self.assertNotIn(impostor, self.repo1.admins.all())
+        self.assertNotIn(other_gh, self.repo1.admins.all())
 
         self.client.force_authenticate(user=self.user1)
 
@@ -454,3 +484,107 @@ class GitHubAPITestCase(RequestsMockMixin, APITestCase):
             'uuid': str(self.repo1.uuid),
             'include_sender_email_in_issue': True,
         })
+
+
+@mock.patch('fb_github.api.update_issue_after_email_association')
+class AssociateEmailAPITestCase(APITestCase):
+    def setUp(self):
+        self.admin = get_user_model().objects.create_user(username='admin')
+        self.repo = RepositoryFactory.create()
+        self.repo.admins.add(self.admin)
+
+        self.sender = get_user_model().objects.create_user(username='sender')
+        self.attacker = get_user_model().objects.create_user(username='attacker')
+
+        self.msg = IncomingMessageFactory.create(from_email='sender@example.com')
+        self.issue = Issue.objects.create(
+            body='', gh_data={}, issue_number=1, msg=self.msg, repo=self.repo,
+        )
+        self.token = make_associate_email_token(self.msg)
+
+        self.plain_url = reverse('fb-github-associate-email', args=[self.msg.uuid])
+        self.token_url = reverse('fb-github-associate-email-token', args=[self.msg.uuid, self.token])
+
+    def test_raw_uuid_rejected(self, task_mock):
+        # Knowing the message uuid alone is not enough, logged in or not
+        self.assertEqual(self.client.get(self.plain_url).status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(self.client.post(self.plain_url).status_code, status.HTTP_403_FORBIDDEN)
+
+        self.client.force_authenticate(user=self.attacker)
+        self.assertEqual(self.client.get(self.plain_url).status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(self.client.post(self.plain_url).status_code, status.HTTP_403_FORBIDDEN)
+
+        self.assertFalse(EmailMap.objects.exists())
+        task_mock.delay.assert_not_called()
+
+    def test_bad_tokens_rejected(self, task_mock):
+        other_msg = IncomingMessageFactory.create(from_email='attacker@example.com')
+        Issue.objects.create(body='', gh_data={}, issue_number=2, msg=other_msg, repo=self.repo)
+        bad_tokens = [
+            'garbage',
+            self.token[:-2] + 'xx',
+            # Valid token for a different message (the attacker's own)
+            make_associate_email_token(other_msg),
+            # Right payload, wrong salt
+            signing.dumps({'msg': str(self.msg.uuid), 'email': self.msg.from_email}),
+            # Right salt and message, but a different email address
+            signing.dumps({'msg': str(self.msg.uuid), 'email': 'attacker@example.com'}, salt=ASSOCIATE_EMAIL_TOKEN_SALT),
+        ]
+
+        self.client.force_authenticate(user=self.attacker)
+        for token in bad_tokens:
+            url = reverse('fb-github-associate-email-token', args=[self.msg.uuid, token])
+            self.assertEqual(self.client.get(url).status_code, status.HTTP_404_NOT_FOUND, token)
+            self.assertEqual(self.client.post(url).status_code, status.HTTP_403_FORBIDDEN, token)
+
+        # Expired token
+        issued_at = datetime.datetime.now().timestamp() - ASSOCIATE_EMAIL_TOKEN_MAX_AGE - 60
+        with mock.patch('django.core.signing.time.time', return_value=issued_at):
+            old_token = make_associate_email_token(self.msg)
+        url = reverse('fb-github-associate-email-token', args=[self.msg.uuid, old_token])
+        self.assertEqual(self.client.post(url).status_code, status.HTTP_403_FORBIDDEN)
+
+        self.assertFalse(EmailMap.objects.exists())
+        task_mock.delay.assert_not_called()
+
+    def test_sender_with_token(self, task_mock):
+        # Anonymous users can view the offer with a valid token, but not claim it
+        resp = self.client.get(self.token_url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data['email'], 'sender@example.com')
+        self.assertEqual(resp.data['url'], 'http://testserver' + self.token_url)
+        self.assertEqual(self.client.post(self.token_url).status_code, status.HTTP_403_FORBIDDEN)
+
+        self.client.force_authenticate(user=self.sender)
+        resp = self.client.post(self.token_url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data['login'], 'sender')
+
+        entry = self.repo.emailmap_set.get()
+        self.assertEqual(entry.email, 'sender@example.com')
+        self.assertEqual(entry.user, self.sender)
+        task_mock.delay.assert_called_once_with(self.issue.id)
+
+        # A second claim on the same (repo, email) is a conflict, not a 500
+        resp = self.client.post(self.token_url)
+        self.assertEqual(resp.status_code, status.HTTP_409_CONFLICT)
+        self.assertEqual(self.repo.emailmap_set.count(), 1)
+        self.assertEqual(task_mock.delay.call_count, 1)
+
+    def test_repo_admin_without_token(self, task_mock):
+        self.client.force_authenticate(user=self.admin)
+        resp = self.client.get(self.plain_url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data['url'], 'http://testserver' + self.plain_url)
+
+        resp = self.client.post(self.plain_url)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.repo.emailmap_set.get().login, 'admin')
+
+    def test_admin_of_other_repo_rejected(self, task_mock):
+        other_repo = RepositoryFactory.create()
+        other_repo.admins.add(self.attacker)
+
+        self.client.force_authenticate(user=self.attacker)
+        self.assertEqual(self.client.post(self.plain_url).status_code, status.HTTP_403_FORBIDDEN)
+        self.assertFalse(EmailMap.objects.exists())

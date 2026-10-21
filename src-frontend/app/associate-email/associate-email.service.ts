@@ -13,9 +13,13 @@ export class AssociateEmailService {
         private http: Http
     ) {}
 
-    getByUuid(uuid: string) {
+    getByUuid(uuid: string, token?: string) {
+        let url = this.apiUrlRoot + uuid + '/';
+        if (token) {
+            url += encodeURIComponent(token) + '/';
+        }
         return new Promise((resolve, reject) => {
-            this.http.get(this.apiUrlRoot + uuid + '/', {}).toPromise()
+            this.http.get(url, {}).toPromise()
                 .then((response) => resolve(response.json() as AssociateEmail))
                 .catch((error) => reject(error));
             }

@@ -1,0 +1,2 @@
+# The pinned legacy django-allauth setup.py imports setuptools.convert_path.
+setuptools==65.7.0

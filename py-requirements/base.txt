@@ -13,7 +13,7 @@ oauthlib==3.0.1
 python3-openid==3.1.0
 requests-oauthlib==1.2.0
 # Specific allauth version that is not yet released, which switches to header authorization.
--e git+git://github.com/pennersr/django-allauth@83a0f77688f7d89939db454e3708d34e523accf3#egg=django-allauth
+django-allauth @ git+https://github.com/pennersr/django-allauth@83a0f77688f7d89939db454e3708d34e523accf3
 
 # Github
 github3.py==1.0.2
