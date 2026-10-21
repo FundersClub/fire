@@ -1,1 +1,2 @@
-npm run build
+# No --progress: its output, piped through the buildpack, made failures exit silently.
+npm run build -- --progress=false

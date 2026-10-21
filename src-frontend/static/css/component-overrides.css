@@ -1,0 +1,99 @@
+/*
+ * Rules that reach into child (Angular Material) components.
+ *
+ * These used Angular 2's `/deep/` combinator inside component styles, which
+ * Dart Sass cannot parse (and Angular 2 predates `::ng-deep`), so they live in
+ * this global stylesheet instead, scoped by each component's host element.
+ */
+
+/* email-map-add: hide the asterisks added to required fields. */
+email-map-add .mat-placeholder-required {
+    display: none;
+}
+
+/* RepositoryComponent: Repository-wide defaults. */
+.Repository .mat-tab-links {
+    color: red;
+    justify-content: center;
+}
+
+/* Add white triangle over ink bar that slides in on load. */
+@keyframes slideIn {
+    from {
+        transform: translateY(13px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.Repository .mat-ink-bar {
+    animation: slideIn .2s .3s linear both;
+    background-color: transparent;
+}
+
+.Repository md-ink-bar.mat-ink-bar:after {
+    content: '';
+    bottom: -1px;
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #fff;
+    transform: translateX(-12px);
+}
+
+/* edit-team: team member rows. */
+edit-team .TeamMembers form {
+    display: flex;
+    align-items: baseline;
+}
+
+edit-team .TeamMembers .LoginField {
+    flex: 0 0 40%;
+}
+
+edit-team .TeamMembers .EmailField {
+    transition: flex-basis .3s ease-in-out;
+    /* Leave room for Actions and margins. */
+    flex-grow: 0;
+    flex-shrink: 0;
+    /* flex-basis: calc(60% - marginLeft - marginRight - Actions.width) */
+    flex-basis: calc(60% - 20px - 10px - 40px);
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+edit-team .TeamMembers .EmailField--shrunk {
+    /* Add additional space for new action buttons. */
+    /* flex-basis: calc(60% - marginLeft - marginRight - Actions--expanded.width) */
+    flex-basis: calc(60% - 20px - 10px - 80px);
+}
+
+edit-team .TeamMembers .Actions {
+    transition: width .3s ease-in-out;
+    white-space: nowrap;
+    width: 40px;
+}
+
+edit-team .TeamMembers .Actions--expanded {
+    width: 80px;
+}
+
+edit-team .TeamMembers .Actions-undo {
+    animation: fadeIn .1s .2s linear both;
+}
+
+/* OnboardingComponent: progress bar colors. */
+.Onboarding .mat-progress-bar-buffer {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.Onboarding .mat-progress-bar-fill:after {
+    background-color: rgba(255, 255, 255, 1);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

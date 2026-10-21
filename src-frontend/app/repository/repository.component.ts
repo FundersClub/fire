@@ -5,6 +5,7 @@ import { MdTabNavBar } from '@angular/material';
 import { Repository } from './repository.model';
 
 @Component({
+    host: {'class': 'Repository'},
     styleUrls: ['./repository.component.scss'],
     templateUrl: './repository.component.html',
 })

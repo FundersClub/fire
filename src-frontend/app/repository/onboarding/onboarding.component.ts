@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 @Component({
+    host: {'class': 'Onboarding'},
     styleUrls: ['./onboarding.component.scss'],
     templateUrl: './onboarding.component.html'
 })
