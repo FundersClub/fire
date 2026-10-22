@@ -39,6 +39,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'firebot.middleware.XForwardedForMiddleware',
 ]
 
@@ -63,6 +64,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'firebot.wsgi.application'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -83,7 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 
@@ -94,7 +96,14 @@ STATIC_FRONTEND_ROOT = os.path.join(STATIC_ROOT, 'frontend')
 STATICFILES_DIRS = [
     os.path.abspath(os.path.join(BASE_DIR, '..', 'dist-frontend'))
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 ###############################################################################
 # Allauth
@@ -102,6 +111,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_ON_GET = True
+# The frontend starts GitHub login with a plain link
+# (/accounts/github/login/?process=login&next=...), as it did before allauth
+# began requiring a POST by default.
+SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_ADAPTER = 'firebot.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'firebot.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
@@ -133,7 +146,7 @@ REST_FRAMEWORK = {
 # Celery
 ###############################################################################
 
-CELERY_IGNORE_RESULT = True
+CELERY_TASK_IGNORE_RESULT = True
 from firebot.settings.tasks import *  # noqa
 
 

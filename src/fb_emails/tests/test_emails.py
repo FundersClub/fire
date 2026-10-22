@@ -99,10 +99,9 @@ New alert from FundersClub Production.
 #  [![Sentry](https://a0wx592cvgzripj.global.ssl.fastly.net/_static/e445fa38a26eeda40957d45e83ffe5b9/sentry/images/email/sentry_logo_full.png)](https://sentry.io)
 ---
 ##  New alert from [FundersClub Production](https://sentry.io/)
-ID: b162081f6c7a4d29aa36050a275751f1
-"""
+ID: b162081f6c7a4d29aa36050a275751f1"""
         body = '\n'.join(
-            l.strip() for l in msg.issue.body.splitlines() if l.strip()
+            line.strip() for line in msg.issue.body.splitlines() if line.strip()
         )
         self.assertTrue(test_text in body)
 

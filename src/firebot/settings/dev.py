@@ -13,7 +13,7 @@ MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'mediafiles'))  # noqa
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'firebot',
         'USER': '',
         'PASSWORD': '',

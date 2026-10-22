@@ -2,7 +2,6 @@ import html2text
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
 from django.core.mail import (
     EmailMultiAlternatives,
     send_mail,
@@ -10,24 +9,22 @@ from django.core.mail import (
 from django.db import models
 from django.template.loader import render_to_string
 
-from djchoices import DjangoChoices, ChoiceItem as C
-
 
 class IncomingMessage(models.Model):
-    class Status(DjangoChoices):
-        Pending = C('pending', 'Pending processing')
-        UnrecognizedDomain = C('unrecognized-domain', 'Unrecognized domain')
-        UnrecognizedUsername = C('unrecognized-username', 'Unrecognized username')
-        IssueError = C('issue-error', 'Failed creating issue')
-        Processed = C('processed', 'Processed')
-        Sanitized = C('sanitized', 'Sanitized')
+    class Status(models.TextChoices):
+        Pending = 'pending', 'Pending processing'
+        UnrecognizedDomain = 'unrecognized-domain', 'Unrecognized domain'
+        UnrecognizedUsername = 'unrecognized-username', 'Unrecognized username'
+        IssueError = 'issue-error', 'Failed creating issue'
+        Processed = 'processed', 'Processed'
+        Sanitized = 'sanitized', 'Sanitized'
 
     body_html = models.TextField()
     body_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     from_email = models.EmailField(max_length=500)
     from_name = models.CharField(max_length=500)
-    original_post_data = JSONField()
+    original_post_data = models.JSONField()
     processed_at = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=32, choices=Status.choices, default=Status.Pending)
     subject = models.CharField(max_length=2000)

@@ -12,10 +12,10 @@ To try it out, send an email to fire-test@fire.fundersclub.com and take a look a
 ```
 git clone git@github.com:FundersClub/fire.git
 cd fire
-python3.6 -m venv venv
+python3.12 -m venv venv
 . ./venv/bin/activate
-pip install -r py-requirements/dev.txt
-npm install
+pip install -r src/requirements.lock.txt -r py-requirements/dev.txt
+npm install  # Node 22
 createdb firebot
 ```
 

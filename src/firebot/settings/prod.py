@@ -1,5 +1,6 @@
 import dj_database_url
 import os
+import ssl
 
 from firebot.settings.base import *  # noqa
 
@@ -23,7 +24,7 @@ SESSION_COOKIE_SECURE = True
 MEDIAFILES_AWS_STORAGE_BUCKET_NAME = os.environ['MEDIAFILES_AWS_STORAGE_BUCKET_NAME']
 MEDIAFILES_AWS_ACCESS_KEY_ID = os.environ['MEDIAFILES_AWS_ACCESS_KEY_ID']
 MEDIAFILES_AWS_SECRET_ACCESS_KEY = os.environ['MEDIAFILES_AWS_SECRET_ACCESS_KEY']
-DEFAULT_FILE_STORAGE = 'firebot.storages.S3MediaFilesStorage'
+STORAGES['default'] = {'BACKEND': 'firebot.storages.S3MediaFilesStorage'}  # noqa: F405
 
 DATABASES = {
     'default': dj_database_url.parse(
@@ -52,6 +53,9 @@ if os.environ.get('SENTRY_DSN'):
 ###############################################################################
 
 CELERY_BROKER_URL = os.environ['REDIS_URL']
+if CELERY_BROKER_URL.startswith('rediss://'):
+    # Heroku Redis serves TLS with a self-signed certificate.
+    CELERY_BROKER_USE_SSL = {'ssl_cert_reqs': ssl.CERT_NONE}
 
 
 ###############################################################################
