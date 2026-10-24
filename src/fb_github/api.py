@@ -1,10 +1,6 @@
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.github.provider import GitHubProvider
 from django.conf import settings
-from django.db import (
-    IntegrityError,
-    transaction,
-)
 from django.http import Http404
 from django.urls import (
     include,
@@ -313,14 +309,11 @@ class AssociateEmailView(APIView):
         if not self._has_valid_token() and not self._is_repo_admin(request.user):
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        try:
-            with transaction.atomic():
-                self.repo.emailmap_set.create(
-                    email=self.msg.from_email,
-                    login=request.user.username,
-                    user=request.user,
-                )
-        except IntegrityError:
+        entry, _ = self.repo.emailmap_set.get_or_create(
+            email=self.msg.from_email,
+            defaults={'login': request.user.username, 'user': request.user},
+        )
+        if entry.login != request.user.username or entry.user_id not in (None, request.user.id):
             return Response(
                 {'detail': 'Email address is already associated with a GitHub username.'},
                 status=status.HTTP_409_CONFLICT,
