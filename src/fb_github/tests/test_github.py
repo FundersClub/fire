@@ -565,11 +565,11 @@ class AssociateEmailAPITestCase(APITestCase):
         self.assertEqual(entry.user, self.sender)
         task_mock.delay.assert_called_once_with(self.issue.id)
 
-        # A second claim on the same (repo, email) is a conflict, not a 500
+        # The same sender can retry a claim and requeue its issue update.
         resp = self.client.post(self.token_url)
-        self.assertEqual(resp.status_code, status.HTTP_409_CONFLICT)
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(self.repo.emailmap_set.count(), 1)
-        self.assertEqual(task_mock.delay.call_count, 1)
+        self.assertEqual(task_mock.delay.call_count, 2)
 
     def test_repo_admin_without_token(self, task_mock):
         self.client.force_authenticate(user=self.admin)
