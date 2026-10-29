@@ -1,7 +1,10 @@
 import html2text
+import logging
 from uuid import uuid4
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.core.mail import (
     EmailMultiAlternatives,
     send_mail,
@@ -10,12 +13,18 @@ from django.db import models
 from django.template.loader import render_to_string
 
 
+LOG = logging.getLogger(__name__)
+
+
 class IncomingMessage(models.Model):
     class Status(models.TextChoices):
         Pending = 'pending', 'Pending processing'
         UnrecognizedDomain = 'unrecognized-domain', 'Unrecognized domain'
         UnrecognizedUsername = 'unrecognized-username', 'Unrecognized username'
         IssueError = 'issue-error', 'Failed creating issue'
+        RepositoryArchived = 'repository-archived', 'Not delivered: repository archived'
+        IssueBodyTooLong = 'issue-body-too-long', 'Not delivered: issue body too long'
+        IssueTitleTooLong = 'issue-title-too-long', 'Not delivered: issue title too long'
         Processed = 'processed', 'Processed'
         Sanitized = 'sanitized', 'Sanitized'
 
@@ -33,6 +42,14 @@ class IncomingMessage(models.Model):
     spam_score = models.DecimalField(max_digits=10, decimal_places=4, default=0)
 
     def reply_from_template(self, template_name, extra_context=None, html=False):
+        # Inbound mail can have a missing or malformed sender. There is no
+        # address to reply to, but processing the message should still finish.
+        try:
+            validate_email(self.from_email)
+        except ValidationError:
+            LOG.warning('Skipping automatic reply for message %s: invalid sender address', self.pk)
+            return 0
+
         context = {
             'msg': self,
             'settings': settings,

@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 
 from fb_emails.models import IncomingMessage
-from fb_github.models import Repository
+from fb_github.models import IssueDeliveryRejected, Repository
 from fb_github.utils import make_associate_email_token
 
 
@@ -49,8 +49,15 @@ def process_incoming_message(msg_id):
         return
 
     # Got our repo, create an issue
-    if not repo.create_issue_from_incoming_msg(msg):
-        msg.status = IncomingMessage.Status.IssueError
+    try:
+        issue = repo.create_issue_from_incoming_msg(msg)
+    except IssueDeliveryRejected as error:
+        issue = None
+        msg.status = error.status
+        LOG.warning('Message %s not delivered to repository %s: %s', msg.id, repo.id, msg.status)
+    if not issue:
+        if msg.status == IncomingMessage.Status.Pending:
+            msg.status = IncomingMessage.Status.IssueError
         msg.save(update_fields=['processed_at', 'status'])
 
         body = render_to_string('fb_emails/create-issue-error.txt', {
@@ -91,7 +98,14 @@ def sanitize_old_emails():
     msgs = IncomingMessage.objects.filter(
         created_at__lte=week_ago
     ).exclude(
-        status=IncomingMessage.Status.Sanitized
+        status__in=[
+            IncomingMessage.Status.Sanitized,
+            IncomingMessage.Status.Pending,
+            IncomingMessage.Status.IssueError,
+            IncomingMessage.Status.RepositoryArchived,
+            IncomingMessage.Status.IssueBodyTooLong,
+            IncomingMessage.Status.IssueTitleTooLong,
+        ]
     ).iterator()
     for msg in msgs:
         msg.body_html = msg.body_text = msg.subject = sanitize_txt

@@ -199,8 +199,8 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
         sanitize_txt = '<redacted>'
 
         # Create two test emails
-        msg1 = IncomingMessageFactory.create()
-        msg2 = IncomingMessageFactory.create()
+        msg1 = IncomingMessageFactory.create(status=IncomingMessage.Status.Processed)
+        msg2 = IncomingMessageFactory.create(status=IncomingMessage.Status.Processed)
 
         self.assertNotEqual(msg1.subject, sanitize_txt)
         self.assertNotEqual(msg1.body_html, sanitize_txt)

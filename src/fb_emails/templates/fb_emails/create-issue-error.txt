@@ -1,8 +1,13 @@
 Hey there,
 
-fire just received an email from {{ msg.from_email }} to your fire email address ({{ repo.email }}). We tried to create an Issue in your Repository, but it seems that we no longer have access.
+fire received an email from {{ msg.from_email }} to {{ repo.email }}, but could not confirm issue creation in {{ repo.full_name }}.
 
-If you intentionally removed fire, you can ignore this message. Otherwise, please re-add the "fire-bot" user to your Repo (as a Read Only contributor) to continue using fire.
+{% if msg.status == 'repository-archived' %}The destination repository is archived and read-only. A repository owner must unarchive it before fire can create issues there.
+{% elif msg.status == 'issue-body-too-long' %}GitHub rejected the issue because its body is too long. The report must be shortened before it can be sent again.
+{% elif msg.status == 'issue-title-too-long' %}GitHub rejected the issue because its title is too long. The subject must be shortened before it can be sent again.
+{% else %}GitHub issue creation failed. A fire operator must check the error before deciding whether it is safe to send the message again. This notice does not establish whether GitHub accepted a request whose response was lost.
+{% endif %}
+The original email is retained in fire for operator review (message {{ msg.uuid }}). fire has not rerouted or automatically resent it.
 
 Thanks!
 
