@@ -1,4 +1,5 @@
 import logging
+import re
 
 from uuid import uuid4
 
@@ -8,13 +9,59 @@ from django.db import (
     transaction,
 )
 from django.utils import timezone
-from github3.exceptions import GitHubException
+from github3.exceptions import ForbiddenError, GitHubException, UnprocessableEntity
+
+from fb_emails.models import IncomingMessage
 
 from fb_github.client import get_github_client
 from fb_github.utils import msg_to_markdown
 
 
 LOG = logging.getLogger(__name__)
+
+
+class IssueDeliveryRejected(Exception):
+    """A known GitHub rejection; no issue was created."""
+
+    def __init__(self, status):
+        self.status = status
+        super().__init__(status)
+
+
+def rejected_issue_status(error):
+    if isinstance(error, ForbiddenError) and error.message == 'Repository was archived so is read-only.':
+        return IncomingMessage.Status.RepositoryArchived
+    if isinstance(error, UnprocessableEntity):
+        errors = error.errors
+        if not isinstance(errors, list) or not errors:
+            return None
+        statuses = []
+        for detail in errors:
+            if not isinstance(detail, dict) or detail.get('resource') != 'Issue':
+                return None
+            field = detail.get('field')
+            if field not in ('body', 'title') or detail.get('code') != 'custom':
+                return None
+            message = detail.get('message', '')
+            if not isinstance(message, str) or not re.fullmatch(
+                field + r' is too long(?: \(maximum is \d+ characters\))?', message, re.IGNORECASE,
+            ):
+                return None
+            statuses.append(IncomingMessage.Status.IssueBodyTooLong if field == 'body'
+                            else IncomingMessage.Status.IssueTitleTooLong)
+        if len(set(statuses)) == 1:
+            return statuses[0]
+    return None
+
+
+def validation_fields(error):
+    """Keep diagnostics useful without copying provider text or email content."""
+    errors = getattr(error, 'errors', [])
+    if not isinstance(errors, list):
+        return []
+    return sorted({detail['field'] for detail in errors if isinstance(detail, dict)
+                   and detail.get('resource') == 'Issue'
+                   and detail.get('field') in ('title', 'body', 'assignees', 'labels', 'milestone')})
 
 
 def email_slug_default():
@@ -90,12 +137,23 @@ class Repository(models.Model):
 
         # Create issue on github
         try:
-            gh_issue = self.gh_repo.create_issue(
+            gh_repo = self.gh_repo
+            if gh_repo.archived is True:
+                raise IssueDeliveryRejected(IncomingMessage.Status.RepositoryArchived)
+            gh_issue = gh_repo.create_issue(
                 title=msg.subject or 'New issue',
                 body=body,
             )
-        except GitHubException:
-            LOG.exception('failed creating github issue for {} {}'.format(self.id, msg.id))
+        except GitHubException as error:
+            rejected_status = rejected_issue_status(error)
+            if rejected_status:
+                raise IssueDeliveryRejected(rejected_status) from error
+            LOG.exception('failed creating github issue for %s %s', self.id, msg.id, extra={
+                'github_status': getattr(error, 'code', None),
+                'github_validation_fields': validation_fields(error),
+                'issue_title_length': len(msg.subject or 'New issue'),
+                'issue_body_length': len(body),
+            })
             return
 
         if not gh_issue:

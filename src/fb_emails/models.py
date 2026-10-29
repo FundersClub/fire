@@ -22,6 +22,9 @@ class IncomingMessage(models.Model):
         UnrecognizedDomain = 'unrecognized-domain', 'Unrecognized domain'
         UnrecognizedUsername = 'unrecognized-username', 'Unrecognized username'
         IssueError = 'issue-error', 'Failed creating issue'
+        RepositoryArchived = 'repository-archived', 'Not delivered: repository archived'
+        IssueBodyTooLong = 'issue-body-too-long', 'Not delivered: issue body too long'
+        IssueTitleTooLong = 'issue-title-too-long', 'Not delivered: issue title too long'
         Processed = 'processed', 'Processed'
         Sanitized = 'sanitized', 'Sanitized'
 
