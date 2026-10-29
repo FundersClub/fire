@@ -51,14 +51,18 @@
         color="primary"
         type="button"
         (click)="purge()"
-        [disabled]="dataDeleted"
+        [disabled]="dataDeleted || purging"
     >
         Delete all attachment data
     </button>
+    <div *ngIf="purging">Deleting attachments. Keep this page open until cleanup finishes.</div>
+    <div *ngIf="purgeFailed" role="alert">
+        Cleanup stopped. Some attachments may already be deleted. Retry to remove the remaining attachments.
+    </div>
     <div
         *ngIf="dataDeleted"
     >
         <br>
-        All attachment data has been deleted.
+        Attachments present when cleanup started have been deleted.
     </div>
 </div>

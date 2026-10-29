@@ -1,3 +1,6 @@
+from copy import copy
+
+from botocore.config import Config
 from django.conf import settings
 from storages.backends.s3 import S3Storage
 
@@ -16,3 +19,17 @@ class S3MediaFilesStorage(S3Storage):
             'CacheControl': 'max-age=31536000, public',
         })
         super().__init__(*args, **kwargs)
+
+
+def attachment_purge_storage(storage):
+    """Use short S3 waits for web cleanup without changing upload settings."""
+    if isinstance(storage, S3Storage):
+        # S3Storage resets its thread-local connections when copied, so the
+        # purge gets a separate client while retaining bucket/key settings.
+        storage = copy(storage)
+        storage.client_config = storage.client_config.merge(Config(
+            connect_timeout=2,
+            read_timeout=3,
+            retries={'total_max_attempts': 1},
+        ))
+    return storage

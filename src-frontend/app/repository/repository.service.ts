@@ -137,13 +137,20 @@ export class RepositoryService {
         );
     }
 
-    purgeAttachmentData(repository: Repository): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.http.post(repository.urls.purge_attachments, {}).toPromise()
-                .then(() => resolve())
-                .catch((error) => reject(error.json()));
-            }
-        );
+    purgeAttachmentData(repository: Repository, throughId?: number): Promise<any> {
+        const data = {through_id: throughId === undefined ? null : throughId};
+        return this.http.post(repository.urls.purge_attachments, data).toPromise()
+            .then((response) => {
+                if (response.status === 204) {
+                    return;
+                }
+                const cutoff = response.json().through_id;
+                if (response.status !== 202 || typeof cutoff !== 'number' || cutoff < 0
+                    || (throughId !== undefined && cutoff !== throughId)) {
+                    throw new Error('Unexpected cleanup response.');
+                }
+                return this.purgeAttachmentData(repository, cutoff);
+            });
     }
 
     fetchBasicInfo(uuid: string): Promise<Repository> {

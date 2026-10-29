@@ -11,6 +11,8 @@ export class ManageSettingsComponent {
     repository: Repository;
     dataDeleted = false;
     saving = false;
+    purging = false;
+    purgeFailed = false;
     options: any;
 
     constructor(
@@ -29,8 +31,20 @@ export class ManageSettingsComponent {
     }
 
     purge() {
+        if (this.purging) {
+            return;
+        }
+        this.purging = true;
+        this.purgeFailed = false;
         this.repositoryService.purgeAttachmentData(this.repository)
-            .then(() => this.dataDeleted = true);
+            .then(() => {
+                this.purging = false;
+                this.dataDeleted = true;
+            })
+            .catch(() => {
+                this.purging = false;
+                this.purgeFailed = true;
+            });
     }
 
     save() {
