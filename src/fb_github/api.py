@@ -1,3 +1,5 @@
+from time import monotonic
+
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.providers.github.provider import GitHubProvider
 from django.conf import settings
@@ -32,6 +34,7 @@ from fb_github import models
 from fb_github.tasks import update_issue_after_email_association
 from fb_github.utils import check_associate_email_token
 from firebot.api import BaseSerializer
+from firebot.storages import attachment_purge_storage
 
 
 ################################################################################
@@ -125,6 +128,12 @@ class RepositorySerializer(serializers.HyperlinkedModelSerializer):
         return settings.EMAIL_DOMAIN
 
 
+class AttachmentPurgeSerializer(serializers.Serializer):
+    # Require an explicit null to start. Older clients treat every 2xx response
+    # as complete, so they must reload before using the batched endpoint.
+    through_id = serializers.IntegerField(allow_null=True, min_value=0, max_value=9223372036854775807)
+
+
 class RepositoryApproveSerializer(RepositorySerializer):
     class Meta(RepositorySerializer.Meta):
         fields = (
@@ -182,13 +191,29 @@ class RepositoryViewSet(
     def purge_attachments(self, request, uuid=None):
         repo = self.get_object()
 
-        qs = fb_emails_models.Attachment.objects.filter(
-            msg__issue__repo=repo
-        )
-        for attachment in qs.iterator():
-            attachment.file.delete()
+        params = AttachmentPurgeSerializer(data=request.data)
+        params.is_valid(raise_exception=True)
+        qs = fb_emails_models.Attachment.objects.filter(msg__issue__repo=repo)
+        through_id = params.validated_data['through_id']
+        if through_id is None:
+            through_id = qs.order_by('-pk').values_list('pk', flat=True).first() or 0
+        qs = qs.filter(pk__lte=through_id)
+
+        # Bound each request and keep the initial cutoff across batches so new
+        # attachments survive. Failed deletes retain their row and file name.
+        deadline = monotonic() + 5
+        storage = None
+        for attachment in qs.order_by('pk')[:10]:
+            if monotonic() >= deadline:
+                break
+            if attachment.file:
+                if storage is None:
+                    storage = attachment_purge_storage(attachment.file.storage)
+                storage.delete(attachment.file.name)
             attachment.delete()
 
+        if qs.exists():
+            return Response({'through_id': through_id}, status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=['post'])
