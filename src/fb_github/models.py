@@ -64,6 +64,37 @@ def validation_fields(error):
                    and detail.get('field') in ('title', 'body', 'assignees', 'labels', 'milestone')})
 
 
+def validation_details(error):
+    """Bound diagnostics and replace provider text with known values only."""
+    errors = getattr(error, 'errors', None)
+    if not isinstance(errors, list):
+        return {'shape': 'missing' if errors is None else 'other'}
+    details = []
+    allowed = {
+        'resource': ('Issue',),
+        'field': ('title', 'body', 'assignees', 'labels', 'milestone'),
+        'code': ('missing', 'missing_field', 'invalid', 'already_exists', 'unprocessable', 'custom'),
+    }
+    for error_detail in errors[:10]:
+        if not isinstance(error_detail, dict):
+            details.append({'shape': 'other'})
+            continue
+        detail = {
+            key: error_detail[key] if error_detail.get(key) in values else
+            ('missing' if key not in error_detail else 'other')
+            for key, values in allowed.items()
+        }
+        message = error_detail.get('message')
+        detail['reason'] = 'missing' if message is None else 'other'
+        if isinstance(message, str):
+            match = re.fullmatch(r'(body|title) is too long(?: \(maximum is \d+ characters\))?',
+                                 message, re.IGNORECASE)
+            if match:
+                detail['reason'] = match.group(1).lower() + '-too-long'
+        details.append(detail)
+    return {'shape': 'list', 'count': len(errors), 'details': details}
+
+
 def email_slug_default():
     return uuid4().hex[:8]
 
@@ -148,12 +179,17 @@ class Repository(models.Model):
             rejected_status = rejected_issue_status(error)
             if rejected_status:
                 raise IssueDeliveryRejected(rejected_status) from error
-            LOG.exception('failed creating github issue for %s %s', self.id, msg.id, extra={
+            diagnostics = {
                 'github_status': getattr(error, 'code', None),
                 'github_validation_fields': validation_fields(error),
+                'github_validation_details': validation_details(error),
                 'issue_title_length': len(msg.subject or 'New issue'),
                 'issue_body_length': len(body),
-            })
+            }
+            # Celery's console formatter omits LogRecord.extra. Keep these safe
+            # details in the message too, even when Sentry misses the event.
+            LOG.exception('failed creating github issue for %s %s: %s',
+                          self.id, msg.id, diagnostics, extra=diagnostics)
             return
 
         if not gh_issue:
