@@ -3,7 +3,9 @@ import logging
 from celery import shared_task
 
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.core.mail import send_mail
+from django.db.models import F, Func, JSONField, TextField, Value
 from django.template.loader import render_to_string
 from django.utils import timezone
 
@@ -13,6 +15,27 @@ from fb_github.utils import make_associate_email_token
 
 
 LOG = logging.getLogger(__name__)
+
+_SANITIZE_EXCLUDED_STATUSES = (
+    IncomingMessage.Status.Sanitized,
+    IncomingMessage.Status.Pending,
+    IncomingMessage.Status.IssueError,
+    IncomingMessage.Status.RepositoryArchived,
+    IncomingMessage.Status.IssueBodyTooLong,
+    IncomingMessage.Status.IssueTitleTooLong,
+)
+
+
+def _redact_post_data(expression, sanitize_txt):
+    for key in ('html', 'text', 'subject'):
+        expression = Func(
+            expression,
+            Value([key], output_field=ArrayField(TextField())),
+            Value(sanitize_txt, output_field=JSONField()),
+            function='jsonb_set',
+            output_field=JSONField(),
+        )
+    return expression
 
 
 @shared_task()
@@ -95,21 +118,14 @@ def process_incoming_message(msg_id):
 def sanitize_old_emails():
     week_ago = timezone.now() - timezone.timedelta(days=7)
     sanitize_txt = '<redacted>'
-    msgs = IncomingMessage.objects.filter(
+    IncomingMessage.objects.filter(
         created_at__lte=week_ago
     ).exclude(
-        status__in=[
-            IncomingMessage.Status.Sanitized,
-            IncomingMessage.Status.Pending,
-            IncomingMessage.Status.IssueError,
-            IncomingMessage.Status.RepositoryArchived,
-            IncomingMessage.Status.IssueBodyTooLong,
-            IncomingMessage.Status.IssueTitleTooLong,
-        ]
-    ).iterator()
-    for msg in msgs:
-        msg.body_html = msg.body_text = msg.subject = sanitize_txt
-        for key in ('html', 'text', 'subject'):
-            msg.original_post_data[key] = sanitize_txt
-        msg.status = IncomingMessage.Status.Sanitized
-        msg.save()
+        status__in=_SANITIZE_EXCLUDED_STATUSES
+    ).update(
+        body_html=sanitize_txt,
+        body_text=sanitize_txt,
+        subject=sanitize_txt,
+        original_post_data=_redact_post_data(F('original_post_data'), sanitize_txt),
+        status=IncomingMessage.Status.Sanitized,
+    )

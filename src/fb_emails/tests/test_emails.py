@@ -4,11 +4,14 @@ import re
 
 from django.conf import settings
 from django.core import mail
+from django.db import connection
 from django.test import (
     TestCase,
     TransactionTestCase,
 )
+from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
+from django.utils import timezone
 
 from fb_emails.models import IncomingMessage
 from fb_emails.tasks import (
@@ -238,6 +241,143 @@ class EmailsTestCase(RequestsMockMixin, TestCase):
         self.assertNotEqual(msg2.subject, sanitize_txt)
         self.assertNotEqual(msg2.body_html, sanitize_txt)
         self.assertNotEqual(msg2.body_text, sanitize_txt)
+
+    def test_sanitize_old_emails_uses_one_query(self):
+        sanitize_txt = '<redacted>'
+        batch_size = 12
+        old = timezone.now() - datetime.timedelta(days=8)
+        messages = []
+        for index in range(batch_size):
+            status = (
+                IncomingMessage.Status.UnrecognizedUsername
+                if index == 0 else IncomingMessage.Status.Processed
+            )
+            msg = IncomingMessageFactory.create(
+                status=status,
+                body_html='<p>secret {}</p>'.format(index),
+                body_text='secret body {}'.format(index),
+                subject='secret subject {}'.format(index),
+                from_email='sender{}@example.com'.format(index),
+                from_name='Sender {}'.format(index),
+                to_email='repo@{}'.format(settings.EMAIL_DOMAIN),
+                original_post_data={
+                    'html': '<p>secret {}</p>'.format(index),
+                    'text': 'secret body {}'.format(index),
+                    'subject': 'secret subject {}'.format(index),
+                    'envelope': '{"to":["reader@example.com"]}',
+                    'from': 'Sender <reader@example.com>',
+                    'marker': index,
+                },
+                spam_score='1.2500',
+            )
+            IncomingMessage.objects.filter(pk=msg.pk).update(created_at=old, processed_at=old)
+            msg.refresh_from_db()
+            messages.append(msg)
+
+        blank_post = IncomingMessageFactory.create(
+            status=IncomingMessage.Status.Processed,
+            body_html='<p>only columns</p>',
+            body_text='only columns',
+            subject='only columns',
+            original_post_data={},
+        )
+        IncomingMessage.objects.filter(pk=blank_post.pk).update(created_at=old)
+
+        young = IncomingMessageFactory.create(
+            status=IncomingMessage.Status.Processed,
+            body_html='<p>still new</p>',
+            body_text='still new',
+            subject='still new',
+            original_post_data={'text': 'still new', 'marker': 'young'},
+        )
+        pending = IncomingMessageFactory.create(
+            status=IncomingMessage.Status.Pending,
+            body_text='keep pending',
+            subject='keep pending',
+            original_post_data={'text': 'keep pending', 'marker': 'pending'},
+        )
+        IncomingMessage.objects.filter(pk=pending.pk).update(created_at=old)
+        already = IncomingMessageFactory.create(
+            status=IncomingMessage.Status.Sanitized,
+            body_html=sanitize_txt,
+            body_text=sanitize_txt,
+            subject=sanitize_txt,
+            original_post_data={
+                'html': sanitize_txt,
+                'text': sanitize_txt,
+                'subject': sanitize_txt,
+                'marker': 'already',
+            },
+        )
+        IncomingMessage.objects.filter(pk=already.pk).update(created_at=old)
+
+        with CaptureQueriesContext(connection) as captured:
+            sanitize_old_emails()
+
+        query_sql = [query['sql'] for query in captured]
+        self.assertEqual(
+            len(query_sql),
+            1,
+            'expected one cleanup statement, ran {}:\n{}'.format(
+                len(query_sql),
+                '\n'.join(query_sql),
+            ),
+        )
+        self.assertTrue(query_sql[0].lstrip().upper().startswith('UPDATE'))
+
+        for msg in messages:
+            before_email = msg.from_email
+            before_name = msg.from_name
+            before_to = msg.to_email
+            before_uuid = msg.uuid
+            before_spam = msg.spam_score
+            before_processed = msg.processed_at
+            before_created = msg.created_at
+            marker = msg.original_post_data['marker']
+            msg.refresh_from_db()
+            self.assertEqual(msg.status, IncomingMessage.Status.Sanitized)
+            self.assertEqual(msg.body_html, sanitize_txt)
+            self.assertEqual(msg.body_text, sanitize_txt)
+            self.assertEqual(msg.subject, sanitize_txt)
+            self.assertEqual(msg.original_post_data['html'], sanitize_txt)
+            self.assertEqual(msg.original_post_data['text'], sanitize_txt)
+            self.assertEqual(msg.original_post_data['subject'], sanitize_txt)
+            self.assertEqual(msg.original_post_data['envelope'], '{"to":["reader@example.com"]}')
+            self.assertEqual(msg.original_post_data['from'], 'Sender <reader@example.com>')
+            self.assertEqual(msg.original_post_data['marker'], marker)
+            self.assertEqual(msg.from_email, before_email)
+            self.assertEqual(msg.from_name, before_name)
+            self.assertEqual(msg.to_email, before_to)
+            self.assertEqual(msg.uuid, before_uuid)
+            self.assertEqual(msg.spam_score, before_spam)
+            self.assertEqual(msg.processed_at, before_processed)
+            self.assertEqual(msg.created_at, before_created)
+
+        blank_post.refresh_from_db()
+        self.assertEqual(blank_post.status, IncomingMessage.Status.Sanitized)
+        self.assertEqual(blank_post.body_html, sanitize_txt)
+        self.assertEqual(blank_post.body_text, sanitize_txt)
+        self.assertEqual(blank_post.subject, sanitize_txt)
+        self.assertEqual(blank_post.original_post_data, {
+            'html': sanitize_txt,
+            'text': sanitize_txt,
+            'subject': sanitize_txt,
+        })
+
+        young.refresh_from_db()
+        self.assertEqual(young.status, IncomingMessage.Status.Processed)
+        self.assertEqual(young.body_text, 'still new')
+        self.assertEqual(young.subject, 'still new')
+        self.assertEqual(young.original_post_data, {'text': 'still new', 'marker': 'young'})
+
+        pending.refresh_from_db()
+        self.assertEqual(pending.status, IncomingMessage.Status.Pending)
+        self.assertEqual(pending.body_text, 'keep pending')
+        self.assertEqual(pending.original_post_data['text'], 'keep pending')
+
+        already.refresh_from_db()
+        self.assertEqual(already.status, IncomingMessage.Status.Sanitized)
+        self.assertEqual(already.original_post_data['marker'], 'already')
 
     @mock_github_api
     def test_issue_create_error(self):
