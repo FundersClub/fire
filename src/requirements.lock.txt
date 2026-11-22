@@ -77,7 +77,7 @@ kombu==5.6.2
     # via celery
 markupsafe==3.0.4
     # via werkzeug
-oauthlib==4.0.0
+oauthlib==4.0.1
     # via django-allauth
 packaging==26.3
     # via kombu
