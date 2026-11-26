@@ -18,6 +18,11 @@ from fb_github.utils import msg_to_markdown
 
 
 LOG = logging.getLogger(__name__)
+ISSUE_BODY_MAX_LENGTH = 65_536
+ISSUE_BODY_TRUNCATION_NOTE = (
+    "\n\n---\nEmail truncated to fit GitHub's issue body limit. "
+    "See the original email for the full message."
+)
 
 
 class IssueDeliveryRejected(Exception):
@@ -165,6 +170,12 @@ class Repository(models.Model):
                 raise
             LOG.exception('failed msg_to_markdown on {} {}'.format(self.id, msg.id))
             body = msg.body_text
+
+        if len(body) > ISSUE_BODY_MAX_LENGTH:
+            body = (
+                body[: ISSUE_BODY_MAX_LENGTH - len(ISSUE_BODY_TRUNCATION_NOTE)]
+                + ISSUE_BODY_TRUNCATION_NOTE
+            )
 
         # Create issue on github
         try:
